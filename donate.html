@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donate Blood - Blood Donation Support System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">
+                    <img src="images/logo.svg" alt="Blood Donation Logo" height="50">
+                    <span class="ms-2">Blood Services</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="donate.html">Donate Blood</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html#host">Hosting a Blood Drive</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html#biomedical">Biomedical Services</a>
+                        </li>
+                    </ul>
+                    <div class="ms-3">
+                        <a href="login.html" class="btn btn-outline-secondary me-2">Sign In</a>
+                        <a href="find-drive.html" class="btn btn-danger">Find a Blood Drive</a>
+                        <button id="languageToggle" class="btn btn-outline-secondary ms-2">
+                            <i class="fas fa-globe me-1"></i>
+                            <span class="language-text">Tiếng Việt</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="bg-danger text-white py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-4 fw-bold">Donate Blood, Save Lives</h1>
+                    <p class="fs-5 mt-3">Your donation can help save up to 3 lives. The donation process is safe, simple, and only takes about an hour from start to finish.</p>
+                    <a href="#schedule" class="btn btn-light btn-lg mt-2">SCHEDULE NOW</a>
+                </div>
+                <div class="col-lg-6 text-center">
+                    <img src="images/donor-hero.jpg" class="img-fluid rounded" alt="Blood Donor">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Donation Process Section -->
+    <section id="process" class="py-5">
+        <div class="container">
+            <h2 class="text-center display-5 mb-5">The Donation Process</h2>
+            <div class="row">
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="rounded-circle bg-primary-light d-flex align-items-center justify-content-center mx-auto mb-4" style="width: 80px; height: 80px;">
+                                <span class="fs-3 fw-bold text-danger">1</span>
+                            </div>
+                            <h3 class="h4">Registration</h3>
+                            <p>Sign in, show ID, and read information about donating blood.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="rounded-circle bg-primary-light d-flex align-items-center justify-content-center mx-auto mb-4" style="width: 80px; height: 80px;">
+                                <span class="fs-3 fw-bold text-danger">2</span>
+                            </div>
+                            <h3 class="h4">Health History</h3>
+                            <p>Answer questions about your health history and have a mini-physical.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="rounded-circle bg-primary-light d-flex align-items-center justify-content-center mx-auto mb-4" style="width: 80px; height: 80px;">
+                                <span class="fs-3 fw-bold text-danger">3</span>
+                            </div>
+                            <h3 class="h4">Donation</h3>
+                            <p>Relax while giving blood, which usually takes 8-10 minutes.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <div class="rounded-circle bg-primary-light d-flex align-items-center justify-content-center mx-auto mb-4" style="width: 80px; height: 80px;">
+                                <span class="fs-3 fw-bold text-danger">4</span>
+                            </div>
+                            <h3 class="h4">Refreshments</h3>
+                            <p>Enjoy refreshments while you rest for 10-15 minutes before leaving.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Eligibility Section -->
+    <section id="eligibility" class="py-5 bg-light">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <h2 class="display-5">Eligibility Requirements</h2>
+                    <p class="lead">Most people can donate blood. Here are some basic requirements:</p>
+                    <ul class="list-group list-group-flush mb-4">
+                        <li class="list-group-item bg-transparent"><i class="fas fa-check text-success me-2"></i> Be at least 17 years old (16 with parental consent in some states)</li>
+                        <li class="list-group-item bg-transparent"><i class="fas fa-check text-success me-2"></i> Weigh at least 110 pounds</li>
+                        <li class="list-group-item bg-transparent"><i class="fas fa-check text-success me-2"></i> Be in good general health and feeling well</li>
+                        <li class="list-group-item bg-transparent"><i class="fas fa-check text-success me-2"></i> No tattoos or piercings within the past 3 months</li>
+                        <li class="list-group-item bg-transparent"><i class="fas fa-check text-success me-2"></i> Have not donated blood in the last 56 days</li>
+                    </ul>
+                    <p>For a complete list of eligibility requirements or to check if you can donate:</p>
+                    <a href="eligibility.html" class="btn btn-danger">Check Your Eligibility</a>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card border-0 shadow">
+                        <div class="card-body p-4">
+                            <h3 class="h4 mb-4">Common Reasons People Cannot Donate</h3>
+                            <div class="d-flex align-items-start mb-3">
+                                <i class="fas fa-exclamation-circle text-danger me-3 mt-1"></i>
+                                <div>
+                                    <h4 class="h6 mb-1">Low Iron Levels</h4>
+                                    <p class="small mb-0">If your hemoglobin level is too low, you may need to wait before donating blood.</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-start mb-3">
+                                <i class="fas fa-exclamation-circle text-danger me-3 mt-1"></i>
+                                <div>
+                                    <h4 class="h6 mb-1">Recent Travel</h4>
+                                    <p class="small mb-0">Travel to certain countries may temporarily disqualify you from donating.</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-start mb-3">
+                                <i class="fas fa-exclamation-circle text-danger me-3 mt-1"></i>
+                                <div>
+                                    <h4 class="h6 mb-1">Certain Medications</h4>
+                                    <p class="small mb-0">Some medications may require a waiting period before donation is possible.</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-start">
+                                <i class="fas fa-exclamation-circle text-danger me-3 mt-1"></i>
+                                <div>
+                                    <h4 class="h6 mb-1">Recent Illness</h4>
+                                    <p class="small mb-0">You should be feeling well and healthy on the day of donation.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Types of Donations Section -->
+    <section id="donation-types" class="py-5">
+        <div class="container">
+            <h2 class="text-center display-5 mb-5">Types of Blood Donations</h2>
+            <div class="row">
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body p-4">
+                            <h3 class="h4 text-danger mb-3">Whole Blood</h3>
+                            <p class="mb-3">The most common type of donation where we collect one pint of whole blood.</p>
+                            <ul class="list-unstyled small">
+                                <li class="mb-2"><strong>Time:</strong> About 1 hour</li>
+                                <li class="mb-2"><strong>Frequency:</strong> Every 56 days</li>
+                                <li><strong>Best For:</strong> All blood types</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body p-4">
+                            <h3 class="h4 text-danger mb-3">Power Red</h3>
+                            <p class="mb-3">Donate red cells only while other blood components are returned to you.</p>
+                            <ul class="list-unstyled small">
+                                <li class="mb-2"><strong>Time:</strong> About 1.5 hours</li>
+                                <li class="mb-2"><strong>Frequency:</strong> Every 112 days</li>
+                                <li><strong>Best For:</strong> Types O, A-, B-</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body p-4">
+                            <h3 class="h4 text-danger mb-3">Platelet</h3>
+                            <p class="mb-3">Donate platelets, which help blood clot and are needed for many medical procedures.</p>
+                            <ul class="list-unstyled small">
+                                <li class="mb-2"><strong>Time:</strong> About 2.5-3 hours</li>
+                                <li class="mb-2"><strong>Frequency:</strong> Every 7 days (up to 24 times/year)</li>
+                                <li><strong>Best For:</strong> Types A, B, AB</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body p-4">
+                            <h3 class="h4 text-danger mb-3">Plasma</h3>
+                            <p class="mb-3">Donate plasma, which helps maintain blood pressure and supplies critical proteins.</p>
+                            <ul class="list-unstyled small">
+                                <li class="mb-2"><strong>Time:</strong> About 1.5 hours</li>
+                                <li class="mb-2"><strong>Frequency:</strong> Every 28 days</li>
+                                <li><strong>Best For:</strong> Types AB, AB+</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Schedule Appointment Section -->
+    <section id="schedule" class="py-5 bg-light">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card shadow border-0">
+                        <div class="card-header bg-danger text-white py-3">
+                            <h2 class="h3 mb-0 text-center">Schedule Your Donation</h2>
+                        </div>
+                        <div class="card-body p-4">
+                            <form id="donationForm">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="donationFirstName" class="form-label">First Name <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="donationFirstName" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="donationLastName" class="form-label">Last Name <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="donationLastName" required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="donationEmail" class="form-label">Email <span class="text-danger">*</span></label>
+                                        <input type="email" class="form-control" id="donationEmail" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="donationPhone" class="form-label">Phone Number <span class="text-danger">*</span></label>
+                                        <input type="tel" class="form-control" id="donationPhone" required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="donationType" class="form-label">Donation Type <span class="text-danger">*</span></label>
+                                        <select class="form-select" id="donationType" required>
+                                            <option value="" selected disabled>Select type</option>
+                                            <option value="whole">Whole Blood</option>
+                                            <option value="power">Power Red</option>
+                                            <option value="platelets">Platelets</option>
+                                            <option value="plasma">Plasma</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="donationDate" class="form-label">Preferred Date <span class="text-danger">*</span></label>
+                                        <input type="date" class="form-control" id="donationDate" required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="donationTime" class="form-label">Preferred Time <span class="text-danger">*</span></label>
+                                        <select class="form-select" id="donationTime" required>
+                                            <option value="" selected disabled>Select time</option>
+                                            <option value="morning">Morning (8:00 AM - 12:00 PM)</option>
+                                            <option value="afternoon">Afternoon (12:00 PM - 4:00 PM)</option>
+                                            <option value="evening">Evening (4:00 PM - 8:00 PM)</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="donationLocation" class="form-label">Preferred Location <span class="text-danger">*</span></label>
+                                        <select class="form-select" id="donationLocation" required>
+                                            <option value="" selected disabled>Select location</option>
+                                            <option value="center1">Main Donation Center</option>
+                                            <option value="center2">Downtown Location</option>
+                                            <option value="center3">West Side Center</option>
+                                            <option value="mobile">Mobile Blood Drive (Check Schedule)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="donationComments" class="form-label">Additional Comments</label>
+                                    <textarea class="form-control" id="donationComments" rows="3"></textarea>
+                                </div>
+                                <div class="form-check mb-4">
+                                    <input class="form-check-input" type="checkbox" id="firstTimeDonor">
+                                    <label class="form-check-label" for="firstTimeDonor">
+                                        This is my first time donating
+                                    </label>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-danger btn-lg">Schedule Appointment</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center display-5 mb-5">Frequently Asked Questions</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="accordion" id="donationFAQ">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Does it hurt to give blood?
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#donationFAQ">
+                                <div class="accordion-body">
+                                    Most donors report only a brief pinch when the needle is inserted. Throughout the donation process, you should experience minimal discomfort. Our trained staff is skilled at ensuring your donation experience is as comfortable as possible.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    How long does it take to donate blood?
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#donationFAQ">
+                                <div class="accordion-body">
+                                    The entire process takes about one hour from start to finish. The actual blood donation typically takes 8-10 minutes, but you should allow for registration, health history, mini-physical, and refreshment time after donation.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingThree">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    How much blood is taken?
+                                </button>
+                            </h2>
+                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#donationFAQ">
+                                <div class="accordion-body">
+                                    For a whole blood donation, approximately one pint (about 500 ml) is collected. The average adult has between 8-12 pints of blood in their body, so one pint is only a small portion. Your body replaces the fluid in hours and the red blood cells within weeks.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingFour">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                    Can I donate if I've recently had a tattoo or piercing?
+                                </button>
+                            </h2>
+                            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#donationFAQ">
+                                <div class="accordion-body">
+                                    In most states, you must wait 3 months after getting a tattoo or piercing before donating blood if the procedure was done in a state-regulated facility with sterile needles. If the tattoo or piercing was done in a non-regulated facility, a 3-month waiting period is required.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingFive">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                    What should I do before and after donating?
+                                </button>
+                            </h2>
+                            <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#donationFAQ">
+                                <div class="accordion-body">
+                                    <strong>Before donating:</strong> Eat a healthy meal, drink plenty of fluids, and get a good night's sleep. Avoid fatty foods before donating as they can affect blood tests.
+                                    <br><br>
+                                    <strong>After donating:</strong> Drink extra fluids, avoid strenuous activity for 12 hours, keep the bandage on for at least 4 hours, and eat a healthy meal. If you feel dizzy, lie down with your feet elevated.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 mb-4 mb-md-0">
+                    <h5>About Us</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white-50">Our Mission</a></li>
+                        <li><a href="#" class="text-white-50">History</a></li>
+                        <li><a href="#" class="text-white-50">Leadership</a></li>
+                        <li><a href="#" class="text-white-50">Financials</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4 mb-md-0">
+                    <h5>Donate Blood</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white-50">Eligibility Requirements</a></li>
+                        <li><a href="#" class="text-white-50">Types of Donations</a></li>
+                        <li><a href="#" class="text-white-50">What to Expect</a></li>
+                        <li><a href="#" class="text-white-50">Find a Drive</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4 mb-md-0">
+                    <h5>Host a Drive</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white-50">Requirements</a></li>
+                        <li><a href="#" class="text-white-50">Benefits</a></li>
+                        <li><a href="#" class="text-white-50">Success Stories</a></li>
+                        <li><a href="#" class="text-white-50">Apply Now</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Connect With Us</h5>
+                    <div class="mb-2">
+                        <a href="#" class="text-white me-2"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-youtube"></i></a>
+                    </div>
+                    <p class="small text-white-50">Sign up for our newsletter to stay informed about blood donation news and opportunities.</p>
+                    <div class="input-group">
+                        <input type="email" class="form-control form-control-sm" placeholder="Your email">
+                        <button class="btn btn-danger btn-sm" type="button">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4 bg-secondary">
+            <div class="row">
+                <div class="col-md-6 small text-white-50">
+                    &copy; 2023 Blood Donation Support System. All rights reserved.
+                </div>
+                <div class="col-md-6 text-md-end small">
+                    <a href="#" class="text-white-50 me-3">Privacy Policy</a>
+                    <a href="#" class="text-white-50 me-3">Terms of Service</a>
+                    <a href="#" class="text-white-50">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap & JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/language.js"></script>
+    <script>
+        // Form submission for donation appointment
+        document.getElementById('donationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Collect form data
+            const formData = {
+                firstName: document.getElementById('donationFirstName').value,
+                lastName: document.getElementById('donationLastName').value,
+                email: document.getElementById('donationEmail').value,
+                phone: document.getElementById('donationPhone').value,
+                donationType: document.getElementById('donationType').value,
+                date: document.getElementById('donationDate').value,
+                time: document.getElementById('donationTime').value,
+                location: document.getElementById('donationLocation').value,
+                comments: document.getElementById('donationComments').value,
+                firstTime: document.getElementById('firstTimeDonor').checked
+            };
+            
+            // Here you would normally send the data to your server
+            console.log('Donation appointment data:', formData);
+            
+            // For demo purposes, simulate successful submission
+            alert('Thank you! Your donation appointment has been scheduled. We will send a confirmation email shortly.');
+            
+            // Reset the form
+            this.reset();
+        });
+    </script>
+</body>
+</html> 
