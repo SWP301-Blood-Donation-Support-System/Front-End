@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const languageToggle = document.getElementById('languageToggle');
     
     // Check if there's a saved language preference
-    let currentLang = localStorage.getItem('language') || 'en';
+    let currentLang = localStorage.getItem('language') || 'vi';
     
     // Set initial state based on saved preference
     if (currentLang === 'vi') {
