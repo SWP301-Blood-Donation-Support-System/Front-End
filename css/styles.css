@@ -79,6 +79,16 @@ body {
     border-color: var(--primary-dark) !important;
 }
 
+/* Ensure consistent red background color */
+.bg-danger {
+    background-color: var(--primary) !important;
+}
+
+/* Ensure consistent red text color */
+.text-danger {
+    color: var(--primary) !important;
+}
+
 .btn-outline-danger {
     color: var(--primary);
     border-color: var(--primary);
@@ -114,6 +124,10 @@ footer a:hover {
     border-bottom: none;
 }
 
+.modal-header.bg-danger {
+    background-color: var(--primary) !important;
+}
+
 .modal-footer {
     border-top: none;
 }
@@ -130,6 +144,11 @@ footer a:hover {
     font-weight: 600;
     padding: 0.35em 0.65em;
     border-radius: 0.5rem;
+}
+
+/* Ensure badges use the same red color */
+.badge.bg-danger {
+    background-color: var(--primary) !important;
 }
 
 /* Animated Elements */
