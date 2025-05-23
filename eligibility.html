@@ -158,9 +158,9 @@
 
                     <div class="card mb-4">
                         <div class="card-body">
-                            <h3 class="h5">Eligibility Questionnaire</h3>
-                            <p>Not sure if you're eligible? Take our quick questionnaire to find out.</p>
-                            <button type="button" class="btn btn-outline-danger w-100" data-bs-toggle="modal" data-bs-target="#eligibilityModal">Check Eligibility</button>
+                            <h3 class="h5">Bảng Câu Hỏi Kiểm Tra Điều Kiện</h3>
+                            <p>Không chắc chắn về điều kiện của bạn? Hãy làm bảng câu hỏi nhanh để tìm hiểu.</p>
+                            <button type="button" class="btn btn-outline-danger w-100" data-bs-toggle="modal" data-bs-target="#eligibilityModal">Kiểm Tra Điều Kiện</button>
                         </div>
                     </div>
 
@@ -182,109 +182,109 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title" id="eligibilityModalLabel">Blood Donation Eligibility Check</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title" id="eligibilityModalLabel">Kiểm Tra Điều Kiện Hiến Máu</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Đóng"></button>
                 </div>
                 <div class="modal-body">
                     <form id="eligibilityForm">
                         <div class="mb-4">
-                            <h6 class="fw-bold">Basic Information</h6>
+                            <h6 class="fw-bold">Thông Tin Cơ Bản</h6>
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="age" class="form-label">What is your age?</label>
+                                    <label for="age" class="form-label">Tuổi của bạn là bao nhiêu?</label>
                                     <input type="number" class="form-control" id="age" min="1" max="120" required>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="weight" class="form-label">What is your weight (in pounds)?</label>
-                                    <input type="number" class="form-control" id="weight" min="50" max="500" required>
+                                    <label for="weight" class="form-label">Cân nặng của bạn là bao nhiêu (kg)?</label>
+                                    <input type="number" class="form-control" id="weight" min="30" max="200" required>
                                 </div>
                             </div>
                         </div>
 
                         <div class="mb-4">
-                            <h6 class="fw-bold">Health Questions</h6>
+                            <h6 class="fw-bold">Câu Hỏi Về Sức Khỏe</h6>
                             
                             <div class="mb-3">
-                                <label class="form-label">Are you feeling well today?</label>
+                                <label class="form-label">Hôm nay bạn có cảm thấy khỏe mạnh không?</label>
                                 <div>
                                     <input type="radio" class="form-check-input" id="feeling_well_yes" name="feeling_well" value="yes" required>
-                                    <label class="form-check-label me-3" for="feeling_well_yes">Yes</label>
+                                    <label class="form-check-label me-3" for="feeling_well_yes">Có</label>
                                     <input type="radio" class="form-check-input" id="feeling_well_no" name="feeling_well" value="no" required>
-                                    <label class="form-check-label" for="feeling_well_no">No</label>
+                                    <label class="form-check-label" for="feeling_well_no">Không</label>
                                 </div>
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">Have you donated blood in the last 8 weeks?</label>
+                                <label class="form-label">Bạn có hiến máu trong 8 tuần qua không?</label>
                                 <div>
                                     <input type="radio" class="form-check-input" id="recent_donation_yes" name="recent_donation" value="yes" required>
-                                    <label class="form-check-label me-3" for="recent_donation_yes">Yes</label>
+                                    <label class="form-check-label me-3" for="recent_donation_yes">Có</label>
                                     <input type="radio" class="form-check-input" id="recent_donation_no" name="recent_donation" value="no" required>
-                                    <label class="form-check-label" for="recent_donation_no">No</label>
+                                    <label class="form-check-label" for="recent_donation_no">Không</label>
                                 </div>
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">Are you currently taking any antibiotics?</label>
+                                <label class="form-label">Hiện tại bạn có đang dùng kháng sinh không?</label>
                                 <div>
                                     <input type="radio" class="form-check-input" id="antibiotics_yes" name="antibiotics" value="yes" required>
-                                    <label class="form-check-label me-3" for="antibiotics_yes">Yes</label>
+                                    <label class="form-check-label me-3" for="antibiotics_yes">Có</label>
                                     <input type="radio" class="form-check-input" id="antibiotics_no" name="antibiotics" value="no" required>
-                                    <label class="form-check-label" for="antibiotics_no">No</label>
+                                    <label class="form-check-label" for="antibiotics_no">Không</label>
                                 </div>
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">Have you had any dental work in the past 3 days?</label>
+                                <label class="form-label">Bạn có làm răng trong 3 ngày qua không?</label>
                                 <div>
                                     <input type="radio" class="form-check-input" id="dental_work_yes" name="dental_work" value="yes" required>
-                                    <label class="form-check-label me-3" for="dental_work_yes">Yes</label>
+                                    <label class="form-check-label me-3" for="dental_work_yes">Có</label>
                                     <input type="radio" class="form-check-input" id="dental_work_no" name="dental_work" value="no" required>
-                                    <label class="form-check-label" for="dental_work_no">No</label>
+                                    <label class="form-check-label" for="dental_work_no">Không</label>
                                 </div>
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">Have you gotten a tattoo or piercing in the past 3 months?</label>
+                                <label class="form-label">Bạn có xăm hình hoặc xỏ khuyên trong 3 tháng qua không?</label>
                                 <div>
                                     <input type="radio" class="form-check-input" id="tattoo_piercing_yes" name="tattoo_piercing" value="yes" required>
-                                    <label class="form-check-label me-3" for="tattoo_piercing_yes">Yes</label>
+                                    <label class="form-check-label me-3" for="tattoo_piercing_yes">Có</label>
                                     <input type="radio" class="form-check-input" id="tattoo_piercing_no" name="tattoo_piercing" value="no" required>
-                                    <label class="form-check-label" for="tattoo_piercing_no">No</label>
+                                    <label class="form-check-label" for="tattoo_piercing_no">Không</label>
                                 </div>
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">Have you traveled outside the United States in the past 3 months?</label>
+                                <label class="form-label">Bạn có đi du lịch nước ngoài trong 3 tháng qua không?</label>
                                 <div>
                                     <input type="radio" class="form-check-input" id="travel_yes" name="travel" value="yes" required>
-                                    <label class="form-check-label me-3" for="travel_yes">Yes</label>
+                                    <label class="form-check-label me-3" for="travel_yes">Có</label>
                                     <input type="radio" class="form-check-input" id="travel_no" name="travel" value="no" required>
-                                    <label class="form-check-label" for="travel_no">No</label>
+                                    <label class="form-check-label" for="travel_no">Không</label>
                                 </div>
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">Do you have any of the following conditions? (Check all that apply)</label>
+                                <label class="form-label">Bạn có bất kỳ tình trạng bệnh lý nào sau đây không? (Chọn tất cả các mục phù hợp)</label>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" id="condition_heart" name="conditions" value="heart">
-                                            <label class="form-check-label" for="condition_heart">Heart disease</label>
+                                            <label class="form-check-label" for="condition_heart">Bệnh tim</label>
                                         </div>
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" id="condition_diabetes" name="conditions" value="diabetes">
-                                            <label class="form-check-label" for="condition_diabetes">Uncontrolled diabetes</label>
+                                            <label class="form-check-label" for="condition_diabetes">Tiểu đường không kiểm soát được</label>
                                         </div>
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" id="condition_cancer" name="conditions" value="cancer">
-                                            <label class="form-check-label" for="condition_cancer">Cancer</label>
+                                            <label class="form-check-label" for="condition_cancer">Ung thư</label>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" id="condition_hepatitis" name="conditions" value="hepatitis">
-                                            <label class="form-check-label" for="condition_hepatitis">Hepatitis B or C</label>
+                                            <label class="form-check-label" for="condition_hepatitis">Viêm gan B hoặc C</label>
                                         </div>
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" id="condition_hiv" name="conditions" value="hiv">
@@ -292,7 +292,7 @@
                                         </div>
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" id="condition_none" name="conditions" value="none">
-                                            <label class="form-check-label" for="condition_none">None of the above</label>
+                                            <label class="form-check-label" for="condition_none">Không có bệnh lý nào ở trên</label>
                                         </div>
                                     </div>
                                 </div>
@@ -300,28 +300,28 @@
                         </div>
 
                         <div class="d-grid">
-                            <button type="submit" class="btn btn-danger btn-lg">Check My Eligibility</button>
+                            <button type="submit" class="btn btn-danger btn-lg">Kiểm Tra Điều Kiện Của Tôi</button>
                         </div>
                     </form>
 
                     <!-- Results Section (hidden initially) -->
                     <div id="eligibilityResults" class="mt-4" style="display: none;">
                         <div id="eligibleResult" class="alert alert-success" style="display: none;">
-                            <h5><i class="fas fa-check-circle me-2"></i>Great! You appear to be eligible to donate blood.</h5>
-                            <p>Based on your responses, you meet the basic eligibility requirements. Please note that final eligibility will be determined by a health professional during your appointment.</p>
-                            <a href="donate.html" class="btn btn-success">Schedule Your Donation</a>
+                            <h5><i class="fas fa-check-circle me-2"></i>Tuyệt vời! Bạn có thể đủ điều kiện hiến máu.</h5>
+                            <p>Dựa trên câu trả lời của bạn, bạn đáp ứng các yêu cầu điều kiện cơ bản. Lưu ý rằng việc xác định điều kiện cuối cùng sẽ do chuyên gia y tế thực hiện trong buổi hẹn của bạn.</p>
+                            <a href="donate.html" class="btn btn-success">Đặt Lịch Hiến Máu</a>
                         </div>
                         
                         <div id="ineligibleResult" class="alert alert-warning" style="display: none;">
-                            <h5><i class="fas fa-exclamation-triangle me-2"></i>You may not be eligible at this time.</h5>
+                            <h5><i class="fas fa-exclamation-triangle me-2"></i>Hiện tại bạn có thể chưa đủ điều kiện.</h5>
                             <p id="ineligibleReason"></p>
-                            <p>We recommend contacting our staff for more specific guidance about your situation.</p>
-                            <p><strong>Phone:</strong> 1-800-RED-CROSS</p>
+                            <p>Chúng tôi khuyên bạn nên liên hệ với nhân viên của chúng tôi để được hướng dẫn cụ thể hơn về tình trạng của bạn.</p>
+                            <p><strong>Điện thoại:</strong> 1-800-RED-CROSS</p>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                 </div>
             </div>
         </div>
