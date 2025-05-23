@@ -1,21 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up - Blood Donation Support System</title>
+    <title>Đăng Ký - Hệ Thống Hỗ Trợ Hiến Máu</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/styles.css">
 </head>
-<body>
-    <!-- Header Navigation -->
+<body>    <!-- Header Navigation -->
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
                 <a class="navbar-brand" href="index.html">
-                    <img src="images/logo.svg" alt="Blood Donation Logo" height="50">
-                    <span class="ms-2">Blood Services</span>
+                    <img src="images/logo.svg" alt="Logo Hiến Máu" height="50">
+                    <span class="ms-2">Dịch Vụ Máu</span>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
@@ -23,76 +22,70 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav mx-auto">
                         <li class="nav-item me-4">
-                            <a class="nav-link fs-6" href="donate.html">Donate Blood</a>
+                            <a class="nav-link fs-6" href="donate.html">Hiến Máu</a>
                         </li>
                         <li class="nav-item me-4">
-                            <a class="nav-link fs-6" href="eligibility.html">Check Eligibility</a>
+                            <a class="nav-link fs-6" href="eligibility.html">Kiểm Tra Đủ Điều Kiện</a>
                         </li>
                         <li class="nav-item me-4">
-                            <a class="nav-link fs-6" href="index.html#host">News</a>
+                            <a class="nav-link fs-6" href="index.html#host">Tin Tức</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link fs-6" href="faq.html">FAQ</a>
+                            <a class="nav-link fs-6" href="faq.html">Hỏi Đáp</a>
                         </li>
                     </ul>
                     <div class="d-flex">
-                        <a href="login.html" class="btn btn-outline-secondary me-2">Sign In</a>
-                        <a href="find-drive.html" class="btn btn-danger">Find a Blood Drive</a>
-                        <button id="languageToggle" class="btn btn-outline-secondary ms-2">
-                            <i class="fas fa-globe me-1"></i>
-                            <span class="language-text">Tiếng Việt</span>
-                        </button>
+                        <a href="login.html" class="btn btn-outline-secondary me-2">Đăng Nhập</a>
+                        <a href="find-drive.html" class="btn btn-danger">Tìm Điểm Hiến Máu</a>
                     </div>
                 </div>
             </div>
         </nav>
-    </header>
-
-    <!-- Sign Up Section -->
+    </header>    <!-- Sign Up Section -->
     <section class="py-5">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-8 col-lg-6">
                     <div class="card shadow">
                         <div class="card-body p-5">
-                            <h2 class="text-center mb-4">Create Your Account</h2>
-                            <p class="text-center text-muted mb-4">Join our community and make a difference by donating blood.</p>
+                            <h2 class="text-center mb-4">Tạo Tài Khoản Của Bạn</h2>
+                            <p class="text-center text-muted mb-4">Tham gia cộng đồng của chúng tôi và tạo sự khác biệt bằng cách hiến máu.</p>
                             
                             <form id="signupForm">
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
-                                        <label for="firstName" class="form-label">First Name <span class="text-danger">*</span></label>
+                                        <label for="firstName" class="form-label">Tên <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" id="firstName" required>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label for="lastName" class="form-label">Last Name <span class="text-danger">*</span></label>
+                                        <label for="lastName" class="form-label">Họ <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" id="lastName" required>
                                     </div>
                                 </div>
                                 
                                 <div class="mb-3">
-                                    <label for="email" class="form-label">Email Address <span class="text-danger">*</span></label>
+                                    <label for="email" class="form-label">Địa Chỉ Email <span class="text-danger">*</span></label>
                                     <input type="email" class="form-control" id="email" required>
                                 </div>
                                 
                                 <div class="mb-3">
-                                    <label for="phone" class="form-label">Phone Number</label>
+                                    <label for="phone" class="form-label">Số Điện Thoại</label>
                                     <input type="tel" class="form-control" id="phone">
                                 </div>
                                 
                                 <div class="mb-3">
-                                    <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+                                    <label for="password" class="form-label">Mật Khẩu <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <input type="password" class="form-control" id="password" required>
                                         <button class="btn btn-outline-secondary" type="button" id="togglePassword">
                                             <i class="fa fa-eye" id="passwordEyeIcon"></i>
                                         </button>
                                     </div>
-                                    <div class="form-text">Password must be at least 8 characters long and include a number and special character.</div>
+                                    <div class="form-text">Mật khẩu phải có ít nhất 8 ký tự và bao gồm một số và ký tự đặc biệt.</div>
                                 </div>
                                 
                                 <div class="mb-3">
-                                    <label for="confirmPassword" class="form-label">Confirm Password <span class="text-danger">*</span></label>
+                                    <label for="confirmPassword" class="form-label">Xác Nhận Mật Khẩu <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <input type="password" class="form-control" id="confirmPassword" required>
                                         <button class="btn btn-outline-secondary" type="button" id="toggleConfirmPassword">
@@ -100,16 +93,15 @@
                                         </button>
                                     </div>
                                 </div>
-                                
-                                <div class="mb-3">
-                                    <label for="dateOfBirth" class="form-label">Date of Birth <span class="text-danger">*</span></label>
+                                  <div class="mb-3">
+                                    <label for="dateOfBirth" class="form-label">Ngày Sinh <span class="text-danger">*</span></label>
                                     <input type="date" class="form-control" id="dateOfBirth" required>
                                 </div>
                                 
                                 <div class="mb-3">
-                                    <label for="bloodType" class="form-label">Blood Type (if known)</label>
+                                    <label for="bloodType" class="form-label">Nhóm Máu (nếu biết)</label>
                                     <select class="form-select" id="bloodType">
-                                        <option value="" selected>I don't know</option>
+                                        <option value="" selected>Tôi không biết</option>
                                         <option value="A+">A+</option>
                                         <option value="A-">A-</option>
                                         <option value="B+">B+</option>
@@ -122,77 +114,75 @@
                                 </div>
                                 
                                 <div class="mb-3">
-                                    <label class="form-label">Interested in</label>
+                                    <label class="form-label">Quan tâm đến</label>
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" id="donateBlood">
-                                        <label class="form-check-label" for="donateBlood">Donating Blood</label>
+                                        <label class="form-check-label" for="donateBlood">Hiến Máu</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" id="volunteer">
-                                        <label class="form-check-label" for="volunteer">Volunteering</label>
+                                        <label class="form-check-label" for="volunteer">Tình Nguyện Viên</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" id="hostDrive">
-                                        <label class="form-check-label" for="hostDrive">Hosting a Blood Drive</label>
+                                        <label class="form-check-label" for="hostDrive">Tổ Chức Chương Trình Hiến Máu</label>
                                     </div>
                                 </div>
                                 
                                 <div class="mb-4 form-check">
                                     <input type="checkbox" class="form-check-input" id="agreeTerms" required>
                                     <label class="form-check-label" for="agreeTerms">
-                                        I agree to the <a href="#" class="text-danger">Terms of Service</a> and <a href="#" class="text-danger">Privacy Policy</a>
+                                        Tôi đồng ý với <a href="#" class="text-danger">Điều Khoản Dịch Vụ</a> và <a href="#" class="text-danger">Chính Sách Bảo Mật</a>
                                     </label>
                                 </div>
                                 
                                 <div class="d-grid">
-                                    <button type="submit" class="btn btn-danger btn-lg">Create Account</button>
+                                    <button type="submit" class="btn btn-danger btn-lg">Tạo Tài Khoản</button>
                                 </div>
                             </form>
                             
                             <hr class="my-4">
                             <div class="text-center">
-                                <p>Already have an account? <a href="login.html" class="text-danger">Sign In</a></p>
+                                <p>Đã có tài khoản? <a href="login.html" class="text-danger">Đăng Nhập</a></p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- Footer -->
+    </section>    <!-- Footer -->
     <footer class="bg-dark text-white py-4 mt-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-3 mb-4 mb-md-0">
-                    <h5>About Us</h5>
+                    <h5>Về Chúng Tôi</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-white-50">Our Mission</a></li>
-                        <li><a href="#" class="text-white-50">History</a></li>
-                        <li><a href="#" class="text-white-50">Leadership</a></li>
-                        <li><a href="#" class="text-white-50">Financials</a></li>
+                        <li><a href="#" class="text-white-50">Sứ Mệnh</a></li>
+                        <li><a href="#" class="text-white-50">Lịch Sử</a></li>
+                        <li><a href="#" class="text-white-50">Ban Lãnh Đạo</a></li>
+                        <li><a href="#" class="text-white-50">Tài Chính</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3 mb-4 mb-md-0">
-                    <h5>Donate Blood</h5>
+                    <h5>Hiến Máu</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-white-50">Eligibility Requirements</a></li>
-                        <li><a href="#" class="text-white-50">Types of Donations</a></li>
-                        <li><a href="#" class="text-white-50">What to Expect</a></li>
-                        <li><a href="#" class="text-white-50">Find a Drive</a></li>
+                        <li><a href="#" class="text-white-50">Yêu Cầu Về Điều Kiện</a></li>
+                        <li><a href="#" class="text-white-50">Các Loại Hiến Tặng</a></li>
+                        <li><a href="#" class="text-white-50">Những Điều Cần Biết</a></li>
+                        <li><a href="#" class="text-white-50">Tìm Điểm Hiến Máu</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3 mb-4 mb-md-0">
-                    <h5>Blood Services</h5>
+                    <h5>Dịch Vụ Máu</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-white-50">Blood Testing</a></li>
-                        <li><a href="#" class="text-white-50">Plasma Services</a></li>
-                        <li><a href="#" class="text-white-50">Emergency Blood</a></li>
-                        <li><a href="#" class="text-white-50">Medical Support</a></li>
+                        <li><a href="#" class="text-white-50">Xét Nghiệm Máu</a></li>
+                        <li><a href="#" class="text-white-50">Dịch Vụ Huyết Tương</a></li>
+                        <li><a href="#" class="text-white-50">Máu Khẩn Cấp</a></li>
+                        <li><a href="#" class="text-white-50">Hỗ Trợ Y Tế</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3">
-                    <h5>Follow Us</h5>
+                    <h5>Theo Dõi Chúng Tôi</h5>
                     <div class="d-flex gap-3 fs-4">
                         <a href="#" class="text-white-50"><i class="fab fa-facebook"></i></a>
                         <a href="#" class="text-white-50"><i class="fab fa-twitter"></i></a>
@@ -204,20 +194,16 @@
             <hr class="my-4 bg-light">
             <div class="row">
                 <div class="col-md-6 mb-3 mb-md-0">
-                    <p class="mb-0 text-white-50">&copy; 2023 Blood Services. All rights reserved.</p>
+                    <p class="mb-0 text-white-50">&copy; 2023 Dịch Vụ Máu. Đã đăng ký bản quyền.</p>
                 </div>
                 <div class="col-md-6 text-md-end">
-                    <a href="#" class="text-white-50 me-3">Privacy Policy</a>
-                    <a href="#" class="text-white-50 me-3">Terms of Service</a>
-                    <a href="#" class="text-white-50">Accessibility</a>
+                    <a href="#" class="text-white-50 me-3">Chính Sách Bảo Mật</a>
+                    <a href="#" class="text-white-50 me-3">Điều Khoản Dịch Vụ</a>
+                    <a href="#" class="text-white-50">Khả Năng Truy Cập</a>
                 </div>
             </div>
-        </div>
-    </footer>
-
-    <!-- JavaScript -->
+        </div>    </footer>    <!-- JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/language.js"></script>
     <script>
         // Toggle password visibility
         document.getElementById('togglePassword').addEventListener('click', function() {
@@ -256,25 +242,24 @@
             
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
-            
-            // Password validation
+              // Password validation
             if (password.length < 8) {
-                alert('Password must be at least 8 characters long.');
+                alert('Mật khẩu phải có ít nhất 8 ký tự.');
                 return;
             }
             
             if (!/[0-9]/.test(password)) {
-                alert('Password must include at least one number.');
+                alert('Mật khẩu phải bao gồm ít nhất một số.');
                 return;
             }
             
             if (!/[!@#$%^&*]/.test(password)) {
-                alert('Password must include at least one special character (!@#$%^&*).');
+                alert('Mật khẩu phải bao gồm ít nhất một ký tự đặc biệt (!@#$%^&*).');
                 return;
             }
             
             if (password !== confirmPassword) {
-                alert('Passwords do not match.');
+                alert('Mật khẩu không khớp.');
                 return;
             }
             
@@ -296,9 +281,8 @@
             
             // Here you would normally send the data to your server
             console.log('Registration data:', formData);
-            
-            // For demo purposes, simulate successful registration
-            alert('Account created successfully! You can now log in.');
+              // For demo purposes, simulate successful registration
+            alert('Tài khoản đã được tạo thành công! Bạn có thể đăng nhập ngay bây giờ.');
             window.location.href = 'login.html';
         });
     </script>

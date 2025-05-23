@@ -1,20 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Find a Blood Drive - Blood Donation Support System</title>
+    <title>Tìm Điểm Hiến Máu - Hệ Thống Hỗ Trợ Hiến Máu</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/styles.css">
 </head>
-<body>
-    <!-- Header Navigation -->
+<body>    <!-- Header Navigation -->
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
                 <a class="navbar-brand" href="index.html">
-                    <img src="images/logo.svg" alt="Blood Donation Logo" height="50">
+                    <img src="images/logo.svg" alt="Logo Hiến Máu" height="50">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
@@ -22,21 +21,21 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav mx-auto">
                         <li class="nav-item me-4">
-                            <a class="nav-link fs-6" href="donate.html">Donate Blood</a>
+                            <a class="nav-link fs-6" href="donate.html">Hiến Máu</a>
                         </li>
                         <li class="nav-item me-4">
-                            <a class="nav-link fs-6" href="eligibility.html">Check Eligibility</a>
+                            <a class="nav-link fs-6" href="eligibility.html">Kiểm Tra Đủ Điều Kiện</a>
                         </li>
                         <li class="nav-item me-4">
-                            <a class="nav-link fs-6" href="index.html#host">News</a>
+                            <a class="nav-link fs-6" href="index.html#host">Tin Tức</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link fs-6" href="faq.html">FAQ</a>
+                            <a class="nav-link fs-6" href="faq.html">Hỏi Đáp</a>
                         </li>
                     </ul>
                     <div class="d-flex">
-                        <a href="login.html" class="btn btn-outline-secondary me-2">Sign In</a>
-                        <a href="find-drive.html" class="btn btn-danger active">Find a Blood Drive</a>
+                        <a href="login.html" class="btn btn-outline-secondary me-2">Đăng Nhập</a>
+                        <a href="find-drive.html" class="btn btn-danger active">Tìm Điểm Hiến Máu</a>
                     </div>
                 </div>
             </div>
@@ -46,41 +45,39 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6">
-                    <h1 class="display-4 fw-bold">Find a Blood Drive Near You</h1>
-                    <p class="fs-5 mt-3">Enter your location to find blood drives in your area. Your donation can help save up to 3 lives.</p>
+                    <h1 class="display-4 fw-bold">Tìm Điểm Hiến Máu Gần Bạn</h1>
+                    <p class="fs-5 mt-3">Nhập vị trí của bạn để tìm điểm hiến máu trong khu vực. Sự đóng góp của bạn có thể giúp cứu sống tới 3 người.</p>
                     <form id="searchForm" class="mt-4">
                         <div class="row g-2">
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="zipCode" placeholder="Enter ZIP code">
-                                    <label for="zipCode">ZIP Code</label>
+                                    <input type="text" class="form-control" id="zipCode" placeholder="Nhập mã bưu điện">
+                                    <label for="zipCode">Mã Bưu Điện</label>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-floating">
                                     <select class="form-select" id="radius">
-                                        <option value="5">5 miles</option>
-                                        <option value="10" selected>10 miles</option>
-                                        <option value="25">25 miles</option>
-                                        <option value="50">50 miles</option>
+                                        <option value="5">5 km</option>
+                                        <option value="10" selected>10 km</option>
+                                        <option value="25">25 km</option>
+                                        <option value="50">50 km</option>
                                     </select>
-                                    <label for="radius">Radius</label>
+                                    <label for="radius">Bán Kính</label>
                                 </div>
                             </div>
                             <div class="col-md-2">
-                                <button type="submit" class="btn btn-light h-100 w-100">Search</button>
+                                <button type="submit" class="btn btn-light h-100 w-100">Tìm Kiếm</button>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="col-lg-6 text-center mt-4 mt-lg-0">
-                    <img src="images/blood-drive-mobile.jpg" class="img-fluid rounded" alt="Mobile Blood Drive">
+                    <img src="images/blood-drive-mobile.jpg" class="img-fluid rounded" alt="Điểm Hiến Máu Lưu Động">
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- Drive Map Section -->
+    </section>    <!-- Drive Map Section -->
     <section class="py-5">
         <div class="container">
             <div class="row">
@@ -92,8 +89,8 @@
                                 <div class="d-flex justify-content-center align-items-center h-100">
                                     <div>
                                         <i class="fas fa-map-marker-alt text-danger fs-1 mb-3"></i>
-                                        <h4>Blood Drive Map</h4>
-                                        <p class="text-muted">Enter your location to see blood drives on the map</p>
+                                        <h4>Bản Đồ Điểm Hiến Máu</h4>
+                                        <p class="text-muted">Nhập vị trí của bạn để xem các điểm hiến máu trên bản đồ</p>
                                     </div>
                                 </div>
                             </div>
@@ -104,12 +101,12 @@
                     
                     <!-- Blood Drive Results -->
                     <div id="searchResults">
-                        <h2 class="h4 mb-4">Nearby Blood Drives</h2>
+                        <h2 class="h4 mb-4">Điểm Hiến Máu Gần Đây</h2>
                         
                         <div class="alert alert-info d-flex align-items-center" id="noResultsMessage">
                             <i class="fas fa-info-circle me-3 fs-4"></i>
                             <div>
-                                Enter your ZIP code to find blood drives in your area.
+                                Nhập mã bưu điện của bạn để tìm các điểm hiến máu trong khu vực.
                             </div>
                         </div>
                         
@@ -118,17 +115,16 @@
                         </div>
                     </div>
                 </div>
-                
-                <div class="col-lg-4">
+                  <div class="col-lg-4">
                     <!-- Search Filters -->
                     <div class="card shadow-sm mb-4">
                         <div class="card-header bg-light">
-                            <h3 class="h5 mb-0">Filter Results</h3>
+                            <h3 class="h5 mb-0">Lọc Kết Quả</h3>
                         </div>
                         <div class="card-body">
                             <form id="filterForm">
                                 <div class="mb-3">
-                                    <label class="form-label">Date Range</label>
+                                    <label class="form-label">Khoảng Thời Gian</label>
                                     <div class="row g-2">
                                         <div class="col-6">
                                             <input type="date" class="form-control" id="startDate">
@@ -140,30 +136,29 @@
                                 </div>
                                 
                                 <div class="mb-3">
-                                    <label class="form-label">Time of Day</label>
+                                    <label class="form-label">Thời Gian Trong Ngày</label>
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" id="morningFilter" checked>
-                                        <label class="form-check-label" for="morningFilter">Morning (8AM-12PM)</label>
+                                        <label class="form-check-label" for="morningFilter">Sáng (8:00-12:00)</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" id="afternoonFilter" checked>
-                                        <label class="form-check-label" for="afternoonFilter">Afternoon (12PM-5PM)</label>
-                                    </div>
-                                    <div class="form-check">
+                                        <label class="form-check-label" for="afternoonFilter">Chiều (12:00-17:00)</label>
+                                    </div>                                    <div class="form-check">
                                         <input class="form-check-input" type="checkbox" id="eveningFilter" checked>
-                                        <label class="form-check-label" for="eveningFilter">Evening (5PM-8PM)</label>
+                                        <label class="form-check-label" for="eveningFilter">Tối (17:00-20:00)</label>
                                     </div>
                                 </div>
                                 
                                 <div class="mb-3">
-                                    <label class="form-label">Location Type</label>
+                                    <label class="form-label">Loại Địa Điểm</label>
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" id="centerFilter" checked>
-                                        <label class="form-check-label" for="centerFilter">Donation Centers</label>
+                                        <label class="form-check-label" for="centerFilter">Trung Tâm Hiến Máu</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" id="mobileFilter" checked>
-                                        <label class="form-check-label" for="mobileFilter">Mobile Blood Drives</label>
+                                        <label class="form-check-label" for="mobileFilter">Điểm Hiến Máu Lưu Động</label>
                                     </div>
                                 </div>
                                 
@@ -173,41 +168,39 @@
                             </form>
                         </div>
                     </div>
-                    
-                    <!-- Informational Card -->
+                      <!-- Informational Card -->
                     <div class="card shadow-sm border-danger">
                         <div class="card-body">
-                            <h4 class="card-title text-danger">Blood Donation Tips</h4>
+                            <h4 class="card-title text-danger">Mẹo Khi Hiến Máu</h4>
                             <ul class="list-unstyled">
-                                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Drink plenty of water before donating</li>
-                                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Eat a healthy meal before your appointment</li>
-                                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Bring your ID and donor card if you have one</li>
-                                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Wear a shirt with sleeves that can be rolled up</li>
+                                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Uống nhiều nước trước khi hiến máu</li>
+                                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Ăn bữa ăn lành mạnh trước cuộc hẹn</li>
+                                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Mang theo CMND/CCCD và thẻ hiến máu nếu có</li>
+                                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Mặc áo có tay áo có thể xắn lên được</li>
                             </ul>
-                            <a href="donate.html" class="btn btn-outline-danger w-100 mt-2">Learn More About Donating</a>
+                            <a href="donate.html" class="btn btn-outline-danger w-100 mt-2">Tìm Hiểu Thêm Về Hiến Máu</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    
-    <!-- Featured Drives Section -->
+      <!-- Featured Drives Section -->
     <section class="py-5 bg-light">
         <div class="container">
-            <h2 class="display-6 mb-4">Featured Blood Drives</h2>
+            <h2 class="display-6 mb-4">Điểm Hiến Máu Nổi Bật</h2>
             <div class="row">
                 <div class="col-md-6 col-lg-4 mb-4">
                     <div class="card h-100 shadow-sm">
                         <div class="card-body">
-                            <span class="badge bg-danger mb-2">Urgent Need</span>
-                            <h3 class="h5 card-title">Downtown Community Center</h3>
-                            <p class="card-text mb-1"><i class="fas fa-map-marker-alt text-danger me-2"></i> 123 Main Street, Downtown</p>
-                            <p class="card-text mb-1"><i class="far fa-calendar-alt text-danger me-2"></i> June 15-16, 2023</p>
-                            <p class="card-text mb-3"><i class="far fa-clock text-danger me-2"></i> 9:00 AM - 6:00 PM</p>
-                            <p class="small text-muted mb-3">Critical need for types O- and B-. All blood types welcome.</p>
+                            <span class="badge bg-danger mb-2">Cần Gấp</span>
+                            <h3 class="h5 card-title">Trung Tâm Cộng Đồng Nội Thành</h3>
+                            <p class="card-text mb-1"><i class="fas fa-map-marker-alt text-danger me-2"></i> 123 Đường Chính, Quận 1</p>
+                            <p class="card-text mb-1"><i class="far fa-calendar-alt text-danger me-2"></i> 15-16 Tháng 6, 2023</p>
+                            <p class="card-text mb-3"><i class="far fa-clock text-danger me-2"></i> 9:00 - 18:00</p>
+                            <p class="small text-muted mb-3">Cần gấp nhóm máu O- và B-. Chấp nhận tất cả các nhóm máu.</p>
                             <div class="d-grid">
-                                <button class="btn btn-outline-danger">Schedule Appointment</button>
+                                <button class="btn btn-outline-danger">Đặt Lịch Hẹn</button>
                             </div>
                         </div>
                     </div>
@@ -216,14 +209,14 @@
                 <div class="col-md-6 col-lg-4 mb-4">
                     <div class="card h-100 shadow-sm">
                         <div class="card-body">
-                            <span class="badge bg-success mb-2">High Capacity</span>
-                            <h3 class="h5 card-title">University Medical Center</h3>
-                            <p class="card-text mb-1"><i class="fas fa-map-marker-alt text-danger me-2"></i> 500 University Ave, Midtown</p>
-                            <p class="card-text mb-1"><i class="far fa-calendar-alt text-danger me-2"></i> June 18-20, 2023</p>
-                            <p class="card-text mb-3"><i class="far fa-clock text-danger me-2"></i> 8:00 AM - 8:00 PM</p>
-                            <p class="small text-muted mb-3">Power Red donations available. Free parking for donors.</p>
+                            <span class="badge bg-success mb-2">Tiếp Nhận Lớn</span>
+                            <h3 class="h5 card-title">Trung Tâm Y Tế Đại Học</h3>
+                            <p class="card-text mb-1"><i class="fas fa-map-marker-alt text-danger me-2"></i> 500 Đại Lộ Đại Học, Trung Tâm</p>
+                            <p class="card-text mb-1"><i class="far fa-calendar-alt text-danger me-2"></i> 18-20 Tháng 6, 2023</p>
+                            <p class="card-text mb-3"><i class="far fa-clock text-danger me-2"></i> 8:00 - 20:00</p>
+                            <p class="small text-muted mb-3">Có dịch vụ hiến máu đậm đặc. Miễn phí đỗ xe cho người hiến máu.</p>
                             <div class="d-grid">
-                                <button class="btn btn-outline-danger">Schedule Appointment</button>
+                                <button class="btn btn-outline-danger">Đặt Lịch Hẹn</button>
                             </div>
                         </div>
                     </div>
@@ -232,34 +225,32 @@
                 <div class="col-md-6 col-lg-4 mb-4">
                     <div class="card h-100 shadow-sm">
                         <div class="card-body">
-                            <span class="badge bg-primary mb-2">New Location</span>
-                            <h3 class="h5 card-title">Westside Shopping Mall</h3>
-                            <p class="card-text mb-1"><i class="fas fa-map-marker-alt text-danger me-2"></i> 789 West Blvd, Westside</p>
-                            <p class="card-text mb-1"><i class="far fa-calendar-alt text-danger me-2"></i> June 22, 2023</p>
-                            <p class="card-text mb-3"><i class="far fa-clock text-danger me-2"></i> 10:00 AM - 4:00 PM</p>
-                            <p class="small text-muted mb-3">Receive a $10 gift card to mall stores. Walk-ins welcome.</p>
+                            <span class="badge bg-primary mb-2">Địa Điểm Mới</span>
+                            <h3 class="h5 card-title">Trung Tâm Mua Sắm Phía Tây</h3>
+                            <p class="card-text mb-1"><i class="fas fa-map-marker-alt text-danger me-2"></i> 789 Đại Lộ Tây, Quận Tây</p>
+                            <p class="card-text mb-1"><i class="far fa-calendar-alt text-danger me-2"></i> 22 Tháng 6, 2023</p>
+                            <p class="card-text mb-3"><i class="far fa-clock text-danger me-2"></i> 10:00 - 16:00</p>
+                            <p class="small text-muted mb-3">Nhận thẻ quà tặng 200.000đ cho các cửa hàng. Chấp nhận không cần hẹn trước.</p>
                             <div class="d-grid">
-                                <button class="btn btn-outline-danger">Schedule Appointment</button>
+                                <button class="btn btn-outline-danger">Đặt Lịch Hẹn</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- CTA Section -->
+    </section>    <!-- CTA Section -->
     <section class="py-5">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-10 col-lg-8">
                     <div class="card bg-danger text-white shadow border-0">
                         <div class="card-body p-5 text-center">
-                            <h2 class="mb-3">Host Your Own Blood Drive</h2>
-                            <p class="lead mb-4">Make an even bigger impact in your community by hosting a blood drive at your workplace, school, or organization.</p>
+                            <h2 class="mb-3">Tổ Chức Điểm Hiến Máu Riêng</h2>
+                            <p class="lead mb-4">Tạo ảnh hưởng lớn hơn trong cộng đồng của bạn bằng cách tổ chức điểm hiến máu tại nơi làm việc, trường học hoặc tổ chức của bạn.</p>
                             <div class="row justify-content-center">
                                 <div class="col-md-8">
-                                    <a href="#" class="btn btn-light btn-lg">Learn About Hosting</a>
+                                    <a href="#" class="btn btn-light btn-lg">Tìm Hiểu Về Việc Tổ Chức</a>
                                 </div>
                             </div>
                         </div>
@@ -267,132 +258,127 @@
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- Footer -->
+    </section>    <!-- Footer -->
     <footer class="bg-dark text-white py-4">
         <div class="container">
             <div class="row">
                 <div class="col-md-3 mb-4 mb-md-0">
-                    <h5>About Us</h5>
+                    <h5>Về Chúng Tôi</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-white-50">Our Mission</a></li>
-                        <li><a href="#" class="text-white-50">History</a></li>
-                        <li><a href="#" class="text-white-50">Leadership</a></li>
-                        <li><a href="#" class="text-white-50">Financials</a></li>
+                        <li><a href="#" class="text-white-50">Sứ Mệnh</a></li>
+                        <li><a href="#" class="text-white-50">Lịch Sử</a></li>
+                        <li><a href="#" class="text-white-50">Ban Lãnh Đạo</a></li>
+                        <li><a href="#" class="text-white-50">Tài Chính</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3 mb-4 mb-md-0">
-                    <h5>Donate Blood</h5>
+                    <h5>Hiến Máu</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-white-50">Eligibility Requirements</a></li>
-                        <li><a href="#" class="text-white-50">Types of Donations</a></li>
-                        <li><a href="#" class="text-white-50">What to Expect</a></li>
-                        <li><a href="#" class="text-white-50">Find a Drive</a></li>
+                        <li><a href="#" class="text-white-50">Điều Kiện Đủ Tiêu Chuẩn</a></li>
+                        <li><a href="#" class="text-white-50">Các Loại Hiến Máu</a></li>
+                        <li><a href="#" class="text-white-50">Những Điều Cần Biết</a></li>
+                        <li><a href="#" class="text-white-50">Tìm Điểm Hiến Máu</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3 mb-4 mb-md-0">
-                    <h5>Blood Services</h5>
+                    <h5>Dịch Vụ Máu</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-white-50">Blood Testing</a></li>
-                        <li><a href="#" class="text-white-50">Plasma Services</a></li>
-                        <li><a href="#" class="text-white-50">Emergency Blood</a></li>
-                        <li><a href="#" class="text-white-50">Medical Support</a></li>
+                        <li><a href="#" class="text-white-50">Xét Nghiệm Máu</a></li>
+                        <li><a href="#" class="text-white-50">Dịch Vụ Huyết Tương</a></li>
+                        <li><a href="#" class="text-white-50">Máu Khẩn Cấp</a></li>
+                        <li><a href="#" class="text-white-50">Hỗ Trợ Y Tế</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3">
-                    <h5>Connect With Us</h5>
+                    <h5>Kết Nối Với Chúng Tôi</h5>
                     <div class="mb-2">
                         <a href="#" class="text-white me-2"><i class="fab fa-facebook-f"></i></a>
                         <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
                         <a href="#" class="text-white me-2"><i class="fab fa-instagram"></i></a>
                         <a href="#" class="text-white me-2"><i class="fab fa-youtube"></i></a>
                     </div>
-                    <p class="small text-white-50">Sign up for our newsletter to stay informed about blood donation news and opportunities.</p>
+                    <p class="small text-white-50">Đăng ký nhận bản tin của chúng tôi để cập nhật về tin tức và cơ hội hiến máu.</p>
                     <div class="input-group">
-                        <input type="email" class="form-control form-control-sm" placeholder="Your email">
-                        <button class="btn btn-danger btn-sm" type="button">Subscribe</button>
+                        <input type="email" class="form-control form-control-sm" placeholder="Email của bạn">
+                        <button class="btn btn-danger btn-sm" type="button">Đăng Ký</button>
                     </div>
                 </div>
             </div>
             <hr class="my-4 bg-secondary">
             <div class="row">
                 <div class="col-md-6 small text-white-50">
-                    &copy; 2023 Blood Donation Support System. All rights reserved.
+                    &copy; 2023 Hệ Thống Hỗ Trợ Hiến Máu. Bảo lưu mọi quyền.
                 </div>
                 <div class="col-md-6 text-md-end small">
-                    <a href="#" class="text-white-50 me-3">Privacy Policy</a>
-                    <a href="#" class="text-white-50 me-3">Terms of Service</a>
-                    <a href="#" class="text-white-50">Contact Us</a>
+                    <a href="#" class="text-white-50 me-3">Chính Sách Bảo Mật</a>
+                    <a href="#" class="text-white-50 me-3">Điều Khoản Dịch Vụ</a>
+                    <a href="#" class="text-white-50">Liên Hệ</a>
                 </div>
             </div>
         </div>
-    </footer>
-
-    <!-- Bootstrap & JavaScript -->
+    </footer>    <!-- Bootstrap & JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/language.js"></script>
     <script>
-        // Sample data for blood drives
+        // Dữ liệu mẫu cho các điểm hiến máu
         window.bloodDrives = [
             {
                 id: 1,
-                name: "Downtown Community Center",
-                address: "123 Main Street, Downtown",
-                dates: "June 15-16, 2023",
-                times: "9:00 AM - 6:00 PM",
+                name: "Trung Tâm Cộng Đồng Nội Thành",
+                address: "123 Đường Chính, Quận 1",
+                dates: "15-16 Tháng 6, 2023",
+                times: "9:00 - 18:00",
                 type: "mobile",
                 timeOfDay: ["morning", "afternoon", "evening"],
                 urgency: "urgent",
-                description: "Critical need for types O- and B-. All blood types welcome."
+                description: "Cần gấp nhóm máu O- và B-. Chấp nhận tất cả các nhóm máu."
             },
             {
                 id: 2,
-                name: "University Medical Center",
-                address: "500 University Ave, Midtown",
-                dates: "June 18-20, 2023",
-                times: "8:00 AM - 8:00 PM",
+                name: "Trung Tâm Y Tế Đại Học",
+                address: "500 Đại Lộ Đại Học, Trung Tâm",
+                dates: "18-20 Tháng 6, 2023",
+                times: "8:00 - 20:00",
                 type: "center",
                 timeOfDay: ["morning", "afternoon", "evening"],
                 urgency: "high",
-                description: "Power Red donations available. Free parking for donors."
+                description: "Có dịch vụ hiến máu đậm đặc. Miễn phí đỗ xe cho người hiến máu."
             },
             {
                 id: 3,
-                name: "Westside Shopping Mall",
-                address: "789 West Blvd, Westside",
-                dates: "June 22, 2023",
-                times: "10:00 AM - 4:00 PM",
+                name: "Trung Tâm Mua Sắm Phía Tây",
+                address: "789 Đại Lộ Tây, Quận Tây",
+                dates: "22 Tháng 6, 2023",
+                times: "10:00 - 16:00",
                 type: "mobile",
                 timeOfDay: ["morning", "afternoon"],
                 urgency: "normal",
-                description: "Receive a $10 gift card to mall stores. Walk-ins welcome."
+                description: "Nhận thẻ quà tặng 200.000đ cho các cửa hàng. Chấp nhận không cần hẹn trước."
             },
             {
                 id: 4,
-                name: "St. Mary's Hospital",
-                address: "456 Health Drive, Eastside",
-                dates: "June 25-27, 2023",
-                times: "7:00 AM - 7:00 PM",
+                name: "Bệnh Viện Thánh Maria",
+                address: "456 Đường Y Tế, Quận Đông",
+                dates: "25-27 Tháng 6, 2023",
+                times: "7:00 - 19:00",
                 type: "center",
                 timeOfDay: ["morning", "afternoon", "evening"],
                 urgency: "high",
-                description: "All donations welcome. Platelet donations especially needed."
+                description: "Chấp nhận tất cả các loại hiến máu. Đặc biệt cần hiến tiểu cầu."
             },
             {
                 id: 5,
-                name: "Corporate Office Park",
-                address: "1000 Business Lane, North District",
-                dates: "June 29, 2023",
-                times: "11:00 AM - 3:00 PM",
+                name: "Khu Văn Phòng Doanh Nghiệp",
+                address: "1000 Đường Doanh Nghiệp, Quận Bắc",
+                dates: "29 Tháng 6, 2023",
+                times: "11:00 - 15:00",
                 type: "mobile",
                 timeOfDay: ["afternoon"],
                 urgency: "normal",
-                description: "Lunch provided for all donors. Appointment preferred."
+                description: "Cung cấp bữa trưa cho tất cả người hiến máu. Nên đặt lịch hẹn trước."
             }
         ];
 
-        // Handle search form submission
+        // Xử lý form tìm kiếm
         document.getElementById('searchForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -400,33 +386,33 @@
             const radius = document.getElementById('radius').value;
             
             if (zipCode) {
-                // Hide placeholder, show map (in a real application)
+                // Ẩn placeholder, hiển thị bản đồ (trong ứng dụng thực tế)
                 document.getElementById('mapPlaceholder').style.display = 'none';
                 // document.getElementById('map').style.display = 'block';
                 
-                // In a real app, you would call an API to get results based on ZIP and radius
-                // For demo purposes, we'll just show our sample data
+                // Trong ứng dụng thực tế, bạn sẽ gọi API để lấy kết quả dựa trên mã bưu điện và bán kính
+                // Cho mục đích demo, chúng ta sẽ chỉ hiển thị dữ liệu mẫu
                 displaySearchResults(window.bloodDrives);
             } else {
-                alert('Please enter a ZIP code to search.');
+                alert('Vui lòng nhập mã bưu điện để tìm kiếm.');
             }
         });
         
-        // Handle filter form submission
+        // Xử lý form lọc kết quả
         document.getElementById('filterForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Get filter values
+            // Lấy giá trị lọc
             const morning = document.getElementById('morningFilter').checked;
             const afternoon = document.getElementById('afternoonFilter').checked;
             const evening = document.getElementById('eveningFilter').checked;
             const centers = document.getElementById('centerFilter').checked;
             const mobile = document.getElementById('mobileFilter').checked;
             
-            // Filter the blood drives
+            // Lọc điểm hiến máu
             let filteredDrives = [...window.bloodDrives];
             
-            // Filter by time of day
+            // Lọc theo thời gian trong ngày
             if (!morning || !afternoon || !evening) {
                 const allowedTimes = [];
                 if (morning) allowedTimes.push('morning');
@@ -438,7 +424,7 @@
                 );
             }
             
-            // Filter by location type
+            // Lọc theo loại địa điểm
             if (!centers || !mobile) {
                 const allowedTypes = [];
                 if (centers) allowedTypes.push('center');
@@ -449,18 +435,18 @@
                 );
             }
             
-            // Display filtered results
+            // Hiển thị kết quả đã lọc
             displaySearchResults(filteredDrives);
         });
         
-        // Function to display search results
+        // Hàm hiển thị kết quả tìm kiếm
         window.displaySearchResults = function(drives) {
             const resultsContainer = document.getElementById('bloodDriveResults');
             resultsContainer.style.display = 'block';
             document.getElementById('noResultsMessage').style.display = 'none';
             
             if (drives.length === 0) {
-                resultsContainer.innerHTML = '<div class="alert alert-warning">No blood drives found matching your criteria. Try adjusting your filters.</div>';
+                resultsContainer.innerHTML = '<div class="alert alert-warning">Không tìm thấy điểm hiến máu nào phù hợp với tiêu chí của bạn. Hãy thử điều chỉnh bộ lọc.</div>';
                 return;
             }
             
@@ -469,9 +455,9 @@
             drives.forEach(drive => {
                 let urgencyBadge = '';
                 if (drive.urgency === 'urgent') {
-                    urgencyBadge = '<span class="badge bg-danger me-2">Urgent Need</span>';
+                    urgencyBadge = '<span class="badge bg-danger me-2">Cần Gấp</span>';
                 } else if (drive.urgency === 'high') {
-                    urgencyBadge = '<span class="badge bg-success me-2">High Capacity</span>';
+                    urgencyBadge = '<span class="badge bg-success me-2">Tiếp Nhận Lớn</span>';
                 }
                 
                 html += `
@@ -493,7 +479,7 @@
                                 <p class="small text-muted">${drive.description}</p>
                             </div>
                             <div class="col-md-4 text-md-end mt-3 mt-md-0">
-                                <button class="btn btn-danger">Schedule</button>
+                                <button class="btn btn-danger">Đặt Lịch</button>
                                 <button class="btn btn-outline-secondary ms-2" data-drive-id="${drive.id}">
                                     <i class="fas fa-directions"></i>
                                 </button>
@@ -506,15 +492,15 @@
             
             resultsContainer.innerHTML = html;
             
-            // Add event listeners to direction buttons
+            // Thêm trình nghe sự kiện cho các nút chỉ đường
             document.querySelectorAll('[data-drive-id]').forEach(button => {
                 button.addEventListener('click', function() {
                     const driveId = this.getAttribute('data-drive-id');
-                    // In a real app, you would open a map with directions
-                    alert(`Getting directions to blood drive #${driveId}`);
+                    // Trong ứng dụng thực tế, bạn sẽ mở bản đồ với chỉ đường
+                    alert(`Đang lấy chỉ đường đến điểm hiến máu #${driveId}`);
                 });
             });
         }
     </script>
 </body>
-</html> 
+</html>

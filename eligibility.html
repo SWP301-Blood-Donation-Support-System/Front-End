@@ -1,20 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eligibility Requirements - Blood Donation Support System</title>
+    <title>Yêu Cầu Điều Kiện Hiến Máu - Hệ Thống Hỗ Trợ Hiến Máu</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/styles.css">
 </head>
-<body>
-    <!-- Header Navigation - Same as index.html -->
+<body>    <!-- Header Navigation - Same as index.html -->
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
                 <a class="navbar-brand" href="index.html">
-                    <img src="images/logo.svg" alt="Blood Donation Logo" height="50">
+                    <img src="images/logo.svg" alt="Logo Hiến Máu" height="50">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
@@ -22,21 +21,21 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav mx-auto">
                         <li class="nav-item me-4">
-                            <a class="nav-link fs-6" href="donate.html">Donate Blood</a>
+                            <a class="nav-link fs-6" href="donate.html">Hiến Máu</a>
                         </li>
                         <li class="nav-item me-4">
-                            <a class="nav-link active fs-6" href="eligibility.html">Check Eligibility</a>
+                            <a class="nav-link active fs-6" href="eligibility.html">Kiểm Tra Đủ Điều Kiện</a>
                         </li>
                         <li class="nav-item me-4">
-                            <a class="nav-link fs-6" href="index.html#host">News</a>
+                            <a class="nav-link fs-6" href="index.html#host">Tin Tức</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link fs-6" href="faq.html">FAQ</a>
+                            <a class="nav-link fs-6" href="faq.html">Hỏi Đáp</a>
                         </li>
                     </ul>
                     <div class="d-flex">
-                        <a href="login.html" class="btn btn-outline-secondary me-2">Sign In</a>
-                        <a href="find-drive.html" class="btn btn-danger">Find a Blood Drive</a>
+                        <a href="login.html" class="btn btn-outline-secondary me-2">Đăng Nhập</a>
+                        <a href="find-drive.html" class="btn btn-danger">Tìm Điểm Hiến Máu</a>
                     </div>
                 </div>
             </div>
@@ -44,7 +43,7 @@
     </header>    <!-- Page Title -->
     <section id="hero" class="bg-danger text-white py-4">
         <div class="container">
-            <h1>Eligibility Requirements</h1>
+            <h1>Yêu Cầu Điều Kiện Hiến Máu</h1>
         </div>
     </section>
 
@@ -53,197 +52,184 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8">
-                    <h2>General Eligibility Guidelines</h2>
-                    <p>To ensure the safety of both donors and recipients, we have certain eligibility requirements that must be met before donating blood. These requirements include:</p>
-                    
-                    <div class="card mb-4">
+                    <h2>Hướng Dẫn Điều Kiện Cơ Bản</h2>
+                    <p>Để đảm bảo an toàn cho cả người hiến máu và người nhận máu, chúng tôi có một số yêu cầu về điều kiện phải đáp ứng trước khi hiến máu. Những yêu cầu này bao gồm:</p>
+                      <div class="card mb-4">
                         <div class="card-body">
-                            <h3 class="h5">Basic Requirements</h3>
+                            <h3 class="h5">Yêu Cầu Cơ Bản</h3>
                             <ul>
-                                <li>Be at least 17 years old in most states (16 years old with parental consent in some states)</li>
-                                <li>Weigh at least 110 pounds</li>
-                                <li>Be in good general health and feeling well on the day of donation</li>
-                                <li>Have a valid ID</li>
+                                <li>Ít nhất 17 tuổi ở hầu hết các nơi (16 tuổi với sự đồng ý của phụ huynh ở một số nơi)</li>
+                                <li>Cân nặng ít nhất 50 kg</li>
+                                <li>Có sức khỏe tốt và cảm thấy khỏe mạnh vào ngày hiến máu</li>
+                                <li>Có giấy tờ tùy thân hợp lệ</li>
                             </ul>
                         </div>
                     </div>
 
-                    <h3>Health-Related Eligibility Factors</h3>
-                    <p>Various health conditions and medications may affect your eligibility to donate blood. Here are some common considerations:</p>
-
-                    <div class="accordion mb-4" id="healthAccordion">
+                    <h3>Các Yếu Tố Sức Khỏe Ảnh Hưởng Đến Điều Kiện</h3>
+                    <p>Các tình trạng sức khỏe và thuốc khác nhau có thể ảnh hưởng đến khả năng hiến máu của bạn. Dưới đây là một số điều cần xem xét thường gặp:</p>                    <div class="accordion mb-4" id="healthAccordion">
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="headingOne">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
-                                    Medications
+                                    Thuốc
                                 </button>
                             </h2>
                             <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#healthAccordion">
                                 <div class="accordion-body">
-                                    <p>Most medications do not prevent you from donating blood. However, some medications may require a waiting period after your last dose. Common examples include:</p>
+                                    <p>Hầu hết các loại thuốc không ngăn bạn hiến máu. Tuy nhiên, một số loại thuốc có thể yêu cầu thời gian chờ đợi sau liều cuối cùng của bạn. Các ví dụ phổ biến bao gồm:</p>
                                     <ul>
-                                        <li>Accutane, Absorica, Amnesteem, Claravis, Myorisan, Sotret, or Zenatane (isotretinoin) – 1 month</li>
-                                        <li>Avodart, Jalyn, or dutasteride – 6 months</li>
-                                        <li>Blood thinners (e.g., Coumadin, Warfilone, Jantoven, warfarin) – 7 days</li>
-                                        <li>Hepatitis B Immune Globulin – 12 months</li>
+                                        <li>Accutane, Absorica, Amnesteem, Claravis, Myorisan, Sotret, hoặc Zenatane (isotretinoin) – 1 tháng</li>
+                                        <li>Avodart, Jalyn, hoặc dutasteride – 6 tháng</li>
+                                        <li>Thuốc chống đông máu (ví dụ: Coumadin, Warfilone, Jantoven, warfarin) – 7 ngày</li>
+                                        <li>Globulin miễn dịch viêm gan B – 12 tháng</li>
                                     </ul>
                                 </div>
                             </div>
-                        </div>
-                        <div class="accordion-item">
+                        </div>                        <div class="accordion-item">
                             <h2 class="accordion-header" id="headingTwo">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
-                                    Medical Conditions
+                                    Tình Trạng Y Tế
                                 </button>
                             </h2>
                             <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#healthAccordion">
                                 <div class="accordion-body">
-                                    <p>Some medical conditions may temporarily or permanently prevent you from donating blood. These include:</p>
+                                    <p>Một số tình trạng y tế có thể tạm thời hoặc vĩnh viễn ngăn bạn hiến máu. Những tình trạng này bao gồm:</p>
                                     <ul>
-                                        <li>Anemia</li>
-                                        <li>Cancer</li>
-                                        <li>Heart disease</li>
+                                        <li>Thiếu máu</li>
+                                        <li>Ung thư</li>
+                                        <li>Bệnh tim</li>
                                         <li>HIV/AIDS</li>
-                                        <li>Hepatitis B or C</li>
-                                        <li>Uncontrolled diabetes</li>
+                                        <li>Viêm gan B hoặc C</li>
+                                        <li>Tiểu đường không kiểm soát được</li>
                                     </ul>
-                                    <p>Please consult with our staff if you have any medical conditions or concerns.</p>
+                                    <p>Vui lòng tham khảo ý kiến của nhân viên của chúng tôi nếu bạn có bất kỳ tình trạng y tế hoặc lo ngại nào.</p>
                                 </div>
                             </div>
-                        </div>
-                        <div class="accordion-item">
+                        </div>                        <div class="accordion-item">
                             <h2 class="accordion-header" id="headingThree">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">
-                                    Recent Procedures
+                                    Thủ Thuật Y Tế Gần Đây
                                 </button>
                             </h2>
                             <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#healthAccordion">
                                 <div class="accordion-body">
-                                    <p>Some recent procedures may temporarily delay your ability to donate:</p>
+                                    <p>Một số thủ thuật gần đây có thể tạm thời trì hoãn khả năng hiến máu của bạn:</p>
                                     <ul>
-                                        <li>Dental work – 24 hours after minor procedures, 3 days after major procedures</li>
-                                        <li>Surgery – depends on the type, typically 6 weeks to 6 months</li>
-                                        <li>Tattoos – eligible if applied in a state-regulated facility with sterile needles and ink</li>
-                                        <li>Piercings – 3 months if not done with single-use equipment</li>
+                                        <li>Làm răng – 24 giờ sau các thủ thuật nhỏ, 3 ngày sau các thủ thuật lớn</li>
+                                        <li>Phẫu thuật – tùy thuộc vào loại, thường từ 6 tuần đến 6 tháng</li>
+                                        <li>Xăm hình – đủ điều kiện nếu được thực hiện tại cơ sở được quản lý bởi nhà nước với kim và mực vô trùng</li>
+                                        <li>Xỏ lỗ – 3 tháng nếu không được thực hiện với thiết bị dùng một lần</li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <h3>Travel-Related Eligibility</h3>
-                    <p>Travel to certain regions of the world may temporarily defer your eligibility to donate blood due to potential exposure to malaria, Zika virus, or other infectious diseases.</p>
+                    </div>                    <h3>Điều Kiện Liên Quan Đến Du Lịch</h3>
+                    <p>Du lịch đến một số khu vực trên thế giới có thể tạm thời hoãn khả năng hiến máu của bạn do khả năng tiếp xúc với bệnh sốt rét, virus Zika hoặc các bệnh truyền nhiễm khác.</p>
                     
                     <div class="alert alert-info">
-                        <h4 class="h5">Travel Deferrals</h4>
-                        <p>Common travel deferrals include:</p>
+                        <h4 class="h5">Hoãn Do Du Lịch</h4>
+                        <p>Các lý do hoãn phổ biến do du lịch bao gồm:</p>
                         <ul>
-                            <li>Travel to malaria-endemic areas – typically a 3-month deferral</li>
-                            <li>Travel to areas with Zika virus outbreaks – typically a 1-month deferral</li>
-                            <li>Extended stays in certain European countries (risk of variant CJD) – may result in indefinite deferral</li>
+                            <li>Du lịch đến khu vực có dịch sốt rét – thường hoãn 3 tháng</li>
+                            <li>Du lịch đến khu vực có dịch virus Zika – thường hoãn 1 tháng</li>
+                            <li>Lưu trú dài hạn ở một số quốc gia châu Âu (nguy cơ mắc biến thể CJD) – có thể dẫn đến hoãn vô thời hạn</li>
                         </ul>
-                    </div>
-
-                    <h3>The Day of Donation</h3>
-                    <p>On the day of your donation, please:</p>
+                    </div>                    <h3>Ngày Hiến Máu</h3>
+                    <p>Vào ngày hiến máu, vui lòng:</p>
                     <ul>
-                        <li>Eat a healthy meal before donating</li>
-                        <li>Drink plenty of non-alcoholic fluids</li>
-                        <li>Bring a valid ID</li>
-                        <li>Wear comfortable clothing with sleeves that can be raised above the elbow</li>
-                        <li>Get a good night's sleep before donating</li>
+                        <li>Ăn một bữa ăn lành mạnh trước khi hiến máu</li>
+                        <li>Uống nhiều nước (không có cồn)</li>
+                        <li>Mang theo giấy tờ tùy thân hợp lệ</li>
+                        <li>Mặc quần áo thoải mái với tay áo có thể xắn lên trên khuỷu tay</li>
+                        <li>Ngủ đủ giấc trước khi hiến máu</li>
                     </ul>
 
                     <div class="alert alert-warning mt-4">
-                        <p class="mb-0"><strong>Note:</strong> This information is provided as a general guide. Eligibility requirements may change over time. The final determination will be made by health professionals at the time of donation.</p>
+                        <p class="mb-0"><strong>Lưu ý:</strong> Thông tin này được cung cấp như một hướng dẫn chung. Các yêu cầu về điều kiện có thể thay đổi theo thời gian. Quyết định cuối cùng sẽ do các chuyên gia y tế đưa ra tại thời điểm hiến máu.</p>
                     </div>
-                </div>
-
-                <div class="col-lg-4">
+                </div>                <div class="col-lg-4">
                     <div class="card mb-4">
                         <div class="card-body">
-                            <h3 class="h5">Ready to Donate?</h3>
-                            <p>If you meet the eligibility requirements, schedule your donation appointment today.</p>
-                            <a href="index.html#appointment" class="btn btn-danger w-100">Make an Appointment</a>
+                            <h3 class="h5">Sẵn Sàng Hiến Máu?</h3>
+                            <p>Nếu bạn đáp ứng các yêu cầu về điều kiện, hãy đặt lịch hẹn hiến máu ngay hôm nay.</p>
+                            <a href="index.html#appointment" class="btn btn-danger w-100">Đặt Lịch Hẹn</a>
                         </div>
                     </div>
 
                     <div class="card mb-4">
                         <div class="card-body">
-                            <h3 class="h5">Eligibility Questionnaire</h3>
-                            <p>Not sure if you're eligible? Take our quick questionnaire to find out.</p>
-                            <a href="#" class="btn btn-outline-danger w-100">Check Eligibility</a>
+                            <h3 class="h5">Bảng Câu Hỏi Kiểm Tra Điều Kiện</h3>
+                            <p>Không chắc bạn có đủ điều kiện không? Hãy làm bảng câu hỏi nhanh của chúng tôi để tìm hiểu.</p>
+                            <a href="#" class="btn btn-outline-danger w-100">Kiểm Tra Điều Kiện</a>
                         </div>
                     </div>
 
                     <div class="card">
                         <div class="card-body">
-                            <h3 class="h5">Have Questions?</h3>
-                            <p>Our team is available to help answer any questions about blood donation eligibility.</p>
+                            <h3 class="h5">Có Câu Hỏi?</h3>
+                            <p>Đội ngũ của chúng tôi luôn sẵn sàng giúp trả lời bất kỳ câu hỏi nào về điều kiện hiến máu.</p>
                             <p class="mb-2"><i class="fas fa-phone me-2 text-danger"></i> 1-800-RED-CROSS</p>
-                            <p class="mb-0"><i class="fas fa-envelope me-2 text-danger"></i> questions@bloodservices.org</p>
+                            <p class="mb-0"><i class="fas fa-envelope me-2 text-danger"></i> cauhoi@hethonghienmau.org</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- Footer - Same as index.html -->
+    </section>    <!-- Footer - Same as index.html -->
     <footer class="bg-dark text-white py-4">
         <div class="container">
             <div class="row">
                 <div class="col-md-3 mb-4 mb-md-0">
-                    <h5>About Us</h5>
+                    <h5>Về Chúng Tôi</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-white-50">Our Mission</a></li>
-                        <li><a href="#" class="text-white-50">History</a></li>
-                        <li><a href="#" class="text-white-50">Leadership</a></li>
-                        <li><a href="#" class="text-white-50">Financials</a></li>
+                        <li><a href="#" class="text-white-50">Sứ Mệnh</a></li>
+                        <li><a href="#" class="text-white-50">Lịch Sử</a></li>
+                        <li><a href="#" class="text-white-50">Ban Lãnh Đạo</a></li>
+                        <li><a href="#" class="text-white-50">Tài Chính</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3 mb-4 mb-md-0">
-                    <h5>Donate Blood</h5>
+                    <h5>Hiến Máu</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-white-50">Eligibility Requirements</a></li>
-                        <li><a href="#" class="text-white-50">Types of Donations</a></li>
-                        <li><a href="#" class="text-white-50">What to Expect</a></li>
-                        <li><a href="#" class="text-white-50">Find a Drive</a></li>
+                        <li><a href="#" class="text-white-50">Yêu Cầu Điều Kiện</a></li>
+                        <li><a href="#" class="text-white-50">Các Loại Hiến Máu</a></li>
+                        <li><a href="#" class="text-white-50">Những Điều Cần Biết</a></li>
+                        <li><a href="#" class="text-white-50">Tìm Điểm Hiến Máu</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3 mb-4 mb-md-0">
-                    <h5>Blood Services</h5>
+                    <h5>Dịch Vụ Máu</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-white-50">Blood Testing</a></li>
-                        <li><a href="#" class="text-white-50">Plasma Services</a></li>
-                        <li><a href="#" class="text-white-50">Emergency Blood</a></li>
-                        <li><a href="#" class="text-white-50">Medical Support</a></li>
+                        <li><a href="#" class="text-white-50">Xét Nghiệm Máu</a></li>
+                        <li><a href="#" class="text-white-50">Dịch Vụ Huyết Tương</a></li>
+                        <li><a href="#" class="text-white-50">Máu Khẩn Cấp</a></li>
+                        <li><a href="#" class="text-white-50">Hỗ Trợ Y Tế</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3">
-                    <h5>Connect With Us</h5>
+                    <h5>Kết Nối Với Chúng Tôi</h5>
                     <div class="mb-2">
                         <a href="#" class="text-white me-2"><i class="fab fa-facebook-f"></i></a>
                         <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
                         <a href="#" class="text-white me-2"><i class="fab fa-instagram"></i></a>
                         <a href="#" class="text-white me-2"><i class="fab fa-youtube"></i></a>
                     </div>
-                    <p class="small text-white-50">Sign up for our newsletter to stay informed about blood donation news and opportunities.</p>
+                    <p class="small text-white-50">Đăng ký nhận bản tin để cập nhật thông tin về hiến máu và các cơ hội hiến máu.</p>
                     <div class="input-group">
-                        <input type="email" class="form-control form-control-sm" placeholder="Your email">
-                        <button class="btn btn-danger btn-sm" type="button">Subscribe</button>
+                        <input type="email" class="form-control form-control-sm" placeholder="Email của bạn">
+                        <button class="btn btn-danger btn-sm" type="button">Đăng Ký</button>
                     </div>
                 </div>
             </div>
             <hr class="my-4 bg-secondary">
             <div class="row">
                 <div class="col-md-6 small text-white-50">
-                    &copy; 2025 Blood Donation Support System. All rights reserved.
+                    &copy; 2025 Hệ Thống Hỗ Trợ Hiến Máu. Tất cả các quyền được bảo lưu.
                 </div>
                 <div class="col-md-6 text-md-end small">
-                    <a href="#" class="text-white-50 me-3">Privacy Policy</a>
-                    <a href="#" class="text-white-50 me-3">Terms of Service</a>
-                    <a href="#" class="text-white-50">Contact Us</a>
+                    <a href="#" class="text-white-50 me-3">Chính Sách Bảo Mật</a>
+                    <a href="#" class="text-white-50 me-3">Điều Khoản Dịch Vụ</a>
+                    <a href="#" class="text-white-50">Liên Hệ</a>
                 </div>
             </div>
         </div>
