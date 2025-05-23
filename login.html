@@ -1,21 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Blood Donation Support System</title>
+    <title>Đăng Nhập - Hệ Thống Hỗ Trợ Hiến Máu</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/styles.css">
 </head>
-<body>
-    <!-- Header Navigation -->
+<body>    <!-- Header Navigation -->
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
                 <a class="navbar-brand" href="index.html">
-                    <img src="images/logo.svg" alt="Blood Donation Logo" height="50">
-                    <span class="ms-2">Blood Services</span>
+                    <img src="images/logo.svg" alt="Logo Hiến Máu" height="50">
+                    <span class="ms-2">Dịch Vụ Máu</span>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
@@ -23,46 +22,40 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav mx-auto">
                         <li class="nav-item me-4">
-                            <a class="nav-link fs-6" href="donate.html">Donate Blood</a>
+                            <a class="nav-link fs-6" href="donate.html">Hiến Máu</a>
                         </li>
                         <li class="nav-item me-4">
-                            <a class="nav-link fs-6" href="eligibility.html">Check Eligibility</a>
+                            <a class="nav-link fs-6" href="eligibility.html">Kiểm Tra Đủ Điều Kiện</a>
                         </li>
                         <li class="nav-item me-4">
-                            <a class="nav-link fs-6" href="index.html#host">News</a>
+                            <a class="nav-link fs-6" href="index.html#host">Tin Tức</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link fs-6" href="faq.html">FAQ</a>
+                            <a class="nav-link fs-6" href="faq.html">Hỏi Đáp</a>
                         </li>
                     </ul>
                     <div class="d-flex">
-                        <a href="login.html" class="btn btn-outline-secondary me-2 active">Sign In</a>
-                        <a href="index.html" class="btn btn-danger">Find a Blood Drive</a>
-                        <button id="languageToggle" class="btn btn-outline-secondary ms-2">
-                            <i class="fas fa-globe me-1"></i>
-                            <span class="language-text">Tiếng Việt</span>
-                        </button>
+                        <a href="login.html" class="btn btn-outline-secondary me-2 active">Đăng Nhập</a>
+                        <a href="index.html" class="btn btn-danger">Tìm Điểm Hiến Máu</a>
                     </div>
                 </div>
             </div>
         </nav>
-    </header>
-
-    <!-- Login Section -->
+    </header>    <!-- Login Section -->
     <section class="py-5">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-6 col-lg-5">
                     <div class="card shadow">
                         <div class="card-body p-5">
-                            <h2 class="text-center mb-4">Welcome Back</h2>
+                            <h2 class="text-center mb-4">Chào Mừng Trở Lại</h2>
                             <form id="loginForm">
                                 <div class="mb-3">
-                                    <label for="email" class="form-label">Email Address</label>
+                                    <label for="email" class="form-label">Địa Chỉ Email</label>
                                     <input type="email" class="form-control" id="email" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="password" class="form-label">Password</label>
+                                    <label for="password" class="form-label">Mật Khẩu</label>
                                     <div class="input-group">
                                         <input type="password" class="form-control" id="password" required>
                                         <button class="btn btn-outline-secondary" type="button" id="togglePassword">
@@ -72,59 +65,57 @@
                                 </div>
                                 <div class="mb-3 form-check">
                                     <input type="checkbox" class="form-check-input" id="rememberMe">
-                                    <label class="form-check-label" for="rememberMe">Remember me</label>
+                                    <label class="form-check-label" for="rememberMe">Ghi nhớ đăng nhập</label>
                                 </div>
                                 <div class="d-grid">
-                                    <button type="submit" class="btn btn-danger btn-lg">Sign In</button>
+                                    <button type="submit" class="btn btn-danger btn-lg">Đăng Nhập</button>
                                 </div>
                                 <div class="text-center mt-3">
-                                    <a href="#" class="text-danger">Forgot Password?</a>
+                                    <a href="#" class="text-danger">Quên Mật Khẩu?</a>
                                 </div>
                             </form>
                             <hr class="my-4">
                             <div class="text-center">
-                                <p>Don't have an account? <a href="signup.html" class="text-danger">Sign Up</a></p>
+                                <p>Chưa có tài khoản? <a href="signup.html" class="text-danger">Đăng Ký</a></p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- Footer -->
+    </section>    <!-- Footer -->
     <footer class="bg-dark text-white py-4 mt-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-3 mb-4 mb-md-0">
-                    <h5>About Us</h5>
+                    <h5>Về Chúng Tôi</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-white-50">Our Mission</a></li>
-                        <li><a href="#" class="text-white-50">History</a></li>
-                        <li><a href="#" class="text-white-50">Leadership</a></li>
-                        <li><a href="#" class="text-white-50">Financials</a></li>
+                        <li><a href="#" class="text-white-50">Sứ Mệnh</a></li>
+                        <li><a href="#" class="text-white-50">Lịch Sử</a></li>
+                        <li><a href="#" class="text-white-50">Ban Lãnh Đạo</a></li>
+                        <li><a href="#" class="text-white-50">Tài Chính</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3 mb-4 mb-md-0">
-                    <h5>Donate Blood</h5>
+                    <h5>Hiến Máu</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-white-50">Eligibility Requirements</a></li>
-                        <li><a href="#" class="text-white-50">Types of Donations</a></li>
-                        <li><a href="#" class="text-white-50">What to Expect</a></li>
-                        <li><a href="#" class="text-white-50">Find a Drive</a></li>
+                        <li><a href="#" class="text-white-50">Yêu Cầu Về Điều Kiện</a></li>
+                        <li><a href="#" class="text-white-50">Các Loại Hiến Tặng</a></li>
+                        <li><a href="#" class="text-white-50">Những Điều Cần Biết</a></li>
+                        <li><a href="#" class="text-white-50">Tìm Điểm Hiến Máu</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3 mb-4 mb-md-0">
-                    <h5>Blood Services</h5>
+                    <h5>Dịch Vụ Máu</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-white-50">Blood Testing</a></li>
-                        <li><a href="#" class="text-white-50">Plasma Services</a></li>
-                        <li><a href="#" class="text-white-50">Emergency Blood</a></li>
-                        <li><a href="#" class="text-white-50">Medical Support</a></li>
+                        <li><a href="#" class="text-white-50">Xét Nghiệm Máu</a></li>
+                        <li><a href="#" class="text-white-50">Dịch Vụ Huyết Tương</a></li>
+                        <li><a href="#" class="text-white-50">Máu Khẩn Cấp</a></li>
+                        <li><a href="#" class="text-white-50">Hỗ Trợ Y Tế</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3">
-                    <h5>Follow Us</h5>
+                    <h5>Theo Dõi Chúng Tôi</h5>
                     <div class="d-flex gap-3 fs-4">
                         <a href="#" class="text-white-50"><i class="fab fa-facebook"></i></a>
                         <a href="#" class="text-white-50"><i class="fab fa-twitter"></i></a>
@@ -136,12 +127,12 @@
             <hr class="my-4 bg-light">
             <div class="row">
                 <div class="col-md-6 mb-3 mb-md-0">
-                    <p class="mb-0 text-white-50">&copy; 2023 Blood Services. All rights reserved.</p>
+                    <p class="mb-0 text-white-50">&copy; 2023 Dịch Vụ Máu. Đã đăng ký bản quyền.</p>
                 </div>
                 <div class="col-md-6 text-md-end">
-                    <a href="#" class="text-white-50 me-3">Privacy Policy</a>
-                    <a href="#" class="text-white-50 me-3">Terms of Service</a>
-                    <a href="#" class="text-white-50">Accessibility</a>
+                    <a href="#" class="text-white-50 me-3">Chính Sách Bảo Mật</a>
+                    <a href="#" class="text-white-50 me-3">Điều Khoản Dịch Vụ</a>
+                    <a href="#" class="text-white-50">Khả Năng Truy Cập</a>
                 </div>
             </div>
         </div>
