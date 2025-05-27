@@ -177,11 +177,14 @@
     <!-- Eligibility Questionnaire Modal -->
     <div class="modal fade" id="eligibilityModal" tabindex="-1" aria-labelledby="eligibilityModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
+
             <div class="modal-content">                <div class="modal-header bg-danger text-white">
+
                     <h5 class="modal-title" id="eligibilityModalLabel">Kiểm Tra Điều Kiện Hiến Máu</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Đóng"></button>
                 </div>
                 <div class="modal-body">
+
                     <form id="eligibilityForm">                        <div class="mb-4">
                             <h6 class="fw-bold">Thông Tin Cơ Bản</h6>
                             <div class="row">
@@ -196,6 +199,7 @@
                             </div>
                         </div>                        <div class="mb-4">
                             <h6 class="fw-bold">Câu Hỏi Sức Khỏe</h6>
+
                             
                             <div class="mb-3">
                                 <label class="form-label">Hôm nay bạn có cảm thấy khỏe mạnh không?</label>
@@ -205,48 +209,60 @@
                                     <input type="radio" class="form-check-input" id="feeling_well_no" name="feeling_well" value="no" required>
                                     <label class="form-check-label" for="feeling_well_no">Không</label>
                                 </div>
+
                             </div>                            <div class="mb-3">
                                 <label class="form-label">Bạn đã hiến máu trong 8 tuần qua chưa?</label>
+
                                 <div>
                                     <input type="radio" class="form-check-input" id="recent_donation_yes" name="recent_donation" value="yes" required>
                                     <label class="form-check-label me-3" for="recent_donation_yes">Có</label>
                                     <input type="radio" class="form-check-input" id="recent_donation_no" name="recent_donation" value="no" required>
                                     <label class="form-check-label" for="recent_donation_no">Không</label>
                                 </div>
+
                             </div>                            <div class="mb-3">
                                 <label class="form-label">Bạn hiện đang dùng thuốc kháng sinh?</label>
+
                                 <div>
                                     <input type="radio" class="form-check-input" id="antibiotics_yes" name="antibiotics" value="yes" required>
                                     <label class="form-check-label me-3" for="antibiotics_yes">Có</label>
                                     <input type="radio" class="form-check-input" id="antibiotics_no" name="antibiotics" value="no" required>
                                     <label class="form-check-label" for="antibiotics_no">Không</label>
                                 </div>
+
                             </div>                            <div class="mb-3">
                                 <label class="form-label">Bạn đã trải qua bất kỳ điều trị nha khoa nào trong 3 ngày qua?</label>
+
                                 <div>
                                     <input type="radio" class="form-check-input" id="dental_work_yes" name="dental_work" value="yes" required>
                                     <label class="form-check-label me-3" for="dental_work_yes">Có</label>
                                     <input type="radio" class="form-check-input" id="dental_work_no" name="dental_work" value="no" required>
                                     <label class="form-check-label" for="dental_work_no">Không</label>
                                 </div>
+
                             </div>                            <div class="mb-3">
                                 <label class="form-label">Bạn có hình xăm hoặc xỏ khuyên mới trong 3 tháng qua không?</label>
+
                                 <div>
                                     <input type="radio" class="form-check-input" id="tattoo_piercing_yes" name="tattoo_piercing" value="yes" required>
                                     <label class="form-check-label me-3" for="tattoo_piercing_yes">Có</label>
                                     <input type="radio" class="form-check-input" id="tattoo_piercing_no" name="tattoo_piercing" value="no" required>
                                     <label class="form-check-label" for="tattoo_piercing_no">Không</label>
                                 </div>
+
                             </div>                            <div class="mb-3">
                                 <label class="form-label">Bạn đã du lịch ra nước ngoài trong 3 tháng qua không?</label>
+
                                 <div>
                                     <input type="radio" class="form-check-input" id="travel_yes" name="travel" value="yes" required>
                                     <label class="form-check-label me-3" for="travel_yes">Có</label>
                                     <input type="radio" class="form-check-input" id="travel_no" name="travel" value="no" required>
                                     <label class="form-check-label" for="travel_no">Không</label>
                                 </div>
+
                             </div>                            <div class="mb-3">
                                 <label class="form-label">Bạn có bất kỳ tình trạng sức khỏe nào sau đây không? (Chọn tất cả nếu có)</label>
+
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-check">
@@ -255,7 +271,9 @@
                                         </div>
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" id="condition_diabetes" name="conditions" value="diabetes">
+
                                             <label class="form-check-label" for="condition_diabetes">Tiểu đường không kiểm soát</label>
+
                                         </div>
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" id="condition_cancer" name="conditions" value="cancer">
@@ -273,18 +291,23 @@
                                         </div>
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" id="condition_none" name="conditions" value="none">
+
                                             <label class="form-check-label" for="condition_none">Không có tình trạng nào ở trên</label>
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                         </div>                        <div class="d-grid">
+
                             <button type="submit" class="btn btn-danger btn-lg">Kiểm Tra Điều Kiện Của Tôi</button>
                         </div>
                     </form>
 
                     <!-- Results Section (hidden initially) -->
                     <div id="eligibilityResults" class="mt-4" style="display: none;">
+
                         <div id="eligibleResult" class="alert alert-success" style="display: none;">                            <h5><i class="fas fa-check-circle me-2"></i>Tuyệt vời! Bạn có thể đủ điều kiện hiến máu.</h5>
                             <p>Dựa trên câu trả lời của bạn, bạn đáp ứng các yêu cầu điều kiện cơ bản. Lưu ý rằng việc xác định điều kiện cuối cùng sẽ do chuyên gia y tế thực hiện trong buổi hẹn của bạn.</p>
                             <a href="donate.html#schedule" class="btn btn-success">Đặt Lịch Hiến Máu</a>
@@ -297,6 +320,7 @@
                         </div>
                     </div>
                 </div>                <div class="modal-footer">
+
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                 </div>
             </div>
