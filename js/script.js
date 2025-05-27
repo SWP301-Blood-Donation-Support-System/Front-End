@@ -521,49 +521,49 @@ function evaluateEligibility() {
     // Check age requirement
     if (age < 17) {
         eligible = false;
-        reasons.push('You must be at least 17 years old to donate blood.');
+        reasons.push('Bạn phải ít nhất 17 tuổi để hiến máu.');
     }
     
-    // Check weight requirement
-    if (weight < 110) {
+    // Check weight requirement (50kg = ~110 pounds)
+    if (weight < 50) {
         eligible = false;
-        reasons.push('You must weigh at least 110 pounds to donate blood.');
+        reasons.push('Bạn phải nặng ít nhất 50 kg để hiến máu.');
     }
     
     // Check if feeling well
     if (feelingWell === 'no') {
         eligible = false;
-        reasons.push('You must be feeling well on the day of donation.');
+        reasons.push('Bạn phải cảm thấy khỏe mạnh vào ngày hiến máu.');
     }
     
     // Check recent donation
     if (recentDonation === 'yes') {
         eligible = false;
-        reasons.push('You must wait at least 8 weeks between blood donations.');
+        reasons.push('Bạn phải đợi ít nhất 8 tuần giữa các lần hiến máu.');
     }
     
     // Check antibiotics
     if (antibiotics === 'yes') {
         eligible = false;
-        reasons.push('You may need to wait until you complete your antibiotic treatment.');
+        reasons.push('Bạn có thể cần đợi cho đến khi hoàn thành quá trình điều trị kháng sinh.');
     }
     
     // Check dental work
     if (dentalWork === 'yes') {
         eligible = false;
-        reasons.push('You must wait at least 3 days after dental work before donating.');
+        reasons.push('Bạn phải đợi ít nhất 3 ngày sau khi điều trị nha khoa trước khi hiến máu.');
     }
     
     // Check tattoo/piercing
     if (tattooPiercing === 'yes') {
         eligible = false;
-        reasons.push('You must wait 3 months after getting a tattoo or piercing in an unregulated facility.');
+        reasons.push('Bạn phải đợi 3 tháng sau khi xăm hình hoặc xỏ khuyên tại cơ sở không được quản lý.');
     }
     
     // Check travel
     if (travel === 'yes') {
         eligible = false;
-        reasons.push('Recent travel may affect eligibility. Please consult with our staff about your specific travel history.');
+        reasons.push('Việc du lịch gần đây có thể ảnh hưởng đến điều kiện hiến máu. Vui lòng tham khảo ý kiến của nhân viên của chúng tôi về lịch sử du lịch cụ thể của bạn.');
     }
     
     // Check medical conditions
@@ -572,7 +572,7 @@ function evaluateEligibility() {
     
     if (hasDisqualifyingCondition) {
         eligible = false;
-        reasons.push('Certain medical conditions may affect your eligibility to donate blood.');
+        reasons.push('Một số tình trạng sức khỏe có thể ảnh hưởng đến điều kiện hiến máu của bạn.');
     }
     
     // Display results
@@ -599,14 +599,14 @@ function displayEligibilityResults(eligible, reasons) {
         
         // Display reasons for ineligibility
         if (reasons.length > 0) {
-            reasonElement.innerHTML = '<strong>Reasons:</strong><ul>' + 
+            reasonElement.innerHTML = '<strong>Lý do:</strong><ul>' + 
                 reasons.map(reason => '<li>' + reason + '</li>').join('') + 
                 '</ul>';
         }
     }
     
-    // Scroll to results
-    resultsDiv.scrollIntoView({ behavior: 'smooth' });
+    // Scroll to results without pulling up the footer
+    resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 // Reset eligibility form when modal is closed
