@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yêu Cầu Điều Kiện Hiến Máu - Hệ Thống Hỗ Trợ Hiến Máu</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/styles.css">
+    <title>Yêu Cầu Điều Kiện Hiến Máu - Hệ Thống Hỗ Trợ Hiến Máu</title>    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/eligibility.css">
 </head>
 <body>    <!-- Header Navigation - Same as index.html -->
     <header>
@@ -32,20 +31,21 @@
                         <li class="nav-item">
                             <a class="nav-link fs-6" href="faq.html">Hỏi Đáp</a>
                         </li>
-                    </ul>
-                    <div class="d-flex">
-                        <a href="login.html" class="btn btn-outline-secondary me-2">Đăng Nhập</a>
+                    </ul>                    <div class="d-flex align-items-center">
+                        <span class="me-3"><i class="fas fa-user-circle me-1"></i> Hello Huy!</span>
                         <a href="find-drive.html" class="btn btn-danger">Tìm Điểm Hiến Máu</a>
                     </div>
                 </div>
             </div>
-        </nav>
-    </header>    <!-- Page Title -->
-    <section id="hero" class="bg-danger text-white py-4">
-        <div class="container">
-            <h1>Yêu Cầu Điều Kiện Hiến Máu</h1>
-        </div>
-    </section>
+        </nav>    </header>    
+    
+    <div class="main-content">
+        <!-- Page Title -->
+        <section id="hero" class="bg-danger text-white py-4">
+            <div class="container">
+                <h1>Yêu Cầu Điều Kiện Hiến Máu</h1>
+            </div>
+        </section>
 
     <!-- Main Content -->
     <section class="py-5">
@@ -147,16 +147,13 @@
                     <div class="alert alert-warning mt-4">
                         <p class="mb-0"><strong>Lưu ý:</strong> Thông tin này được cung cấp như một hướng dẫn chung. Các yêu cầu về điều kiện có thể thay đổi theo thời gian. Quyết định cuối cùng sẽ do các chuyên gia y tế đưa ra tại thời điểm hiến máu.</p>
                     </div>
-                </div>                <div class="col-lg-4">
-                    <div class="card mb-4">
+                </div>                <div class="col-lg-4">                    <div class="card mb-4">
                         <div class="card-body">
                             <h3 class="h5">Sẵn Sàng Hiến Máu?</h3>
                             <p>Nếu bạn đáp ứng các yêu cầu về điều kiện, hãy đặt lịch hẹn hiến máu ngay hôm nay.</p>
-                            <a href="index.html#appointment" class="btn btn-danger w-100">Đặt Lịch Hẹn</a>
+                            <a href="donate.html#schedule" class="btn btn-danger w-100">Đặt Lịch Hẹn</a>
                         </div>
-                    </div>
-
-                    <div class="card mb-4">
+                    </div>                    <div class="card mb-4">
                         <div class="card-body">
                             <h3 class="h5">Bảng Câu Hỏi Kiểm Tra Điều Kiện</h3>
                             <p>Không chắc chắn về điều kiện của bạn? Hãy làm bảng câu hỏi nhanh để tìm hiểu.</p>
@@ -172,37 +169,37 @@
                             <p class="mb-0"><i class="fas fa-envelope me-2 text-danger"></i> cauhoi@hethonghienmau.org</p>
                         </div>
                     </div>
-                </div>
-            </div>
+                </div>            </div>
         </div>
     </section>
+    </div>
 
     <!-- Eligibility Questionnaire Modal -->
     <div class="modal fade" id="eligibilityModal" tabindex="-1" aria-labelledby="eligibilityModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header bg-danger text-white">
+
+            <div class="modal-content">                <div class="modal-header bg-danger text-white">
+
                     <h5 class="modal-title" id="eligibilityModalLabel">Kiểm Tra Điều Kiện Hiến Máu</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Đóng"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="eligibilityForm">
-                        <div class="mb-4">
+
+                    <form id="eligibilityForm">                        <div class="mb-4">
                             <h6 class="fw-bold">Thông Tin Cơ Bản</h6>
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="age" class="form-label">Tuổi của bạn là bao nhiêu?</label>
+                                    <label for="age" class="form-label">Bạn bao nhiêu tuổi?</label>
                                     <input type="number" class="form-control" id="age" min="1" max="120" required>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="weight" class="form-label">Cân nặng của bạn là bao nhiêu (kg)?</label>
-                                    <input type="number" class="form-control" id="weight" min="30" max="200" required>
+                                    <label for="weight" class="form-label">Bạn cân nặng bao nhiêu (kg)?</label>
+                                    <input type="number" class="form-control" id="weight" min="50" max="500" required>
                                 </div>
                             </div>
-                        </div>
+                        </div>                        <div class="mb-4">
+                            <h6 class="fw-bold">Câu Hỏi Sức Khỏe</h6>
 
-                        <div class="mb-4">
-                            <h6 class="fw-bold">Câu Hỏi Về Sức Khỏe</h6>
                             
                             <div class="mb-3">
                                 <label class="form-label">Hôm nay bạn có cảm thấy khỏe mạnh không?</label>
@@ -212,60 +209,60 @@
                                     <input type="radio" class="form-check-input" id="feeling_well_no" name="feeling_well" value="no" required>
                                     <label class="form-check-label" for="feeling_well_no">Không</label>
                                 </div>
-                            </div>
 
-                            <div class="mb-3">
-                                <label class="form-label">Bạn có hiến máu trong 8 tuần qua không?</label>
+                            </div>                            <div class="mb-3">
+                                <label class="form-label">Bạn đã hiến máu trong 8 tuần qua chưa?</label>
+
                                 <div>
                                     <input type="radio" class="form-check-input" id="recent_donation_yes" name="recent_donation" value="yes" required>
                                     <label class="form-check-label me-3" for="recent_donation_yes">Có</label>
                                     <input type="radio" class="form-check-input" id="recent_donation_no" name="recent_donation" value="no" required>
                                     <label class="form-check-label" for="recent_donation_no">Không</label>
                                 </div>
-                            </div>
 
-                            <div class="mb-3">
-                                <label class="form-label">Hiện tại bạn có đang dùng kháng sinh không?</label>
+                            </div>                            <div class="mb-3">
+                                <label class="form-label">Bạn hiện đang dùng thuốc kháng sinh?</label>
+
                                 <div>
                                     <input type="radio" class="form-check-input" id="antibiotics_yes" name="antibiotics" value="yes" required>
                                     <label class="form-check-label me-3" for="antibiotics_yes">Có</label>
                                     <input type="radio" class="form-check-input" id="antibiotics_no" name="antibiotics" value="no" required>
                                     <label class="form-check-label" for="antibiotics_no">Không</label>
                                 </div>
-                            </div>
 
-                            <div class="mb-3">
-                                <label class="form-label">Bạn có làm răng trong 3 ngày qua không?</label>
+                            </div>                            <div class="mb-3">
+                                <label class="form-label">Bạn đã trải qua bất kỳ điều trị nha khoa nào trong 3 ngày qua?</label>
+
                                 <div>
                                     <input type="radio" class="form-check-input" id="dental_work_yes" name="dental_work" value="yes" required>
                                     <label class="form-check-label me-3" for="dental_work_yes">Có</label>
                                     <input type="radio" class="form-check-input" id="dental_work_no" name="dental_work" value="no" required>
                                     <label class="form-check-label" for="dental_work_no">Không</label>
                                 </div>
-                            </div>
 
-                            <div class="mb-3">
-                                <label class="form-label">Bạn có xăm hình hoặc xỏ khuyên trong 3 tháng qua không?</label>
+                            </div>                            <div class="mb-3">
+                                <label class="form-label">Bạn có hình xăm hoặc xỏ khuyên mới trong 3 tháng qua không?</label>
+
                                 <div>
                                     <input type="radio" class="form-check-input" id="tattoo_piercing_yes" name="tattoo_piercing" value="yes" required>
                                     <label class="form-check-label me-3" for="tattoo_piercing_yes">Có</label>
                                     <input type="radio" class="form-check-input" id="tattoo_piercing_no" name="tattoo_piercing" value="no" required>
                                     <label class="form-check-label" for="tattoo_piercing_no">Không</label>
                                 </div>
-                            </div>
 
-                            <div class="mb-3">
-                                <label class="form-label">Bạn có đi du lịch nước ngoài trong 3 tháng qua không?</label>
+                            </div>                            <div class="mb-3">
+                                <label class="form-label">Bạn đã du lịch ra nước ngoài trong 3 tháng qua không?</label>
+
                                 <div>
                                     <input type="radio" class="form-check-input" id="travel_yes" name="travel" value="yes" required>
                                     <label class="form-check-label me-3" for="travel_yes">Có</label>
                                     <input type="radio" class="form-check-input" id="travel_no" name="travel" value="no" required>
                                     <label class="form-check-label" for="travel_no">Không</label>
                                 </div>
-                            </div>
 
-                            <div class="mb-3">
-                                <label class="form-label">Bạn có bất kỳ tình trạng bệnh lý nào sau đây không? (Chọn tất cả các mục phù hợp)</label>
+                            </div>                            <div class="mb-3">
+                                <label class="form-label">Bạn có bất kỳ tình trạng sức khỏe nào sau đây không? (Chọn tất cả nếu có)</label>
+
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-check">
@@ -274,7 +271,9 @@
                                         </div>
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" id="condition_diabetes" name="conditions" value="diabetes">
-                                            <label class="form-check-label" for="condition_diabetes">Tiểu đường không kiểm soát được</label>
+
+                                            <label class="form-check-label" for="condition_diabetes">Tiểu đường không kiểm soát</label>
+
                                         </div>
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" id="condition_cancer" name="conditions" value="cancer">
@@ -292,35 +291,36 @@
                                         </div>
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" id="condition_none" name="conditions" value="none">
-                                            <label class="form-check-label" for="condition_none">Không có bệnh lý nào ở trên</label>
+
+                                            <label class="form-check-label" for="condition_none">Không có tình trạng nào ở trên</label>
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="d-grid">
+                        </div>                        <div class="d-grid">
+
                             <button type="submit" class="btn btn-danger btn-lg">Kiểm Tra Điều Kiện Của Tôi</button>
                         </div>
                     </form>
 
                     <!-- Results Section (hidden initially) -->
                     <div id="eligibilityResults" class="mt-4" style="display: none;">
-                        <div id="eligibleResult" class="alert alert-success" style="display: none;">
-                            <h5><i class="fas fa-check-circle me-2"></i>Tuyệt vời! Bạn có thể đủ điều kiện hiến máu.</h5>
+
+                        <div id="eligibleResult" class="alert alert-success" style="display: none;">                            <h5><i class="fas fa-check-circle me-2"></i>Tuyệt vời! Bạn có thể đủ điều kiện hiến máu.</h5>
                             <p>Dựa trên câu trả lời của bạn, bạn đáp ứng các yêu cầu điều kiện cơ bản. Lưu ý rằng việc xác định điều kiện cuối cùng sẽ do chuyên gia y tế thực hiện trong buổi hẹn của bạn.</p>
-                            <a href="donate.html" class="btn btn-success">Đặt Lịch Hiến Máu</a>
+                            <a href="donate.html#schedule" class="btn btn-success">Đặt Lịch Hiến Máu</a>
                         </div>
-                        
-                        <div id="ineligibleResult" class="alert alert-warning" style="display: none;">
-                            <h5><i class="fas fa-exclamation-triangle me-2"></i>Hiện tại bạn có thể chưa đủ điều kiện.</h5>
+                          <div id="ineligibleResult" class="alert alert-warning" style="display: none;">
+                            <h5><i class="fas fa-exclamation-triangle me-2"></i>Bạn có thể chưa đủ điều kiện hiến máu vào lúc này.</h5>
                             <p id="ineligibleReason"></p>
-                            <p>Chúng tôi khuyên bạn nên liên hệ với nhân viên của chúng tôi để được hướng dẫn cụ thể hơn về tình trạng của bạn.</p>
+                            <p>Chúng tôi khuyên bạn nên liên hệ với nhân viên của chúng tôi để được hướng dẫn cụ thể hơn về trường hợp của bạn.</p>
                             <p><strong>Điện thoại:</strong> 1-800-RED-CROSS</p>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
+                </div>                <div class="modal-footer">
+
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                 </div>
             </div>
@@ -385,10 +385,8 @@
                 </div>
             </div>
         </div>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/js/script.js"></script>
+    </footer>    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
     <script src="js/language.js"></script>
 </body>
 </html>

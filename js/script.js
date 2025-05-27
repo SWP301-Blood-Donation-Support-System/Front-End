@@ -524,10 +524,12 @@ function evaluateEligibility() {
         reasons.push('Bạn phải ít nhất 17 tuổi để hiến máu.');
     }
     
-    // Check weight requirement (converted to kg)
+
+    // Check weight requirement (50kg = ~110 pounds)
     if (weight < 50) {
         eligible = false;
-        reasons.push('Bạn phải có cân nặng ít nhất 50kg để hiến máu.');
+        reasons.push('Bạn phải nặng ít nhất 50 kg để hiến máu.');
+
     }
     
     // Check if feeling well
@@ -539,31 +541,41 @@ function evaluateEligibility() {
     // Check recent donation
     if (recentDonation === 'yes') {
         eligible = false;
-        reasons.push('Bạn phải chờ ít nhất 8 tuần giữa các lần hiến máu.');
+
+        reasons.push('Bạn phải đợi ít nhất 8 tuần giữa các lần hiến máu.');
+
     }
     
     // Check antibiotics
     if (antibiotics === 'yes') {
         eligible = false;
-        reasons.push('Bạn có thể cần chờ đến khi hoàn thành đợt điều trị kháng sinh.');
+
+        reasons.push('Bạn có thể cần đợi cho đến khi hoàn thành quá trình điều trị kháng sinh.');
+
     }
     
     // Check dental work
     if (dentalWork === 'yes') {
         eligible = false;
-        reasons.push('Bạn phải chờ ít nhất 3 ngày sau khi làm răng trước khi hiến máu.');
+
+        reasons.push('Bạn phải đợi ít nhất 3 ngày sau khi điều trị nha khoa trước khi hiến máu.');
+
     }
     
     // Check tattoo/piercing
     if (tattooPiercing === 'yes') {
         eligible = false;
-        reasons.push('Bạn phải chờ 3 tháng sau khi xăm hình hoặc xỏ khuyên tại cơ sở không được quản lý.');
+
+        reasons.push('Bạn phải đợi 3 tháng sau khi xăm hình hoặc xỏ khuyên tại cơ sở không được quản lý.');
+
     }
     
     // Check travel
     if (travel === 'yes') {
         eligible = false;
-        reasons.push('Du lịch gần đây có thể ảnh hưởng đến điều kiện hiến máu. Vui lòng tham khảo ý kiến nhân viên về lịch sử du lịch cụ thể của bạn.');
+
+        reasons.push('Việc du lịch gần đây có thể ảnh hưởng đến điều kiện hiến máu. Vui lòng tham khảo ý kiến của nhân viên của chúng tôi về lịch sử du lịch cụ thể của bạn.');
+
     }
     
     // Check medical conditions
@@ -572,7 +584,9 @@ function evaluateEligibility() {
     
     if (hasDisqualifyingCondition) {
         eligible = false;
-        reasons.push('Một số tình trạng bệnh lý có thể ảnh hưởng đến khả năng hiến máu của bạn.');
+
+        reasons.push('Một số tình trạng sức khỏe có thể ảnh hưởng đến điều kiện hiến máu của bạn.');
+
     }
     
     // Display results
@@ -605,8 +619,8 @@ function displayEligibilityResults(eligible, reasons) {
         }
     }
     
-    // Scroll to results
-    resultsDiv.scrollIntoView({ behavior: 'smooth' });
+    // Scroll to results without pulling up the footer
+    resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 // Reset eligibility form when modal is closed
