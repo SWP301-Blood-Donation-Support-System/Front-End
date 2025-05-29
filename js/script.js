@@ -10,6 +10,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize eligibility questionnaire
     initializeEligibilityQuestionnaire();
     
+    // Initialize donation form
+    initializeDonationForm();
+    
+    // Initialize newsletter subscription
+    initializeNewsletterSubscription();
+    
     // Check for any saved appointment data in local storage
     checkSavedAppointmentData();
 });
@@ -599,15 +605,20 @@ function displayEligibilityResults(eligible, reasons) {
     const eligibleDiv = document.getElementById('eligibleResult');
     const ineligibleDiv = document.getElementById('ineligibleResult');
     const reasonElement = document.getElementById('ineligibleReason');
-    
-    // Hide form and show results
+      // Hide form and show results
     document.getElementById('eligibilityForm').style.display = 'none';
     resultsDiv.style.display = 'block';
     
+    // Hide modal footer (it contains the redundant "Đóng" button)
+    const modalFooter = document.getElementById('modalFooter');
+    if (modalFooter) modalFooter.style.display = 'none';
+    
     if (eligible) {
+        // Show eligible result with the green "Hoàn tất" button
         eligibleDiv.style.display = 'block';
         ineligibleDiv.style.display = 'none';
     } else {
+        // Show ineligible result with the gray "Đóng" button
         eligibleDiv.style.display = 'none';
         ineligibleDiv.style.display = 'block';
         
@@ -640,3 +651,149 @@ document.addEventListener('hidden.bs.modal', function(event) {
         }
     }
 });
+
+// Initialize newsletter subscription functionality
+function initializeNewsletterSubscription() {
+    // Find all newsletter subscription buttons in footers across all pages
+    const newsletterButtons = document.querySelectorAll('.input-group .btn-danger');
+    
+    newsletterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Get the email input that is a sibling to this button
+            const emailInput = this.previousElementSibling;
+            
+            if (!emailInput || emailInput.value.trim() === '') {
+                showAlert('Vui lòng nhập địa chỉ email của bạn', 'warning');
+                return;
+            }
+            
+            // Simple email validation
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(emailInput.value.trim())) {
+                showAlert('Vui lòng nhập một địa chỉ email hợp lệ', 'warning');
+                return;
+            }
+            
+            // In a real app, you would send this to your server
+            console.log('Newsletter subscription:', emailInput.value.trim());
+            
+            // Clear the input
+            emailInput.value = '';
+            
+            // Show success message
+            showAlert('Cảm ơn bạn đã đăng ký! Bạn sẽ sớm nhận được bản tin của chúng tôi.', 'success');
+        });
+    });
+    
+    // Handle the main newsletter form in the index page
+    const newsletterForm = document.getElementById('newsletterForm');
+    if (newsletterForm) {
+        newsletterForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const emailInput = this.querySelector('input[type="email"]');
+            if (!emailInput || emailInput.value.trim() === '') {
+                showAlert('Vui lòng nhập địa chỉ email của bạn', 'warning');
+                return;
+            }
+            
+            // Simple email validation
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(emailInput.value.trim())) {
+                showAlert('Vui lòng nhập một địa chỉ email hợp lệ', 'warning');
+                return;
+            }
+            
+            // In a real app, you would send this to your server
+            console.log('Monthly newsletter subscription:', emailInput.value.trim());
+            
+            // Clear the form
+            this.reset();
+            
+            // Show success message
+            showAlert('Cảm ơn bạn đã đăng ký! Bạn sẽ nhận được bản tin hàng tháng của chúng tôi.', 'success');
+        });
+    }
+}
+
+// Initialize donation form handling
+function initializeDonationForm() {
+    const donationForm = document.getElementById('donationForm');
+    if (!donationForm) return;
+    
+    // Setup donation date min value (only prevent past dates)
+    const donationDateInput = document.getElementById('donationDate');
+    if (donationDateInput) {
+        const today = new Date();
+        const todayFormatted = today.toISOString().split('T')[0];
+        
+        // Only set minimum date to prevent selecting dates in the past
+        donationDateInput.setAttribute('min', todayFormatted);
+        // Remove max attribute to allow selecting any future date
+        donationDateInput.removeAttribute('max');
+    }
+    
+    donationForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Simple form validation
+        let isValid = true;
+        let firstInvalidField = null;
+        
+        // Check required fields
+        const requiredFields = donationForm.querySelectorAll('[required]');
+        for (let i = 0; i < requiredFields.length; i++) {
+            const field = requiredFields[i];
+            if (!field.value.trim()) {
+                isValid = false;
+                field.classList.add('is-invalid');
+                if (!firstInvalidField) firstInvalidField = field;
+            } else {
+                field.classList.remove('is-invalid');
+            }
+        }
+        
+        // If form is invalid, focus on the first invalid field
+        if (!isValid) {
+            firstInvalidField.focus();
+            return;
+        }
+        
+        // Collect donation form data
+        const donationData = {
+            firstName: document.getElementById('donationFirstName').value,
+            lastName: document.getElementById('donationLastName').value,
+            email: document.getElementById('donationEmail').value,
+            phone: document.getElementById('donationPhone').value,
+            donationType: document.getElementById('donationType').value,
+            donationDate: document.getElementById('donationDate').value,
+            donationTime: document.getElementById('donationTime').value,
+            comments: document.getElementById('donationComments').value,
+            firstTime: document.getElementById('firstTimeDonor').checked
+        };
+        
+        // In a real app, you would send this data to your server
+        console.log('Donation Data:', donationData);
+          // Save to local storage
+        localStorage.setItem('donationData', JSON.stringify(donationData));
+        
+        // Reset eligibility form in case it was used before
+        const eligibilityForm = document.getElementById('eligibilityForm');
+        const resultsDiv = document.getElementById('eligibilityResults');
+        if (eligibilityForm && resultsDiv) {
+            eligibilityForm.style.display = 'block';
+            eligibilityForm.reset();
+            resultsDiv.style.display = 'none';
+            
+            // Hide result sections if they were previously shown
+            const eligibleDiv = document.getElementById('eligibleResult');
+            const ineligibleDiv = document.getElementById('ineligibleResult');
+            if (eligibleDiv) eligibleDiv.style.display = 'none';
+            if (ineligibleDiv) ineligibleDiv.style.display = 'none';
+        }
+        
+        // Show the eligibility modal immediately
+        const eligibilityModal = new bootstrap.Modal(document.getElementById('eligibilityModal'));
+        eligibilityModal.show();
+    });
+}
