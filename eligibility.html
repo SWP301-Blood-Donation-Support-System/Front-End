@@ -437,5 +437,21 @@
     <script src="js/language.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/header.js"></script>
+    <script>
+        // Check if we should automatically open the eligibility modal
+        document.addEventListener('DOMContentLoaded', function() {
+            if (localStorage.getItem('openEligibilityModal') === 'true') {
+                // Open the eligibility modal
+                const eligibilityModal = new bootstrap.Modal(document.getElementById('eligibilityModal'));
+                eligibilityModal.show();
+                
+                // Clear the flag so it doesn't open automatically next time
+                localStorage.removeItem('openEligibilityModal');
+                
+                // Optionally, scroll to the modal
+                document.getElementById('eligibilityModal').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        });
+    </script>
 </body>
 </html>
