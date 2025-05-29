@@ -15,12 +15,13 @@ function checkLoginStatus() {
     
     // Get all auth containers across pages
     const authContainers = document.querySelectorAll('.auth-container');
-    
-    authContainers.forEach(container => {
+      authContainers.forEach(container => {
         if (isLoggedIn) {            // Show logged in state with username and logout button
             container.innerHTML = `
                 <div class="d-flex align-items-center">
-                    <span class="me-3"><i class="fas fa-user-circle me-1"></i> Hello ${userName}!</span>
+                    <a href="account.html" class="text-decoration-none text-dark me-3">
+                        <span><i class="fas fa-user-circle me-1"></i> Hello ${userName}!</span>
+                    </a>
                     <button id="logoutBtn" class="btn btn-outline-secondary btn-sm me-2">Đăng Xuất</button>
                 </div>
             `;

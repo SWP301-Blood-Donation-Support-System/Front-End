@@ -99,23 +99,19 @@ body {
 }
 
 /* Ensure consistent red background color */
-.bg-danger {
+.bg-danger, .card-header.bg-danger {
     background-color: var(--primary) !important;
 }
 
-/* Ensure consistent red text color */
-.text-danger {
+/* Account link hover effect */
+.auth-container a:hover {
     color: var(--primary) !important;
+    transition: color 0.3s ease;
 }
 
-.btn-outline-danger {
-    color: var(--primary);
-    border-color: var(--primary);
-}
-
-.btn-outline-danger:hover {
-    background-color: var(--primary);
-    border-color: var(--primary);
+.auth-container a:hover i {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
 }
 
 /* Forms */
