@@ -7,14 +7,56 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/header.css">
 </head>
-<body>    <!-- Header Navigation -->
+<body>    <!-- Upper Header Part -->
+    <div class="header-top">
+        <div class="container">
+            <!-- Logo (Left) -->
+            <div class="header-logo">
+                <a href="index.html">
+                    <img src="images/logo.svg" alt="Blood Services Logo" height="40">
+                </a>
+            </div>
+            
+            <!-- Right Side Container -->
+            <div class="header-right">
+                <!-- Auth Section -->
+                <div class="header-auth">
+                    <!-- When logged out -->
+                    <button class="auth-btn" id="loginBtn">
+                        <i class="fas fa-user me-1"></i>
+                        <span class="auth-text">Đăng nhập</span>
+                    </button>
+                    
+                    <!-- When logged in (initially hidden) -->
+                    <div class="user-info" id="userInfo" style="display: none;">
+                        <span class="user-greeting">
+                            <i class="fas fa-user-circle me-1"></i>
+                            <span class="hello-text">Hello</span> <span class="user-name">Huy</span>!
+                        </span>
+                        <button class="auth-btn logged-in ms-2" id="logoutBtn">
+                            <span class="logout-text">Đăng Xuất</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Language Switcher -->
+                <div class="language-switcher">
+                    <button class="language-toggle">
+                        <span class="current-lang">VN</span>
+                        <span class="text-muted">|</span>
+                        <span class="alternate-lang">EN</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header Navigation (Lower Part) -->
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
-                <a class="navbar-brand" href="index.html">
-                    <img src="images/logo.svg" alt="Logo Hiến Máu" height="50">
-                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -26,7 +68,6 @@
                         <li class="nav-item me-4">
                             <a class="nav-link active fs-6" href="donate.html">Đặt Lịch Hiến Máu</a>
                         </li>
-
                         <li class="nav-item me-4">
                             <a class="nav-link fs-6" href="lookup.html">Tra Cứu</a>
                         </li>
@@ -35,10 +76,8 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link fs-6" href="faq.html">Hỏi Đáp</a>
-                        </li>                    </ul>                    
-                    <div class="auth-container">
-                        <!-- Auth content will be inserted by auth.js -->
-                    </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </nav>
@@ -420,239 +459,8 @@
 
     <!-- Bootstrap & JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/language.js"></script>    <!-- Eligibility Check Modal -->
-    <div class="modal fade" id="eligibilityCheckModal" tabindex="-1" aria-labelledby="eligibilityCheckModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title" id="eligibilityCheckModalLabel">Kiểm Tra Điều Kiện Hiến Máu</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Đóng"></button>
-                </div>
-                <div class="modal-body">
-                    <p class="mb-3">Cảm ơn bạn đã đăng ký hiến máu! Trước khi xác nhận buổi hẹn, vui lòng hoàn thành bảng câu hỏi điều kiện hiến máu ngắn này.</p>
-                    
-                    <form id="donationEligibilityForm">
-                        <div class="mb-4">
-                            <h6 class="fw-bold">Thông Tin Cơ Bản</h6>
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="donor_age" class="form-label">Tuổi của bạn là bao nhiêu?</label>
-                                    <input type="number" class="form-control" id="donor_age" min="1" max="120" required>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="donor_weight" class="form-label">Cân nặng của bạn là bao nhiêu (kg)?</label>
-                                    <input type="number" class="form-control" id="donor_weight" min="30" max="200" required>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mb-4">
-                            <h6 class="fw-bold">Câu Hỏi Về Sức Khỏe</h6>
-                            
-                            <div class="mb-3">
-                                <label class="form-label">Hôm nay bạn có cảm thấy khỏe mạnh không?</label>
-                                <div>
-                                    <input type="radio" class="form-check-input" id="donor_feeling_well_yes" name="donor_feeling_well" value="yes" required>
-                                    <label class="form-check-label me-3" for="donor_feeling_well_yes">Có</label>
-                                    <input type="radio" class="form-check-input" id="donor_feeling_well_no" name="donor_feeling_well" value="no" required>
-                                    <label class="form-check-label" for="donor_feeling_well_no">Không</label>
-                                </div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Bạn có hiến máu trong 8 tuần qua không?</label>
-                                <div>
-                                    <input type="radio" class="form-check-input" id="donor_recent_donation_yes" name="donor_recent_donation" value="yes" required>
-                                    <label class="form-check-label me-3" for="donor_recent_donation_yes">Có</label>
-                                    <input type="radio" class="form-check-input" id="donor_recent_donation_no" name="donor_recent_donation" value="no" required>
-                                    <label class="form-check-label" for="donor_recent_donation_no">Không</label>
-                                </div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Hiện tại bạn có đang dùng kháng sinh không?</label>
-                                <div>
-                                    <input type="radio" class="form-check-input" id="donor_antibiotics_yes" name="donor_antibiotics" value="yes" required>
-                                    <label class="form-check-label me-3" for="donor_antibiotics_yes">Có</label>
-                                    <input type="radio" class="form-check-input" id="donor_antibiotics_no" name="donor_antibiotics" value="no" required>
-                                    <label class="form-check-label" for="donor_antibiotics_no">Không</label>
-                                </div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Bạn có xăm hình hoặc xỏ khuyên trong 3 tháng qua không?</label>
-                                <div>
-                                    <input type="radio" class="form-check-input" id="donor_tattoo_piercing_yes" name="donor_tattoo_piercing" value="yes" required>
-                                    <label class="form-check-label me-3" for="donor_tattoo_piercing_yes">Có</label>
-                                    <input type="radio" class="form-check-input" id="donor_tattoo_piercing_no" name="donor_tattoo_piercing" value="no" required>
-                                    <label class="form-check-label" for="donor_tattoo_piercing_no">Không</label>
-                                </div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Bạn có đi du lịch nước ngoài trong 3 tháng qua không?</label>
-                                <div>
-                                    <input type="radio" class="form-check-input" id="donor_travel_yes" name="donor_travel" value="yes" required>
-                                    <label class="form-check-label me-3" for="donor_travel_yes">Có</label>
-                                    <input type="radio" class="form-check-input" id="donor_travel_no" name="donor_travel" value="no" required>
-                                    <label class="form-check-label" for="donor_travel_no">Không</label>
-                                </div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Bạn có bất kỳ tình trạng bệnh lý nào sau đây không? (Chọn tất cả các mục phù hợp)</label>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="donor_condition_heart" name="donor_conditions" value="heart">
-                                            <label class="form-check-label" for="donor_condition_heart">Bệnh tim</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="donor_condition_diabetes" name="donor_conditions" value="diabetes">
-                                            <label class="form-check-label" for="donor_condition_diabetes">Tiểu đường không kiểm soát được</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="donor_condition_cancer" name="donor_conditions" value="cancer">
-                                            <label class="form-check-label" for="donor_condition_cancer">Ung thư</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="donor_condition_hepatitis" name="donor_conditions" value="hepatitis">
-                                            <label class="form-check-label" for="donor_condition_hepatitis">Viêm gan B hoặc C</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="donor_condition_hiv" name="donor_conditions" value="hiv">
-                                            <label class="form-check-label" for="donor_condition_hiv">HIV/AIDS</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="donor_condition_none" name="donor_conditions" value="none">
-                                            <label class="form-check-label" for="donor_condition_none">Không có bệnh lý nào ở trên</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-danger btn-lg">Xác Nhận & Hoàn Tất Đăng Ký</button>
-                        </div>
-                    </form>
-
-                    <!-- Results Section (hidden initially) -->
-                    <div id="donorEligibilityResults" class="mt-4" style="display: none;">
-                        <div id="donorEligibleResult" class="alert alert-success" style="display: none;">
-                            <h5><i class="fas fa-check-circle me-2"></i>Tuyệt vời! Bạn đủ điều kiện hiến máu.</h5>
-                            <p>Dựa trên câu trả lời của bạn, bạn đáp ứng các yêu cầu điều kiện cơ bản. Buổi hẹn hiến máu của bạn đã được xác nhận.</p>
-                            <p>Chúng tôi sẽ gửi email xác nhận chi tiết về buổi hẹn trong thời gian sớm nhất. Cảm ơn bạn đã đăng ký!</p>
-                            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Hoàn Tất</button>
-                        </div>
-                        
-                        <div id="donorIneligibleResult" class="alert alert-warning" style="display: none;">
-                            <h5><i class="fas fa-exclamation-triangle me-2"></i>Hiện tại bạn có thể chưa đủ điều kiện.</h5>
-                            <p id="donorIneligibleReason"></p>
-                            <p>Chúng tôi khuyên bạn nên liên hệ với nhân viên y tế của chúng tôi để được hướng dẫn cụ thể và kiểm tra lại điều kiện của bạn.</p>
-                            <p><strong>Điện thoại:</strong> 1-800-RED-CROSS</p>
-                            <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Đóng</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <script>
-        // Form submission for donation appointment
-        document.getElementById('donationForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Collect form data
-            const formData = {
-                firstName: document.getElementById('donationFirstName').value,
-                lastName: document.getElementById('donationLastName').value,
-                email: document.getElementById('donationEmail').value,
-                phone: document.getElementById('donationPhone').value,
-                donationType: document.getElementById('donationType').value,
-                date: document.getElementById('donationDate').value,
-                time: document.getElementById('donationTime').value,
-                location: document.getElementById('donationLocation').value,
-                comments: document.getElementById('donationComments').value,
-                firstTime: document.getElementById('firstTimeDonor').checked
-            };
-            
-            // Store form data for later use
-            sessionStorage.setItem('donationFormData', JSON.stringify(formData));
-            
-            // Show eligibility check modal
-            const eligibilityModal = new bootstrap.Modal(document.getElementById('eligibilityCheckModal'));
-            eligibilityModal.show();
-        });
-        
-        // Eligibility check form submission
-        document.getElementById('donationEligibilityForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Hide form and show results
-            this.style.display = 'none';
-            document.getElementById('donorEligibilityResults').style.display = 'block';
-            
-            // Check eligibility
-            const age = parseInt(document.getElementById('donor_age').value);
-            const weight = parseInt(document.getElementById('donor_weight').value);
-            const feelingWell = document.querySelector('input[name="donor_feeling_well"]:checked').value;
-            const recentDonation = document.querySelector('input[name="donor_recent_donation"]:checked').value;
-            const antibiotics = document.querySelector('input[name="donor_antibiotics"]:checked').value;
-            const tattooPiercing = document.querySelector('input[name="donor_tattoo_piercing"]:checked').value;
-            const noneMedicalCondition = document.getElementById('donor_condition_none').checked;
-            
-            // Check if eligible
-            let isEligible = true;
-            let reasons = [];
-            
-            if (age < 17) {
-                isEligible = false;
-                reasons.push("Bạn phải ít nhất 17 tuổi để hiến máu.");
-            }
-            
-            if (weight < 50) {
-                isEligible = false;
-                reasons.push("Bạn phải nặng ít nhất 50kg để hiến máu.");
-            }
-            
-            if (feelingWell === 'no') {
-                isEligible = false;
-                reasons.push("Bạn phải cảm thấy khỏe mạnh vào ngày hiến máu.");
-            }
-            
-            if (recentDonation === 'yes') {
-                isEligible = false;
-                reasons.push("Bạn đã hiến máu trong 8 tuần qua. Vui lòng đợi ít nhất 8 tuần giữa các lần hiến máu toàn phần.");
-            }
-            
-            if (antibiotics === 'yes') {
-                isEligible = false;
-                reasons.push("Bạn đang dùng kháng sinh. Vui lòng đợi cho đến khi hoàn thành điều trị.");
-            }
-            
-            if (tattooPiercing === 'yes') {
-                isEligible = false;
-                reasons.push("Bạn đã xăm hình hoặc xỏ khuyên trong 3 tháng qua. Vui lòng đợi ít nhất 3 tháng sau khi xăm hình hoặc xỏ khuyên.");
-            }
-            
-            if (!noneMedicalCondition) {
-                isEligible = false;
-                reasons.push("Các tình trạng y tế bạn đã chọn có thể ảnh hưởng đến khả năng hiến máu của bạn.");
-            }
-            
-            // Show appropriate result
-            if (isEligible) {
-                document.getElementById('donorEligibleResult').style.display = 'block';
-            } else {
-                document.getElementById('donorIneligibleReason').innerHTML = reasons.join('<br>');
-                document.getElementById('donorIneligibleResult').style.display = 'block';
-            }
-        });
-    </script>
+    <script src="js/script.js"></script>
     <script src="js/auth.js"></script>
+    <script src="js/header.js"></script>
 </body>
 </html> 
