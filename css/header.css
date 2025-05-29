@@ -194,6 +194,26 @@
     margin-left: 4px;
 }
 
+/* User greeting link hover effects */
+.user-greeting:hover {
+    color: #DC052D !important;
+    text-decoration: none !important;
+    transition: color 0.3s ease;
+}
+
+.user-greeting:hover i {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}
+
+.user-greeting:hover .hello-text {
+    color: #DC052D;
+}
+
+.user-greeting:hover .user-name {
+    color: #DC052D;
+}
+
 /* Lower Navigation */
 .navbar {
     margin-bottom: 0;
