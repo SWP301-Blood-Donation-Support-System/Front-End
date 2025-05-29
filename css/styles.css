@@ -53,6 +53,12 @@ body {
     overflow: hidden;
 }
 
+/* Full width hero for specific pages */
+body[data-page="lookup"] #hero,
+body[data-page="faq"] #hero {
+    margin: 0;
+}
+
 #hero::before {
     content: '';
     position: absolute;
@@ -277,6 +283,12 @@ footer a:hover {
     #hero {
         margin: 0 20px;
     }
+    
+    /* Full width hero for specific pages on tablet */
+    body[data-page="lookup"] #hero,
+    body[data-page="faq"] #hero {
+        margin: 0;
+    }
 }
 
 @media (max-width: 576px) {
@@ -291,6 +303,13 @@ footer a:hover {
     #hero {
         text-align: center;
         margin: 0 12px;
+    }
+    
+    /* Full width hero for specific pages on mobile */
+    body[data-page="lookup"] #hero,
+    body[data-page="faq"] #hero {
+        margin: 0;
+        text-align: center;
     }
 }
 
