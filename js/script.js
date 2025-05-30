@@ -70,18 +70,7 @@ function setupEventListeners() {
         submitAppointmentBtn.addEventListener('click', function() {
             handleAppointmentSubmission();
         });
-    }
-
-    // Guide form submission
-    const guideForm = document.getElementById('guideForm');
-    if (guideForm) {
-        guideForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            handleGuideFormSubmission();
-        });
-    }
-
-    // Appointment date change - to update available times
+    }    // Appointment date change - to update available times
     const apptDate = document.getElementById('apptDate');
     if (apptDate) {
         apptDate.addEventListener('change', function() {
@@ -186,11 +175,9 @@ function handleAppointmentSubmission() {
         firstInvalidField.focus();
         return;
     }
-    
-    // Collect form data
+      // Collect form data
     const appointmentData = {
-        firstName: document.getElementById('apptFirstName').value,
-        lastName: document.getElementById('apptLastName').value,
+        fullName: document.getElementById('apptFullName').value,
         email: document.getElementById('apptEmail').value,
         phone: document.getElementById('apptPhone').value,
         location: document.getElementById('apptLocation').options[document.getElementById('apptLocation').selectedIndex].text,
@@ -211,31 +198,6 @@ function handleAppointmentSubmission() {
     
     // Show success message
     showAlert('Your appointment has been scheduled successfully!', 'success');
-}
-
-// Handle guide form submission
-function handleGuideFormSubmission() {
-    // Get form data
-    const firstName = document.getElementById('firstName').value.trim();
-    const lastName = document.getElementById('lastName').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const zipCode = document.getElementById('zipCode').value.trim();
-    
-    // Simple validation
-    if (!firstName || !lastName || !email || !zipCode) {
-        showAlert('Please fill in all required fields', 'warning');
-        return;
-    }
-    
-    // In a real app, you would send this data to your server
-    const guideData = { firstName, lastName, email, zipCode };
-    console.log('Guide Request Data:', guideData);
-    
-    // Reset form
-    document.getElementById('guideForm').reset();
-    
-    // Show success message
-    showAlert('Thank you! Your donor guide will be sent to your email shortly.', 'success');
 }
 
 // Search for blood drives by ZIP code
@@ -757,12 +719,11 @@ function initializeDonationForm() {
         if (!isValid) {
             firstInvalidField.focus();
             return;
-        }
+        }          // Collect donation form data
+        const fullName = document.getElementById('donationFullName').value;
         
-        // Collect donation form data
         const donationData = {
-            firstName: document.getElementById('donationFirstName').value,
-            lastName: document.getElementById('donationLastName').value,
+            fullName: fullName,
             email: document.getElementById('donationEmail').value,
             phone: document.getElementById('donationPhone').value,
             donationType: document.getElementById('donationType').value,

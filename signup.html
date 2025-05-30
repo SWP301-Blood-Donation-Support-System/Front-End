@@ -90,15 +90,10 @@
                             <h2 class="text-center mb-4">Tạo Tài Khoản Của Bạn</h2>
                             <p class="text-center text-muted mb-4">Tham gia cộng đồng của chúng tôi và tạo sự khác biệt bằng cách hiến máu.</p>
                             
-                            <form id="signupForm">
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="firstName" class="form-label">Tên <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="firstName" required>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="lastName" class="form-label">Họ <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="lastName" required>
+                            <form id="signupForm">                                <div class="row">
+                                    <div class="col-md-12 mb-3">
+                                        <label for="fullName" class="form-label">Họ và Tên <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="fullName" required>
                                     </div>
                                 </div>
                                 
@@ -291,11 +286,11 @@
             if (password !== confirmPassword) {
                 alert('Mật khẩu không khớp.');
                 return;
-            }
-              // Collect form data
+            }            // Collect form data
+            const fullName = document.getElementById('fullName').value;
+
             const formData = {
-                firstName: document.getElementById('firstName').value,
-                lastName: document.getElementById('lastName').value,
+                fullName: fullName,
                 email: document.getElementById('email').value,
                 phone: document.getElementById('phone').value,
                 password: password,
@@ -308,11 +303,14 @@
             };
               // Here you would normally send the data to your server
             console.log('Registration data:', formData);
-              // For demo purposes, simulate successful registration
-            
-            // Save login state to localStorage
+              // For demo purposes, simulate successful registration            // Save login state and user data to localStorage
             localStorage.setItem('isLoggedIn', 'true');
-            localStorage.setItem('userName', 'Huy');
+            localStorage.setItem('userName', fullName);
+            localStorage.setItem('userFullName', formData.fullName);
+            localStorage.setItem('userEmail', formData.email);
+            localStorage.setItem('userPhone', formData.phone);
+            localStorage.setItem('userBirthDate', formData.dateOfBirth);
+            localStorage.setItem('userBloodType', formData.bloodType);
               
             alert('Tài khoản đã được tạo thành công! Bạn sẽ được chuyển đến trang chủ.');
             window.location.href = 'index.html';});
