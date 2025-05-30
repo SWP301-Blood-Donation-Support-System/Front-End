@@ -62,13 +62,12 @@
                         <i class="fas fa-user me-1"></i>
                         <span class="auth-text">Đăng nhập</span>
                     </button>
-                    
-                    <!-- When logged in (initially hidden) -->
+                      <!-- When logged in (initially hidden) -->
                     <div class="user-info" id="userInfo" style="display: none;">
-                        <span class="user-greeting">
+                        <a href="account.html" class="user-greeting text-decoration-none text-dark">
                             <i class="fas fa-user-circle me-1"></i>
                             <span class="hello-text">Hello</span> <span class="user-name">Huy</span>!
-                        </span>
+                        </a>
                         <button class="auth-btn logged-in ms-2" id="logoutBtn">
                             <span class="logout-text">Đăng Xuất</span>
                         </button>
@@ -76,13 +75,13 @@
                 </div>
                 
                 <!-- Language Switcher -->
-                <div class="language-switcher">
+                <!-- <div class="language-switcher">
                     <button class="language-toggle">
                         <span class="current-lang">VN</span>
                         <span class="text-muted">|</span>
                         <span class="alternate-lang">EN</span>
                     </button>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -104,9 +103,8 @@
                         </li>
                         <li class="nav-item me-4">
                             <a class="nav-link active fs-6" href="lookup.html">Tra Cứu</a>
-                        </li>
-                        <li class="nav-item me-4">
-                            <a class="nav-link fs-6" href="index.html#host">Tin Tức</a>
+                        </li>                        <li class="nav-item me-4">
+                            <a class="nav-link fs-6" href="#host">Tin Tức</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link fs-6" href="faq.html">Hỏi Đáp</a>
@@ -184,7 +182,7 @@
                 <div class="col-lg-3 col-md-6 mb-4">
                     <div class="card blood-type-card h-100 border-danger">
                         <div class="card-header bg-danger text-white text-center">
-                            <h3 class="h4 mb-0">O-</h3>
+                            <h3 class="h4 mb-0 text-white">O-</h3>
                             <small>Người Hiến Máu Vạn Năng</small>
                         </div>
                         <div class="card-body">
@@ -200,7 +198,7 @@
                 <div class="col-lg-3 col-md-6 mb-4">
                     <div class="card blood-type-card h-100 border-primary">
                         <div class="card-header bg-primary text-white text-center">
-                            <h3 class="h4 mb-0">AB+</h3>
+                            <h3 class="h4 mb-0 text-white">AB+</h3>
                             <small>Người Nhận Vạn Năng</small>
                         </div>
                         <div class="card-body">
@@ -216,7 +214,7 @@
                 <div class="col-lg-3 col-md-6 mb-4">
                     <div class="card blood-type-card h-100 border-success">
                         <div class="card-header bg-success text-white text-center">
-                            <h3 class="h4 mb-0">O+</h3>
+                            <h3 class="h4 mb-0 text-white">O+</h3>
                             <small>Phổ Biến Nhất</small>
                         </div>
                         <div class="card-body">
@@ -232,7 +230,7 @@
                 <div class="col-lg-3 col-md-6 mb-4">
                     <div class="card blood-type-card h-100 border-warning">
                         <div class="card-header bg-warning text-white text-center">
-                            <h3 class="h4 mb-0">A+</h3>
+                            <h3 class="h4 mb-0 text-white">A+</h3>
                             <small>Phổ Biến</small>
                         </div>
                         <div class="card-body">
@@ -572,31 +570,29 @@
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-dark text-white py-4">
+    </section>    <!-- Footer -->
+    <footer class="bg-dark text-white py-5 mt-5">
         <div class="container">
             <div class="row">
-                <div class="col-md-3 mb-4 mb-md-0">
+                <div class="col-md-3 mb-4">
                     <h5>Về Chúng Tôi</h5>
                     <ul class="list-unstyled">
                         <li><a href="#" class="text-white-50">Sứ Mệnh</a></li>
                         <li><a href="#" class="text-white-50">Lịch Sử</a></li>
                         <li><a href="#" class="text-white-50">Ban Lãnh Đạo</a></li>
-                        <li><a href="#" class="text-white-50">Tài Chính</a></li>
+                        <li><a href="#" class="text-white-50">Báo Cáo Thường Niên</a></li>
                     </ul>
                 </div>
-                <div class="col-md-3 mb-4 mb-md-0">
+                <div class="col-md-3 mb-4">
                     <h5>Hiến Máu</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-white-50">Yêu Cầu Điều Kiện</a></li>
-                        <li><a href="#" class="text-white-50">Các Loại Hiến Máu</a></li>
+                        <li><a href="#" class="text-white-50">Yêu Cầu Về Điều Kiện</a></li>
+                        <li><a href="#" class="text-white-50">Các Loại Hiến Tặng</a></li>
                         <li><a href="#" class="text-white-50">Những Điều Cần Biết</a></li>
                         <li><a href="#" class="text-white-50">Tìm Điểm Hiến Máu</a></li>
                     </ul>
                 </div>
-                <div class="col-md-3 mb-4 mb-md-0">
+                <div class="col-md-3 mb-4">
                     <h5>Dịch Vụ Máu</h5>
                     <ul class="list-unstyled">
                         <li><a href="#" class="text-white-50">Xét Nghiệm Máu</a></li>
@@ -605,30 +601,30 @@
                         <li><a href="#" class="text-white-50">Hỗ Trợ Y Tế</a></li>
                     </ul>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 mb-4">
                     <h5>Kết Nối Với Chúng Tôi</h5>
-                    <div class="mb-2">
-                        <a href="#" class="text-white me-2"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-white me-2"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="text-white me-2"><i class="fab fa-youtube"></i></a>
+                    <div class="d-flex gap-3 mb-3">
+                        <a href="#" class="text-white-50 fs-4"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-white-50 fs-4"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white-50 fs-4"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white-50 fs-4"><i class="fab fa-youtube"></i></a>
                     </div>
-                    <p class="small text-white-50">Đăng ký nhận bản tin để cập nhật thông tin về hiến máu và các cơ hội hiến máu.</p>
+                    <h6>Đăng Ký Nhận Thông Tin</h6>
                     <div class="input-group">
-                        <input type="email" class="form-control form-control-sm" placeholder="Email của bạn">
-                        <button class="btn btn-danger btn-sm" type="button">Đăng Ký</button>
+                        <input type="email" class="form-control" placeholder="Email của bạn">
+                        <button class="btn btn-danger" type="button">Đăng Ký</button>
                     </div>
                 </div>
             </div>
-            <hr class="my-4 bg-secondary">
+            <hr class="my-4">
             <div class="row">
-                <div class="col-md-6 small text-white-50">
-                    &copy; 2025 Hệ Thống Hỗ Trợ Hiến Máu. Tất cả các quyền được bảo lưu.
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2025 Hệ Thống Hỗ Trợ Hiến Máu. Đã đăng ký bản quyền.</p>
                 </div>
-                <div class="col-md-6 text-md-end small">
+                <div class="col-md-6 text-md-end">
                     <a href="#" class="text-white-50 me-3">Chính Sách Bảo Mật</a>
                     <a href="#" class="text-white-50 me-3">Điều Khoản Dịch Vụ</a>
-                    <a href="#" class="text-white-50">Liên Hệ</a>
+                    <a href="#" class="text-white-50">Khả Năng Tiếp Cận</a>
                 </div>
             </div>
         </div>

@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông Tin Tài Khoản - Hệ Thống Hỗ Trợ Hiến Máu</title>    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/header.css">
+</head>
+<body>
+    <!-- Upper Header Part -->
+    <div class="header-top">
+        <div class="container">
+            <!-- Logo (Left) -->
+            <div class="header-logo">
+                <a href="index.html">
+                    <img src="images/logo.svg" alt="Blood Services Logo" height="40">
+                </a>
+            </div>
+            
+            <!-- Right Side Container -->
+            <div class="header-right">
+                <!-- Auth Section -->
+                <div class="header-auth">
+                    <!-- When logged out -->
+                    <button class="auth-btn" id="loginBtn">
+                        <i class="fas fa-user me-1"></i>
+                        <span class="auth-text">Đăng nhập</span>
+                    </button>
+                    
+                    <!-- When logged in (initially hidden) -->
+                   <div class="user-info" id="userInfo" style="display: none;">
+                        <a href="account.html" class="user-greeting text-decoration-none text-dark">
+                            <i class="fas fa-user-circle me-1"></i>
+                            <span class="hello-text">Hello</span> <span class="user-name">Huy</span>!
+                        </a>
+                        <button class="auth-btn logged-in ms-2" id="logoutBtn">
+                            <span class="logout-text">Đăng Xuất</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Language Switcher -->
+                <!-- <div class="language-switcher">
+                    <button class="language-toggle">
+                        <span class="current-lang">VN</span>
+                        <span class="text-muted">|</span>
+                        <span class="alternate-lang">EN</span>
+                    </button>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Header Navigation (Lower Part) -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item me-4">
+                            <a class="nav-link fs-6" href="index.html">Trang Chủ</a>
+                        </li>
+                        <li class="nav-item me-4">
+                            <a class="nav-link fs-6" href="donate.html">Đặt Lịch Hiến Máu</a>
+                        </li>
+                        <li class="nav-item me-4">
+                            <a class="nav-link fs-6" href="lookup.html">Tra Cứu</a>
+                        </li>
+                        <li class="nav-item me-4">
+                            <a class="nav-link fs-6" href="#host">Tin Tức</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fs-6" href="faq.html">Hỏi Đáp</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Page Header -->
+    
+
+    <!-- Account Information Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <!-- Profile Information -->
+                <div class="col-lg-8 mb-4">
+                    <div class="card shadow border-0">
+                        <div class="card-header bg-danger text-white py-3">
+                            <h3 class="h4 mb-0"><i class="fas fa-user me-2"></i>Thông Tin Cá Nhân</h3>
+                        </div>
+                        <div class="card-body p-4">
+                            <form id="profileForm">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="firstName" class="form-label">Tên <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="firstName" value="Huy" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="lastName" class="form-label">Họ <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="lastName" value="Nguyễn" required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                                        <input type="email" class="form-control" id="email" value="huy.nguyen@example.com" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="phone" class="form-label">Số Điện Thoại <span class="text-danger">*</span></label>
+                                        <input type="tel" class="form-control" id="phone" value="0123456789" required>
+                                    </div>
+                                </div>                                <div class="row">
+                                    <div class="col-md-12 mb-3">
+                                        <label for="birthDate" class="form-label">Ngày Sinh</label>
+                                        <input type="date" class="form-control" id="birthDate" value="1995-05-15">
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="address" class="form-label">Địa Chỉ</label>
+                                    <textarea class="form-control" id="address" rows="2">123 Đường ABC, Quận 1, TP.HCM</textarea>
+                                </div>
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <button type="submit" class="btn btn-danger">Cập Nhật Thông Tin</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Account Summary & Actions -->
+                <div class="col-lg-4">
+                    <!-- Account Summary -->
+                    <div class="card shadow border-0 mb-4">
+                        <div class="card-header bg-primary text-white py-3">
+                            <h3 class="h5 mb-0"><i class="fas fa-chart-line me-2"></i>Tóm Tắt Tài Khoản</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span>Tổng Lần Hiến Máu:</span>
+                                <span class="badge bg-danger fs-6">5</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span>Lần Hiến Gần Nhất:</span>
+                                <small class="text-muted">15/03/2025</small>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span>Lần Hiến Tiếp Theo:</span>
+                                <small class="text-success">10/05/2025</small>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span>Trạng Thái:</span>
+                                <span class="badge bg-success">Đủ Điều Kiện</span>
+                            </div>                        </div>
+                    </div>
+
+                    <!-- Blood Type Information -->
+                    <div class="card shadow border-0 mb-4">
+                        <div class="card-header bg-danger text-white py-3">
+                            <h3 class="h5 mb-0"><i class="fas fa-tint me-2"></i>Thông Tin Nhóm Máu</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span>Nhóm Máu:</span>
+                                <span class="badge bg-danger fs-6" id="displayBloodType">A+</span>
+                            </div>
+                        </div>                 
+                     </div>
+                </div>
+            </div>
+
+            <!-- Donation History Section -->
+            <div class="row mt-5">
+                <div class="col-12">
+                    <div class="card shadow border-0" id="donationHistory">
+                        <div class="card-header bg-info text-white py-3">
+                            <h3 class="h4 mb-0"><i class="fas fa-history me-2"></i>Lịch Sử Hiến Máu</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Ngày Hiến</th>
+                                            <th>Loại Hiến Máu</th>
+                                         
+                                            <th>Kết Quả</th>
+                                            <th>Ghi Chú</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>15/03/2025</td>
+                                            <td><span class="badge bg-primary">Máu Toàn Phần</span></td>
+                                            <td><span class="badge bg-success">Thành Công</span></td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td>28/01/2025</td>
+                                            <td><span class="badge bg-warning">Tiểu Cầu</span></td>
+                                            <td><span class="badge bg-success">Thành Công</span></td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td>20/11/2024</td>
+                                            <td><span class="badge bg-primary">Máu Toàn Phần</span></td>
+                                            <td><span class="badge bg-success">Thành Công</span></td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td>05/09/2024</td>
+                                            <td><span class="badge bg-info">Huyết Tương</span></td>
+                                            <td><span class="badge bg-success">Thành Công</span></td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td>18/07/2024</td>
+                                            <td><span class="badge bg-primary">Máu Toàn Phần</span></td>
+                                            <td><span class="badge bg-success">Thành Công</span></td>
+                                            <td>-</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Change Password Modal -->
+    <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-warning text-dark">
+                    <h5 class="modal-title" id="changePasswordModalLabel">Đổi Mật Khẩu</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="changePasswordForm">
+                        <div class="mb-3">
+                            <label for="currentPassword" class="form-label">Mật Khẩu Hiện Tại <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control" id="currentPassword" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="newPassword" class="form-label">Mật Khẩu Mới <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control" id="newPassword" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Xác Nhận Mật Khẩu Mới <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control" id="confirmPassword" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" form="changePasswordForm" class="btn btn-warning">Đổi Mật Khẩu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Emergency Contact Modal -->
+    
+    </div>    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 mb-4 mb-md-0">
+                    <h5>Về Chúng Tôi</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white-50">Sứ Mệnh</a></li>
+                        <li><a href="#" class="text-white-50">Lịch Sử</a></li>
+                        <li><a href="#" class="text-white-50">Ban Lãnh Đạo</a></li>
+                        <li><a href="#" class="text-white-50">Tài Chính</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4 mb-md-0">
+                    <h5>Hiến Máu</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white-50">Yêu Cầu Về Điều Kiện</a></li>
+                        <li><a href="#" class="text-white-50">Các Loại Hiến Tặng</a></li>
+                        <li><a href="#" class="text-white-50">Những Điều Cần Biết</a></li>
+                        <li><a href="#" class="text-white-50">Tìm Điểm Hiến Máu</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4 mb-md-0">
+                    <h5>Dịch Vụ Máu</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white-50">Xét Nghiệm Máu</a></li>
+                        <li><a href="#" class="text-white-50">Dịch Vụ Huyết Tương</a></li>
+                        <li><a href="#" class="text-white-50">Máu Khẩn Cấp</a></li>
+                        <li><a href="#" class="text-white-50">Hỗ Trợ Y Tế</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Kết Nối Với Chúng Tôi</h5>
+                    <div class="mb-2">
+                        <a href="#" class="text-white me-2"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-youtube"></i></a>
+                    </div>
+                    <p class="small text-white-50">Đăng ký nhận bản tin của chúng tôi để cập nhật thông tin về hiến máu và các cơ hội tham gia.</p>
+                    <div class="input-group">
+                        <input type="email" class="form-control form-control-sm" placeholder="Email của bạn">
+                        <button class="btn btn-danger btn-sm" type="button">Đăng Ký</button>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4 bg-secondary">
+            <div class="row">
+                <div class="col-md-6 small text-white-50">
+                    &copy; 2025 Hệ Thống Hỗ Trợ Hiến Máu. Đã đăng ký bản quyền.
+                </div>
+                <div class="col-md-6 text-md-end small">
+                    <a href="#" class="text-white-50 me-3">Chính Sách Bảo Mật</a>
+                    <a href="#" class="text-white-50 me-3">Điều Khoản Dịch Vụ</a>
+                    <a href="#" class="text-white-50">Liên Hệ</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap & JavaScript -->    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/header.js"></script>
+
+    <script>
+        // Page-specific JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in, redirect if not
+            if (localStorage.getItem('isLoggedIn') !== 'true') {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Profile form submission
+            document.getElementById('profileForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                  // Get form data
+                const formData = {
+                    firstName: document.getElementById('firstName').value,
+                    lastName: document.getElementById('lastName').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    birthDate: document.getElementById('birthDate').value,
+                    address: document.getElementById('address').value
+                };
+                
+                // Update localStorage with user name
+                localStorage.setItem('userName', formData.firstName);
+                
+                // Show success message
+                showAlert('Thông tin tài khoản đã được cập nhật thành công!', 'success');
+                
+                // Update auth display
+                checkLoginStatus();
+            });
+
+            // Change password modal
+            document.getElementById('changePasswordBtn').addEventListener('click', function() {
+                const modal = new bootstrap.Modal(document.getElementById('changePasswordModal'));
+                modal.show();
+            });
+
+            // Change password form submission
+            document.getElementById('changePasswordForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const currentPassword = document.getElementById('currentPassword').value;
+                const newPassword = document.getElementById('newPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                
+                // Validate passwords
+                if (newPassword !== confirmPassword) {
+                    showAlert('Mật khẩu mới và xác nhận mật khẩu không khớp!', 'danger');
+                    return;
+                }
+                
+                if (newPassword.length < 6) {
+                    showAlert('Mật khẩu mới phải có ít nhất 6 ký tự!', 'warning');
+                    return;
+                }
+                
+                // Simulate password change
+                showAlert('Mật khẩu đã được thay đổi thành công!', 'success');
+                
+                // Close modal and reset form
+                const modal = bootstrap.Modal.getInstance(document.getElementById('changePasswordModal'));
+                modal.hide();
+                document.getElementById('changePasswordForm').reset();
+            });
+
+            // Emergency contact modal
+            document.getElementById('editEmergencyContact').addEventListener('click', function() {
+                const modal = new bootstrap.Modal(document.getElementById('emergencyContactModal'));
+                modal.show();
+            });
+
+            // Emergency contact form submission
+            document.getElementById('emergencyContactForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Show success message
+                showAlert('Thông tin liên hệ khẩn cấp đã được cập nhật!', 'success');
+                
+                // Close modal
+                const modal = bootstrap.Modal.getInstance(document.getElementById('emergencyContactModal'));
+                modal.hide();
+            });            // Cancel edit button
+            document.getElementById('cancelEdit').addEventListener('click', function() {
+                // Reset form to original values
+                document.getElementById('profileForm').reset();
+                showAlert('Đã hủy chỉnh sửa thông tin.', 'info');
+            });
+
+            // Blood type update functionality
+            document.getElementById('updateBloodType').addEventListener('click', function() {
+                const selectedBloodType = document.getElementById('bloodType').value;
+                
+                if (!selectedBloodType) {
+                    showAlert('Vui lòng chọn nhóm máu!', 'warning');
+                    return;
+                }
+                
+                // Update the display
+                document.getElementById('displayBloodType').textContent = selectedBloodType;
+                
+                // Save to localStorage (you could save this to a server in a real application)
+                localStorage.setItem('userBloodType', selectedBloodType);
+                
+                showAlert('Nhóm máu đã được cập nhật thành công!', 'success');
+            });
+
+            // Load saved blood type on page load
+            const savedBloodType = localStorage.getItem('userBloodType');
+            if (savedBloodType) {
+                document.getElementById('bloodType').value = savedBloodType;
+                document.getElementById('displayBloodType').textContent = savedBloodType;
+            }
+        });
+
+        // Display alert message (reuse from auth.js)
+        function showAlert(message, type = 'info') {
+            let alertContainer = document.getElementById('alertContainer');
+            if (!alertContainer) {
+                alertContainer = document.createElement('div');
+                alertContainer.id = 'alertContainer';
+                alertContainer.style.position = 'fixed';
+                alertContainer.style.top = '20px';
+                alertContainer.style.right = '20px';
+                alertContainer.style.zIndex = '9999';
+                document.body.appendChild(alertContainer);
+            }
+            
+            const alertEl = document.createElement('div');
+            alertEl.className = `alert alert-${type} alert-dismissible fade show`;
+            alertEl.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+            
+            alertContainer.appendChild(alertEl);
+            
+            setTimeout(function() {
+                alertEl.classList.remove('show');
+                setTimeout(function() {
+                    if (alertContainer.contains(alertEl)) {
+                        alertContainer.removeChild(alertEl);
+                    }
+                }, 150);
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
