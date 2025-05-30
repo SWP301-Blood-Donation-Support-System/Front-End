@@ -42,13 +42,13 @@
                 </div>
                 
                 <!-- Language Switcher -->
-                <div class="language-switcher">
+                <!-- <div class="language-switcher">
                     <button class="language-toggle">
                         <span class="current-lang">VN</span>
                         <span class="text-muted">|</span>
                         <span class="alternate-lang">EN</span>
                     </button>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -171,27 +171,8 @@
                                 <span>Nhóm Máu:</span>
                                 <span class="badge bg-danger fs-6" id="displayBloodType">A+</span>
                             </div>
-                            <div class="mb-3">
-                                <label for="bloodType" class="form-label">Cập Nhật Nhóm Máu</label>
-                                <select class="form-select" id="bloodType">
-                                    <option value="">Chọn nhóm máu</option>
-                                    <option value="O+">O+</option>
-                                    <option value="O-">O-</option>
-                                    <option value="A+" selected>A+</option>
-                                    <option value="A-">A-</option>
-                                    <option value="B+">B+</option>
-                                    <option value="B-">B-</option>
-                                    <option value="AB+">AB+</option>
-                                    <option value="AB-">AB-</option>
-                                </select>
-                            </div>
-                            <button type="button" class="btn btn-outline-danger btn-sm w-100" id="updateBloodType">
-                                <i class="fas fa-sync-alt me-2"></i>Cập Nhật Nhóm Máu
-                            </button>
-                        </div>                    </div>
-
-                  
-                   
+                        </div>                 
+                     </div>
                 </div>
             </div>
 
@@ -209,7 +190,7 @@
                                         <tr>
                                             <th>Ngày Hiến</th>
                                             <th>Loại Hiến Máu</th>
-                                            <th>Địa Điểm</th>
+                                         
                                             <th>Kết Quả</th>
                                             <th>Ghi Chú</th>
                                         </tr>
@@ -218,35 +199,30 @@
                                         <tr>
                                             <td>15/03/2025</td>
                                             <td><span class="badge bg-primary">Máu Toàn Phần</span></td>
-                                            <td>Bệnh viện Chợ Rẫy</td>
                                             <td><span class="badge bg-success">Thành Công</span></td>
                                             <td>-</td>
                                         </tr>
                                         <tr>
                                             <td>28/01/2025</td>
                                             <td><span class="badge bg-warning">Tiểu Cầu</span></td>
-                                            <td>Bệnh viện Đại học Y Dược</td>
                                             <td><span class="badge bg-success">Thành Công</span></td>
                                             <td>-</td>
                                         </tr>
                                         <tr>
                                             <td>20/11/2024</td>
                                             <td><span class="badge bg-primary">Máu Toàn Phần</span></td>
-                                            <td>Trung tâm Hiến máu TP.HCM</td>
                                             <td><span class="badge bg-success">Thành Công</span></td>
                                             <td>-</td>
                                         </tr>
                                         <tr>
                                             <td>05/09/2024</td>
                                             <td><span class="badge bg-info">Huyết Tương</span></td>
-                                            <td>Bệnh viện Bình Dân</td>
                                             <td><span class="badge bg-success">Thành Công</span></td>
                                             <td>-</td>
                                         </tr>
                                         <tr>
                                             <td>18/07/2024</td>
                                             <td><span class="badge bg-primary">Máu Toàn Phần</span></td>
-                                            <td>Trung tâm Hiến máu TP.HCM</td>
                                             <td><span class="badge bg-success">Thành Công</span></td>
                                             <td>-</td>
                                         </tr>
@@ -293,44 +269,7 @@
     </div>
 
     <!-- Edit Emergency Contact Modal -->
-    <div class="modal fade" id="emergencyContactModal" tabindex="-1" aria-labelledby="emergencyContactModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header bg-warning text-dark">
-                    <h5 class="modal-title" id="emergencyContactModalLabel">Chỉnh Sửa Liên Hệ Khẩn Cấp</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="emergencyContactForm">
-                        <div class="mb-3">
-                            <label for="emergencyName" class="form-label">Tên <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="emergencyName" value="Nguyễn Thị Mai" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="emergencyRelation" class="form-label">Quan Hệ <span class="text-danger">*</span></label>
-                            <select class="form-select" id="emergencyRelation" required>
-                                <option value="">Chọn quan hệ</option>
-                                <option value="Vợ" selected>Vợ</option>
-                                <option value="Chồng">Chồng</option>
-                                <option value="Cha">Cha</option>
-                                <option value="Mẹ">Mẹ</option>
-                                <option value="Anh/Chị">Anh/Chị</option>
-                                <option value="Bạn">Bạn</option>
-                                <option value="Khác">Khác</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="emergencyPhone" class="form-label">Số Điện Thoại <span class="text-danger">*</span></label>
-                            <input type="tel" class="form-control" id="emergencyPhone" value="0987654321" required>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button type="submit" form="emergencyContactForm" class="btn btn-warning">Cập Nhật</button>
-                </div>
-            </div>
-        </div>
+    
     </div>    <!-- Footer -->
     <footer class="bg-dark text-white py-4">
         <div class="container">

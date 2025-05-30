@@ -48,11 +48,13 @@ function setupLogoutButton() {
             localStorage.removeItem('isLoggedIn');
             localStorage.removeItem('userName');
             
-            // Update UI
-            checkLoginStatus();
-            
             // Show logout message
             showAlert('Bạn đã đăng xuất thành công!', 'success');
+            
+            // Redirect to index.html after a short delay
+            setTimeout(function() {
+                window.location.href = 'index.html';
+            }, 1500);
         });
     }
 }
