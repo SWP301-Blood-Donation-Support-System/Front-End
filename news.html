@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tin Tức - Hệ Thống Hỗ Trợ Hiến Máu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/news.css">
+</head>
+<body>
+    <!-- Upper Header Part -->
+    <div class="header-top">
+        <div class="container">
+            <!-- Logo (Left) -->
+            <div class="header-logo">
+                <a href="index.html">
+                    <img src="images/logo.svg" alt="Blood Services Logo" height="40">
+                </a>
+            </div>
+            
+            <!-- Right Side Container -->
+            <div class="header-right">
+                <!-- Auth Section -->
+                <div class="header-auth">
+                    <!-- When logged out -->
+                    <button class="auth-btn" id="loginBtn">
+                        <i class="fas fa-user me-1"></i>
+                        <span class="auth-text">Đăng nhập</span>
+                    </button>
+                    
+                    <!-- When logged in (initially hidden) -->
+                   <div class="user-info" id="userInfo" style="display: none;">
+                        <a href="account.html" class="user-greeting text-decoration-none text-dark">
+                            <i class="fas fa-user-circle me-1"></i>
+                            <span class="hello-text">Hello</span> <span class="user-name">Huy</span>!
+                        </a>
+                        <button class="auth-btn logged-in ms-2" id="logoutBtn">
+                            <span class="logout-text">Đăng Xuất</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header Navigation -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item me-4">
+                            <a class="nav-link fs-6" href="index.html">Trang Chủ</a>
+                        </li>
+                        <li class="nav-item me-4">
+                            <a class="nav-link fs-6" href="donate.html">Đặt Lịch Hiến Máu</a>
+                        </li>
+                        <li class="nav-item me-4">
+                            <a class="nav-link fs-6" href="lookup.html">Tra Cứu</a>
+                        </li>
+                        <li class="nav-item me-4">
+                            <a class="nav-link fs-6 active" href="news.html">Tin Tức</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fs-6" href="faq.html">Hỏi Đáp</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="bg-danger text-white py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1 class="display-4 fw-bold">Tin Tức</h1>
+                    <p class="fs-5 mt-3">Cập nhật những tin tức mới nhất về hoạt động hiến máu, các chương trình tình nguyện và những câu chuyện cảm động từ cộng đồng hiến máu.</p>
+                </div>
+                <div class="col-lg-4 text-end">
+                    <i class="fas fa-newspaper display-1"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Grid Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <!-- Featured News -->
+                <div class="col-lg-10 col-xl-8">
+                    <div class="row">
+                        <!-- Main Featured Article -->
+                        <div class="col-12 mb-4">
+                            <div class="news-card featured">
+                                <div class="news-image">
+                                    <img src="images/vn_blog_1.png" alt="Khởi động tháng nhân đạo năm 2025">
+                                    
+                                </div>
+                                <div class="news-content">
+                                    <div class="news-meta">
+                                        <span class="news-date"><i class="fas fa-calendar me-1"></i>8 tháng 1, 2025</span>
+                                        
+                                    </div>
+                                    <h2 class="news-title">KHỞI ĐỘNG THÁNG NHÂN ĐẠO NĂM 2025: HÀNH TRÌNH "TRAO GIỌT HỒNG - LƯU GIỮ YÊU THƯƠNG"</h2>
+                                    <p class="news-excerpt">Ngày 8-5, tại TPHCM, Trung ương Hội Chữ thập đỏ Việt Nam và UBND TPHCM phối hợp tổ chức lễ phát động Tháng Nhân đạo cấp quốc gia năm 2025...</p>
+                                    <a href="#" class="btn btn-outline-danger">Đọc Thêm</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Grid Articles -->
+                        <div class="col-md-6 mb-4">
+                            <div class="news-card">
+                                <div class="news-image">
+                                    <img src="images/vn_blog_2.png" alt="Ngày toàn dân hiến máu">         
+                                </div>
+                                <div class="news-content">
+                                    <div class="news-meta">
+                                        <span class="news-date"><i class="fas fa-calendar me-1"></i>7 tháng 4, 2025</span>
+                                    </div>
+                                    <h3 class="news-title">NGÀY TOÀN DÂN HIẾN MÁU TỈNH NGUYÊN 7/4</h3>
+                                    <p class="news-excerpt">Ngày 7/4, chúng ta cùng nhau hướng về một ngày ý nghĩa – Ngày Toàn dân hiến máu tỉnh nguyện. Tích máu cứu người - Một nghĩa cử cao đẹp...</p>
+                                    <a href="#" class="text-danger text-decoration-none">Đọc thêm <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <div class="news-card">
+                                <div class="news-image">
+                                    <img src="images/vn_blog_3.jpg" alt="Ứng dụng công nghệ số">
+                                    
+                                </div>
+                                <div class="news-content">
+                                    <div class="news-meta">
+                                        <span class="news-date"><i class="fas fa-calendar me-1"></i>4 tháng 3, 2025</span>
+                                    </div>
+                                    <h3 class="news-title">ÁP DỤNG CÔNG NGHỆ SỐ TRONG HOẠT ĐỘNG HIẾN MÁU</h3>
+                                    <p class="news-excerpt">Ngày 04/3, tại Trung tâm Hiến máu nhân đạo, Hội Chữ thập đỏ Thành phố phối hợp Hội Tin học Thành phố cùng với sự đồng hành của các doanh nghiệp...</p>
+                                    <a href="#" class="text-danger text-decoration-none">Đọc thêm <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <div class="news-card">
+                                <div class="news-image">
+                                    <img src="images/vn_blog_4.jpg" alt="Hiến máu tình nguyện">
+                                    
+                                </div>
+                                <div class="news-content">
+                                    <div class="news-meta">
+                                        <span class="news-date"><i class="fas fa-calendar me-1"></i>15 tháng 2, 2025</span>
+                                    </div>
+                                    <h3 class="news-title">HƠN 1.000 ĐƠN VỊ MÁU ĐƯỢC TIẾP NHẬN TẠI LỄ HỘI XUÂN TÌNH NGUYỆN</h3>
+                                    <p class="news-excerpt">Chương trình "Lễ hội Xuân tình nguyện" đã thu hút sự tham gia của hàng nghìn người dân và tình nguyện viên...</p>
+                                    <a href="#" class="text-danger text-decoration-none">Đọc thêm <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <div class="news-card">
+                                <div class="news-image">
+                                    <img src="images/vn_blog_5.png" alt="Hội nghị tổng kết">
+                                    
+                                </div>
+                                <div class="news-content">
+                                    <div class="news-meta">
+                                        <span class="news-date"><i class="fas fa-calendar me-1"></i>10 tháng 1, 2025</span>
+                                    </div>
+                                    <h3 class="news-title">HỘI NGHỊ TỔNG KẾT CÔNG TÁC VẬN ĐỘNG HIẾN MÁU NĂM 2024</h3>
+                                    <p class="news-excerpt">Nhìn lại một năm hoạt động, ngành y tế đã đạt được nhiều thành tựu đáng kể trong việc vận động hiến máu tình nguyện...</p>
+                                    <a href="#" class="text-danger text-decoration-none">Đọc thêm <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <div class="news-card">
+                                <div class="news-image">
+                                    <img src="images/vn_blog_6.jpg" alt="Kỷ niệm 25 năm">
+                                    
+                                </div>
+                                <div class="news-content">
+                                    <div class="news-meta">
+                                        <span class="news-date"><i class="fas fa-calendar me-1"></i>25 tháng 12, 2024</span>
+                                    </div>
+                                    <h3 class="news-title">KỶ NIỆM 25 NĂM THÀNH LẬP VÀ PHÁT TRIỂN TRUNG TÂM HIẾN MÁU</h3>
+                                    <p class="news-excerpt">Trung tâm Hiến máu Nhân đạo kỷ niệm 25 năm thành lập và phát triển (1999 - 2024) với nhiều hoạt động ý nghĩa...</p>
+                                    <a href="#" class="text-danger text-decoration-none">Đọc thêm <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 mb-4 mb-md-0">
+                    <h5>Về Chúng Tôi</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white-50">Sứ Mệnh</a></li>
+                        <li><a href="#" class="text-white-50">Lịch Sử</a></li>
+                        <li><a href="#" class="text-white-50">Ban Lãnh Đạo</a></li>
+                        <li><a href="#" class="text-white-50">Tài Chính</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4 mb-md-0">
+                    <h5>Hiến Máu</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white-50">Yêu Cầu Về Điều Kiện</a></li>
+                        <li><a href="#" class="text-white-50">Các Loại Hiến Tặng</a></li>
+                        <li><a href="#" class="text-white-50">Những Điều Cần Biết</a></li>
+                        <li><a href="#" class="text-white-50">Tìm Điểm Hiến Máu</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4 mb-md-0">
+                    <h5>Dịch Vụ Máu</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white-50">Xét Nghiệm Máu</a></li>
+                        <li><a href="#" class="text-white-50">Dịch Vụ Huyết Tương</a></li>
+                        <li><a href="#" class="text-white-50">Máu Khẩn Cấp</a></li>
+                        <li><a href="#" class="text-white-50">Hỗ Trợ Y Tế</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Kết Nối Với Chúng Tôi</h5>
+                    <div class="mb-2">
+                        <a href="#" class="text-white me-2"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-youtube"></i></a>
+                    </div>
+                    <p class="small text-white-50">Đăng ký nhận bản tin của chúng tôi để cập nhật thông tin về hiến máu và các cơ hội tham gia.</p>
+                    <div class="input-group">
+                        <input type="email" class="form-control form-control-sm" placeholder="Email của bạn">
+                        <button class="btn btn-danger btn-sm" type="button">Đăng Ký</button>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4 bg-secondary">
+            <div class="row">
+                <div class="col-md-6 small text-white-50">
+                    &copy; 2025 Hệ Thống Hỗ Trợ Hiến Máu. Đã đăng ký bản quyền.
+                </div>
+                <div class="col-md-6 text-md-end small">
+                    <a href="#" class="text-white-50 me-3">Chính Sách Bảo Mật</a>
+                    <a href="#" class="text-white-50 me-3">Điều Khoản Dịch Vụ</a>
+                    <a href="#" class="text-white-50">Liên Hệ</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/header.js"></script>
+</body>
+</html> 
