@@ -94,18 +94,13 @@
                 <div class="col-lg-8 mb-4">
                     <div class="card shadow border-0">
                         <div class="card-header bg-danger text-white py-3">
-                            <h3 class="h4 mb-0"><i class="fas fa-user me-2"></i>Thông Tin Cá Nhân</h3>
+                            <h3 class="h4 mb-0"><i class="fas fa-user me-2"></i>Thông Tin Cá Nhâ</h3>
                         </div>
-                        <div class="card-body p-4">
-                            <form id="profileForm">
+                        <div class="card-body p-4">                            <form id="profileForm">
                                 <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="firstName" class="form-label">Tên <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="firstName" value="Huy" required>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="lastName" class="form-label">Họ <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="lastName" value="Nguyễn" required>
+                                    <div class="col-md-12 mb-3">
+                                        <label for="fullName" class="form-label">Họ và Tên <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="fullName" value="Huỳnh An Khương" required>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -159,19 +154,17 @@
                                 <span>Trạng Thái:</span>
                                 <span class="badge bg-success">Đủ Điều Kiện</span>
                             </div>                        </div>
-                    </div>
-
-                    <!-- Blood Type Information -->
+                    </div>                    <!-- Blood Type Information -->
                     <div class="card shadow border-0 mb-4">
                         <div class="card-header bg-danger text-white py-3">
-                            <h3 class="h5 mb-0"><i class="fas fa-tint me-2"></i>Thông Tin Nhóm Máu</h3>
+                            <h3 class="h5 mb-0"><i class="fas fa-tint me-2"></i>Nhóm Máu</h3>
                         </div>
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <span>Nhóm Máu:</span>
-                                <span class="badge bg-danger fs-6" id="displayBloodType">A+</span>
+                        <div class="card-body d-flex justify-content-center align-items-center" style="min-height: 120px;">
+                            <div class="blood-drop-container position-relative">
+                                <img src="images/BloodDrop.png" alt="Blood Drop" class="blood-drop-image" style="width: 60px; height: 80px;">
+                                <span class="blood-type-text position-absolute text-white fw-bold fs-4" id="displayBloodType" style="top: 60%; left: 50%; transform: translate(-50%, -50%);">A+</span>
                             </div>
-                        </div>                 
+                        </div>
                      </div>
                 </div>
             </div>
@@ -337,28 +330,35 @@
 
     <script>
         // Page-specific JavaScript
-        document.addEventListener('DOMContentLoaded', function() {
-            // Check if user is logged in, redirect if not
+        document.addEventListener('DOMContentLoaded', function() {            // Check if user is logged in, redirect if not
             if (localStorage.getItem('isLoggedIn') !== 'true') {
                 window.location.href = 'login.html';
                 return;
             }
 
-            // Profile form submission
+            // Load existing user data from localStorage
+            loadUserProfileData();            // Profile form submission
             document.getElementById('profileForm').addEventListener('submit', function(e) {
                 e.preventDefault();
-                  // Get form data
+
+                // Get form data
+                const fullName = document.getElementById('fullName').value;
+                
                 const formData = {
-                    firstName: document.getElementById('firstName').value,
-                    lastName: document.getElementById('lastName').value,
+                    fullName: fullName,
                     email: document.getElementById('email').value,
                     phone: document.getElementById('phone').value,
                     birthDate: document.getElementById('birthDate').value,
                     address: document.getElementById('address').value
                 };
                 
-                // Update localStorage with user name
-                localStorage.setItem('userName', formData.firstName);
+                // Update localStorage with user data for form auto-population
+                localStorage.setItem('userName', fullName);
+                localStorage.setItem('userFullName', fullName);
+                localStorage.setItem('userEmail', formData.email);
+                localStorage.setItem('userPhone', formData.phone);
+                localStorage.setItem('userBirthDate', formData.birthDate);
+                localStorage.setItem('userAddress', formData.address);
                 
                 // Show success message
                 showAlert('Thông tin tài khoản đã được cập nhật thành công!', 'success');
@@ -440,15 +440,38 @@
                 localStorage.setItem('userBloodType', selectedBloodType);
                 
                 showAlert('Nhóm máu đã được cập nhật thành công!', 'success');
-            });
-
-            // Load saved blood type on page load
+            });            // Load saved blood type on page load
             const savedBloodType = localStorage.getItem('userBloodType');
             if (savedBloodType) {
                 document.getElementById('bloodType').value = savedBloodType;
                 document.getElementById('displayBloodType').textContent = savedBloodType;
             }
-        });
+        });        // Load user profile data from localStorage
+        function loadUserProfileData() {
+            // Load saved user information if available
+            const firstName = localStorage.getItem('userFirstName');
+            const lastName = localStorage.getItem('userLastName');
+            const fullName = localStorage.getItem('userFullName');
+            const email = localStorage.getItem('userEmail');
+            const phone = localStorage.getItem('userPhone');
+            const birthDate = localStorage.getItem('userBirthDate');
+            const address = localStorage.getItem('userAddress');
+
+            // Populate form fields with saved data
+            if (fullName) {
+                document.getElementById('fullName').value = fullName;
+            } else if (firstName && lastName) {
+                // If we have separate first and last name, combine them
+                document.getElementById('fullName').value = `${lastName} ${firstName}`;
+            } else if (firstName) {
+                document.getElementById('fullName').value = firstName;
+            }
+            
+            if (email) document.getElementById('email').value = email;
+            if (phone) document.getElementById('phone').value = phone;
+            if (birthDate) document.getElementById('birthDate').value = birthDate;
+            if (address) document.getElementById('address').value = address;
+        }
 
         // Display alert message (reuse from auth.js)
         function showAlert(message, type = 'info') {

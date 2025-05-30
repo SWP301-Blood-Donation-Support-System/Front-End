@@ -190,11 +190,9 @@ document.addEventListener('DOMContentLoaded', function() {
             '#donation-types .col-md-6:nth-child(2) h3': { text: 'Power Red' },
             '#donation-types .col-md-6:nth-child(3) h3': { text: 'Platelets' },
             '#donation-types .col-md-6:nth-child(4) h3': { text: 'Plasma' },
-            
-            // Schedule Appointment Section
+              // Schedule Appointment Section
             '#schedule .card-header h2': { text: 'Schedule Your Donation' },
-            'label[for="donationFirstName"]': { text: 'First Name <span class="text-danger">*</span>', html: true },
-            'label[for="donationLastName"]': { text: 'Last Name <span class="text-danger">*</span>', html: true },
+            'label[for="donationFullName"]': { text: 'Full Name <span class="text-danger">*</span>', html: true },
             'label[for="donationEmail"]': { text: 'Email <span class="text-danger">*</span>', html: true },
             'label[for="donationPhone"]': { text: 'Phone Number <span class="text-danger">*</span>', html: true },
             'label[for="donationType"]': { text: 'Donation Type <span class="text-danger">*</span>', html: true },
