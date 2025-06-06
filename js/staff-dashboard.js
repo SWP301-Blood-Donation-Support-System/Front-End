@@ -595,13 +595,22 @@ class StaffDashboard {
             }
         });
 
-        // Status change clicks
+        // Status change clicks - improved event handling
         document.addEventListener('click', (e) => {
-            if (e.target.matches('.status-change-btn')) {
+            // Check if the clicked element or its parent is a status change button
+            let button = e.target;
+            if (e.target.tagName === 'I') {
+                button = e.target.parentElement;
+            }
+            
+            if (button && button.classList.contains('status-change-btn')) {
                 e.preventDefault();
-                const unitId = e.target.getAttribute('data-unit-id');
-                const currentStatus = e.target.getAttribute('data-current-status');
-                this.showStatusChangeOptions(unitId, currentStatus, e.target);
+                e.stopPropagation();
+                console.log('Status change button clicked!', button); // Debug log
+                const unitId = button.getAttribute('data-unit-id');
+                const currentStatus = button.getAttribute('data-current-status');
+                console.log('Unit ID:', unitId, 'Current Status:', currentStatus); // Debug log
+                this.showStatusChangeOptions(unitId, currentStatus, button);
             }
         });
     }
@@ -738,11 +747,23 @@ class StaffDashboard {
     }
 
     showStatusChangeOptions(unitId, currentStatus, buttonElement) {
-        const statusOptions = [
-            { value: 'approved', text: 'Đã duyệt', icon: 'fas fa-check-circle', class: 'text-success' },
-            { value: 'denied', text: 'Từ chối', icon: 'fas fa-times-circle', class: 'text-danger' },
-            { value: 'pending', text: 'Chờ duyệt', icon: 'fas fa-clock', class: 'text-warning' }
-        ];
+        console.log('showStatusChangeOptions called with:', unitId, currentStatus, buttonElement); // Debug log
+        let statusOptions;
+        
+        // Special options for pending status
+        if (currentStatus === 'pending') {
+            statusOptions = [
+                { value: 'approved', text: 'Duyệt đạt', icon: 'fas fa-check-circle', class: 'text-success' },
+                { value: 'denied', text: 'Không đạt', icon: 'fas fa-times-circle', class: 'text-danger' }
+            ];
+        } else {
+            // General options for other statuses
+            statusOptions = [
+                { value: 'approved', text: 'Đã duyệt', icon: 'fas fa-check-circle', class: 'text-success' },
+                { value: 'denied', text: 'Từ chối', icon: 'fas fa-times-circle', class: 'text-danger' },
+                { value: 'pending', text: 'Chờ duyệt', icon: 'fas fa-clock', class: 'text-warning' }
+            ];
+        }
 
         // Create dropdown
         const dropdown = document.createElement('div');
@@ -754,33 +775,63 @@ class StaffDashboard {
         dropdown.style.borderRadius = '8px';
         dropdown.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
         dropdown.style.minWidth = '150px';
+        dropdown.style.padding = '8px 0';
+
+        // For pending status, show special header
+        let headerHTML = '';
+        if (currentStatus === 'pending') {
+            headerHTML = `
+                <div style="padding: 8px 16px; background-color: #f8f9fa; border-bottom: 1px solid #dee2e6; font-weight: 600; color: #495057;">
+                    <i class="fas fa-clipboard-check me-2"></i>
+                    Kết quả duyệt
+                </div>
+            `;
+        }
 
         const optionsHTML = statusOptions
             .filter(option => option.value !== currentStatus)
             .map(option => `
-                <div class="dropdown-item status-option" data-status="${option.value}" data-unit-id="${unitId}">
+                <div class="dropdown-item status-option" data-status="${option.value}" data-unit-id="${unitId}" style="padding: 12px 16px; cursor: pointer; transition: background-color 0.2s;">
                     <i class="${option.icon} ${option.class} me-2"></i>
                     ${option.text}
                 </div>
             `).join('');
 
-        dropdown.innerHTML = optionsHTML;
+        dropdown.innerHTML = headerHTML + optionsHTML;
 
         // Position dropdown
         const rect = buttonElement.getBoundingClientRect();
-        dropdown.style.left = rect.left + 'px';
-        dropdown.style.top = (rect.bottom + 5) + 'px';
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+        
+        dropdown.style.left = (rect.left + scrollLeft) + 'px';
+        dropdown.style.top = (rect.bottom + scrollTop + 5) + 'px';
+        
+        console.log('Dropdown positioned at:', dropdown.style.left, dropdown.style.top); // Debug log
 
         // Add to body
         document.body.appendChild(dropdown);
+        console.log('Dropdown added to body:', dropdown); // Debug log
 
         // Handle clicks
         dropdown.addEventListener('click', (e) => {
-            if (e.target.matches('.status-option')) {
-                const newStatus = e.target.getAttribute('data-status');
-                const unitId = e.target.getAttribute('data-unit-id');
+            console.log('Dropdown clicked:', e.target); // Debug log
+            let option = e.target;
+            
+            // Handle clicking on icon inside option
+            if (e.target.tagName === 'I') {
+                option = e.target.parentElement;
+            }
+            
+            if (option && option.classList.contains('status-option')) {
+                console.log('Status option clicked:', option); // Debug log
+                const newStatus = option.getAttribute('data-status');
+                const unitId = option.getAttribute('data-unit-id');
+                console.log('Changing status to:', newStatus, 'for unit:', unitId); // Debug log
                 this.changeBloodUnitStatus(unitId, newStatus);
-                document.body.removeChild(dropdown);
+                if (document.body.contains(dropdown)) {
+                    document.body.removeChild(dropdown);
+                }
             }
         });
 
@@ -814,28 +865,47 @@ class StaffDashboard {
     showStatusChangeMessage(unitId, newStatus) {
         const statusText = this.getStatusText(newStatus);
         
+        // Determine message type and icon based on status
+        let alertClass = 'alert-success';
+        let icon = 'fas fa-check-circle';
+        let messageText = 'Đã cập nhật trạng thái túi máu';
+        
+        if (newStatus === 'approved') {
+            alertClass = 'alert-success';
+            icon = 'fas fa-check-circle';
+            messageText = 'Đã duyệt túi máu';
+        } else if (newStatus === 'denied') {
+            alertClass = 'alert-danger';
+            icon = 'fas fa-times-circle';
+            messageText = 'Đã từ chối túi máu';
+        } else if (newStatus === 'pending') {
+            alertClass = 'alert-warning';
+            icon = 'fas fa-clock';
+            messageText = 'Đã chuyển túi máu về trạng thái chờ duyệt';
+        }
+        
         // Create toast notification
         const toast = document.createElement('div');
-        toast.className = 'alert alert-success alert-dismissible fade show position-fixed';
+        toast.className = `alert ${alertClass} alert-dismissible fade show position-fixed`;
         toast.style.top = '20px';
         toast.style.right = '20px';
         toast.style.zIndex = '9999';
         toast.style.minWidth = '300px';
         
         toast.innerHTML = `
-            <i class="fas fa-check-circle me-2"></i>
-            Đã cập nhật trạng thái túi máu <strong>${unitId}</strong> thành <strong>${statusText}</strong>
+            <i class="${icon} me-2"></i>
+            ${messageText} <strong>${unitId}</strong> - <strong>${statusText}</strong>
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         `;
         
         document.body.appendChild(toast);
         
-        // Auto remove after 3 seconds
+        // Auto remove after 4 seconds
         setTimeout(() => {
             if (document.body.contains(toast)) {
                 document.body.removeChild(toast);
             }
-        }, 3000);
+        }, 4000);
     }
 
     renderBloodUnitPagination(totalItems, currentPage) {
