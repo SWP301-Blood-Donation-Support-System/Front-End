@@ -127,8 +127,7 @@ class StaffFeatures {
             staffDashboardItem.className = 'nav-item me-4 staff-dashboard-nav-item';
             staffDashboardItem.innerHTML = `
                 <a class="nav-link fs-6" href="staff-dashboard.html">
-                    <i class="fas fa-tachometer-alt me-2"></i>
-                    Bảng điều khiển
+                    Dashboard
                 </a>
             `;
             
