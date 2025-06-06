@@ -92,6 +92,7 @@
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Địa Chỉ Email</label>
                                     <input type="email" class="form-control" id="email" required>
+                                    <div class="form-text text-muted">Nhập email nhân viên để đăng nhập với quyền nhân viên</div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="password" class="form-label">Mật Khẩu</label>
@@ -185,6 +186,7 @@
     <script src="js/script.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/header.js"></script>
+    <script src="js/role-manager.js"></script>
     <script>
         // Toggle password visibility
         document.getElementById('togglePassword').addEventListener('click', function() {
@@ -206,14 +208,30 @@
             
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            
-            // Here you would normally send the data to your server
+              // Here you would normally send the data to your server
             console.log('Login attempt:', { email, password });
             
             // For demo purposes, simulate successful login
             // Save login state to localStorage
             localStorage.setItem('isLoggedIn', 'true');
             localStorage.setItem('userName', 'Huy');
+            
+            // Check if this is a staff email (for demo purposes)
+            // In a real system, this would be determined by backend authentication
+            if (email.includes('staff') || email.includes('nhanvien') || email.endsWith('@bloodsys.vn')) {
+                localStorage.setItem('userRole', 'staff');
+            } else {
+                localStorage.setItem('userRole', 'member');
+            }
+            
+            // If window header manager exists, update it
+            if (window.headerManager) {
+                window.headerManager.setUserLoggedIn({ name: 'Huy' });
+                // Update role display if needed
+                if (window.headerManager.updateRoleDisplay) {
+                    window.headerManager.updateRoleDisplay();
+                }
+            }
             
             // Show success message
             showAlert('Đăng nhập thành công!', 'success');
@@ -251,4 +269,4 @@
         }
     </script>
 </body>
-</html> 
+</html>

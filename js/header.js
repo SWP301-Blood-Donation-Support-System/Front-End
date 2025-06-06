@@ -5,6 +5,7 @@ class HeaderManager {
         this.currentLang = 'vi'; // Default Vietnamese
         this.isLoggedIn = false;
         this.userInfo = null;
+        this.userRole = 'member'; // Default role is member
         this.isInitialized = false;
         this.init();
     }
@@ -14,6 +15,7 @@ class HeaderManager {
         this.loadSavedSettings();
         this.setupLanguageToggle();
         this.setupAuthButtons();
+        this.setupRoleToggle(); // Setup role toggle functionality
         this.preloadPages();
         this.isInitialized = true;
     }
@@ -148,6 +150,7 @@ class HeaderManager {
         const loginBtn = document.getElementById('loginBtn');
         const userInfo = document.getElementById('userInfo');
         const userNameEl = document.querySelector('.user-name');
+        const roleToggleBtn = document.getElementById('roleToggleBtn');
         
         if (this.isLoggedIn && this.userInfo) {
             // Show user info, hide login button
@@ -158,10 +161,79 @@ class HeaderManager {
             if (userNameEl && this.userInfo.name) {
                 userNameEl.textContent = this.userInfo.name;
             }
+            
+            // Show role toggle button
+            if (roleToggleBtn) roleToggleBtn.style.display = 'block';
         } else {
             // Show login button, hide user info
             if (loginBtn) loginBtn.style.display = 'block';
             if (userInfo) userInfo.style.display = 'none';
+            
+            // Hide role toggle button
+            if (roleToggleBtn) roleToggleBtn.style.display = 'none';
+        }
+    }
+
+    setupRoleToggle() {
+        const roleToggleBtn = document.getElementById('roleToggleBtn');
+        
+        if (roleToggleBtn) {
+            roleToggleBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.toggleRole();
+            });
+        }
+    }    toggleRole() {
+        this.userRole = this.userRole === 'member' ? 'staff' : 'member';
+        this.updateRoleDisplay();
+        this.saveRoleState();
+        
+        // Dispatch a custom event for other components to listen to
+        const event = new CustomEvent('roleToggled', { 
+            detail: { role: this.userRole } 
+        });
+        document.dispatchEvent(event);
+        
+        // Also dispatch roleChanged event for role-manager.js
+        const roleChangedEvent = new CustomEvent('roleChanged', { 
+            detail: { role: this.userRole } 
+        });
+        document.dispatchEvent(roleChangedEvent);
+        
+        // Show notification about role change
+        const translations = {
+            vi: {
+                member: 'Đã chuyển sang chế độ Thành viên',
+                staff: 'Đã chuyển sang chế độ Nhân viên'
+            },
+            en: {
+                member: 'Switched to Member mode',
+                staff: 'Switched to Staff mode'
+            }
+        };
+          // Show a simple notification about role change
+        alert(translations[this.currentLang][this.userRole]);
+    }
+
+    updateRoleDisplay() {
+        const roleToggleBtn = document.getElementById('roleToggleBtn');
+        const roleIcon = document.getElementById('roleIcon');
+        const roleText = document.getElementById('roleText');
+        
+        if (roleToggleBtn && roleIcon && roleText) {
+            if (this.userRole === 'staff') {
+                roleToggleBtn.classList.add('staff-role');
+                roleToggleBtn.classList.remove('member-role');
+                roleIcon.className = 'fas fa-user-tie';
+                
+                roleText.textContent = this.currentLang === 'vi' ? 'Nhân viên' : 'Staff';
+            } else {
+                roleToggleBtn.classList.add('member-role');
+                roleToggleBtn.classList.remove('staff-role');
+                roleIcon.className = 'fas fa-user';
+                
+                roleText.textContent = this.currentLang === 'vi' ? 'Thành viên' : 'Member';
+            }
         }
     }
 
@@ -184,11 +256,21 @@ class HeaderManager {
         localStorage.removeItem('authUpdateTime');
     }
 
+    saveRoleState() {
+        localStorage.setItem('userRole', this.userRole);
+    }
+
     loadSavedSettings() {
         // Load language preference IMMEDIATELY to prevent flicker
         const savedLang = localStorage.getItem('preferredLanguage');
         if (savedLang && (savedLang === 'vi' || savedLang === 'en')) {
             this.currentLang = savedLang;
+        }
+
+        // Load user role IMMEDIATELY
+        const savedRole = localStorage.getItem('userRole');
+        if (savedRole && (savedRole === 'member' || savedRole === 'staff')) {
+            this.userRole = savedRole;
         }
 
         // Load auth state IMMEDIATELY
@@ -229,6 +311,7 @@ class HeaderManager {
         this.updateLanguageDisplay();
         this.updatePageContent();
         this.updateAuthDisplay();
+        this.updateRoleDisplay(); // Update role display
     }
 
     // Public methods for external use
@@ -257,6 +340,18 @@ class HeaderManager {
         return this.isLoggedIn;
     }
 
+    getUserRole() {
+        return this.userRole;
+    }
+
+    setUserRole(role) {
+        if (role === 'member' || role === 'staff') {
+            this.userRole = role;
+            this.updateRoleDisplay();
+            this.saveRoleState();
+        }
+    }
+
     // Method to simulate login for testing
     simulateLogin(name = 'Huy') {
         this.login({ name: name });
@@ -283,4 +378,4 @@ document.addEventListener('DOMContentLoaded', function() {
     // setTimeout(() => {
     //     window.headerManager.simulateLogin('Huy');
     // }, 2000);
-}); 
+});
