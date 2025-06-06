@@ -102,7 +102,45 @@ class StaffFeatures {
                     }
                 }
             });
+            
+            // Add staff dashboard link as fallback
+            this.addStaffDashboardNavItemFallback();
         }
+    }
+
+    addStaffDashboardNavItemFallback() {
+        setTimeout(() => {
+            const navbar = document.querySelector('ul.navbar-nav');
+            if (!navbar) {
+                console.log('StaffFeatures: Navbar not found, retrying...');
+                setTimeout(() => this.addStaffDashboardNavItemFallback(), 100);
+                return;
+            }
+            
+            // Remove existing staff dashboard link if any
+            document.querySelectorAll('.staff-dashboard-nav-item').forEach(el => {
+                el.remove();
+            });
+            
+            // Create staff dashboard navigation item
+            const staffDashboardItem = document.createElement('li');
+            staffDashboardItem.className = 'nav-item me-4 staff-dashboard-nav-item';
+            staffDashboardItem.innerHTML = `
+                <a class="nav-link fs-6" href="staff-dashboard.html">
+                    Dashboard
+                </a>
+            `;
+            
+            // Add after the home link
+            const homeItem = navbar.querySelector('li:first-child');
+            if (homeItem && homeItem.nextSibling) {
+                navbar.insertBefore(staffDashboardItem, homeItem.nextSibling);
+            } else {
+                navbar.appendChild(staffDashboardItem);
+            }
+            
+            console.log('StaffFeatures: Staff dashboard link added to navbar (fallback)');
+        }, 50);
     }
 
     updateNavbarForMember() {
@@ -116,6 +154,11 @@ class StaffFeatures {
             const navItems = document.querySelectorAll('ul.navbar-nav .nav-item');
             navItems.forEach(item => {
                 item.style.display = 'block';
+            });
+            
+            // Remove staff dashboard navigation item
+            document.querySelectorAll('.staff-dashboard-nav-item').forEach(el => {
+                el.remove();
             });
         }
     }

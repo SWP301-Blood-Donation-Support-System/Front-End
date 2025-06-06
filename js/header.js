@@ -135,8 +135,20 @@ class HeaderManager {
     logout() {
         this.isLoggedIn = false;
         this.userInfo = null;
+        
+        // Reset role to member when logging out
+        this.userRole = 'member';
+        
         this.updateAuthDisplay();
+        this.updateRoleDisplay(); // Update role display after reset
         this.clearAuthState();
+        this.saveRoleState(); // Save the reset role state
+        
+        // Dispatch role change event to update other components
+        const roleChangedEvent = new CustomEvent('roleChanged', { 
+            detail: { role: this.userRole } 
+        });
+        document.dispatchEvent(roleChangedEvent);
         
         const translations = {
             vi: 'Đã đăng xuất thành công!',
@@ -254,6 +266,7 @@ class HeaderManager {
         localStorage.removeItem('isLoggedIn');
         localStorage.removeItem('userInfo');
         localStorage.removeItem('authUpdateTime');
+        localStorage.removeItem('userRole'); // Also clear the role when logging out
     }
 
     saveRoleState() {
