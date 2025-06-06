@@ -356,6 +356,296 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
+/* Donor Management Styles */
+.donors-stats {
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.donors-table-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.donors-table-container .table {
+    margin-bottom: 0;
+}
+
+.donors-table-container .table th {
+    background: var(--primary) !important;
+    color: white;
+    font-weight: 600;
+    border: none;
+    padding: 15px 12px;
+}
+
+.donors-table-container .table td {
+    padding: 15px 12px;
+    vertical-align: middle;
+    border-color: #f8f9fa;
+}
+
+.donor-row:hover {
+    background-color: #f8f9fa;
+}
+
+.blood-type-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-align: center;
+    min-width: 45px;
+}
+
+.blood-type-A {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+.blood-type-B {
+    background-color: #e8f5e8;
+    color: #2e7d32;
+}
+
+.blood-type-AB {
+    background-color: #fff3e0;
+    color: #ef6c00;
+}
+
+.blood-type-O {
+    background-color: #e3f2fd;
+    color: #1565c0;
+}
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.status-eligible {
+    background-color: #e8f5e8;
+    color: #2e7d32;
+}
+
+.status-waiting {
+    background-color: #fff3e0;
+    color: #ef6c00;
+}
+
+.status-ineligible {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+.donor-actions .btn {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    margin: 0 2px;
+}
+
+.search-filter-section .input-group {
+    border-radius: 25px;
+    overflow: hidden;
+}
+
+.search-filter-section .form-control {
+    border-right: none;
+    border-radius: 25px 0 0 25px;
+}
+
+.search-filter-section .btn {
+    border-left: none;
+    border-radius: 0 25px 25px 0;
+}
+
+.filter-buttons .btn {
+    margin-right: 10px;
+    margin-bottom: 5px;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+}
+
+.donor-name {
+    font-weight: 600;
+    color: var(--secondary);
+}
+
+.last-donation-date {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.donation-count {
+    font-weight: 600;
+    color: var(--primary);
+}
+
+/* Blood Units Management Styles */
+.blood-units-stats .stat-card-total {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+.blood-units-stats .stat-card-approved {
+    background: linear-gradient(135deg, #56ab2f, #a8e6cf);
+}
+
+.blood-units-stats .stat-card-pending {
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+}
+
+.blood-units-stats .stat-card-available {
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+}
+
+.blood-units-table-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.blood-units-table-container .table th {
+    background: var(--primary) !important;
+    color: white;
+    font-weight: 600;
+    border: none;
+    padding: 15px 12px;
+}
+
+.blood-units-table-container .table td {
+    padding: 15px 12px;
+    vertical-align: middle;
+    border-color: #f8f9fa;
+}
+
+.blood-unit-row:hover {
+    background-color: #f8f9fa;
+}
+
+.blood-unit-id {
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+    color: var(--primary);
+    background-color: #f8f9fa;
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.volume-display {
+    font-weight: 600;
+    color: #e74c3c;
+    font-size: 1.1rem;
+}
+
+.blood-unit-status {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-align: center;
+    min-width: 80px;
+    display: inline-block;
+}
+
+.status-approved {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.status-pending {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeaa7;
+}
+
+.status-denied {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.status-expired {
+    background-color: #e2e3e5;
+    color: #383d41;
+    border: 1px solid #d6d8db;
+}
+
+.expiry-date {
+    font-size: 0.9rem;
+}
+
+.expiry-warning {
+    color: #e74c3c;
+    font-weight: 600;
+}
+
+.expiry-normal {
+    color: #27ae60;
+}
+
+.expiry-soon {
+    color: #f39c12;
+    font-weight: 600;
+}
+
+.blood-unit-actions .btn {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    margin: 0 2px;
+    border-radius: 15px;
+}
+
+.status-change-dropdown {
+    min-width: 120px;
+}
+
+.status-change-dropdown .dropdown-item {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+}
+
+.status-change-dropdown .dropdown-item:hover {
+    background-color: #f8f9fa;
+}
+
+.donation-date {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .dashboard-container {
@@ -417,5 +707,112 @@
     .donor-meta {
         width: 100%;
         justify-content: space-between;
+    }
+
+    /* Donor management responsive styles */
+    .donors-stats .row {
+        margin: 0;
+    }
+    
+    .donors-stats .col-md-3 {
+        padding: 5px;
+        margin-bottom: 10px;
+    }
+    
+    .stat-number {
+        font-size: 2rem;
+    }
+    
+    .search-filter-section .input-group {
+        width: 100% !important;
+    }
+    
+    .filter-buttons .btn {
+        margin-right: 5px;
+        margin-bottom: 10px;
+        font-size: 0.8rem;
+        padding: 6px 12px;
+    }
+    
+    .donors-table-container {
+        font-size: 0.8rem;
+    }
+    
+    .donors-table-container .table th,
+    .donors-table-container .table td {
+        padding: 8px 6px;
+    }
+    
+    .donor-actions .btn {
+        padding: 3px 6px;
+        font-size: 0.7rem;
+        margin: 0 1px;
+    }
+    
+    .blood-type-badge {
+        font-size: 0.7rem;
+        padding: 4px 8px;
+        min-width: 35px;
+    }
+    
+    .status-badge {
+        font-size: 0.7rem;
+        padding: 4px 8px;
+    }
+    
+    .donor-name {
+        font-size: 0.9rem;
+    }
+    
+    .last-donation-date {
+        font-size: 0.8rem;
+    }
+
+    /* Blood units management responsive styles */
+    .blood-units-stats .row {
+        margin: 0;
+    }
+    
+    .blood-units-stats .col-md-3 {
+        padding: 5px;
+        margin-bottom: 10px;
+    }
+    
+    .blood-units-table-container {
+        font-size: 0.8rem;
+    }
+    
+    .blood-units-table-container .table th,
+    .blood-units-table-container .table td {
+        padding: 8px 6px;
+    }
+    
+    .blood-unit-actions .btn {
+        padding: 3px 6px;
+        font-size: 0.7rem;
+        margin: 0 1px;
+    }
+    
+    .blood-unit-id {
+        font-size: 0.8rem;
+        padding: 2px 6px;
+    }
+    
+    .volume-display {
+        font-size: 0.9rem;
+    }
+    
+    .blood-unit-status {
+        font-size: 0.7rem;
+        padding: 4px 8px;
+        min-width: 60px;
+    }
+    
+    .expiry-date {
+        font-size: 0.8rem;
+    }
+    
+    .donation-date {
+        font-size: 0.8rem;
     }
 } 
