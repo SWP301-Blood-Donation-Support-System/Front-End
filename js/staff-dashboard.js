@@ -11,6 +11,9 @@ class StaffDashboard {
         this.currentStatusFilter = 'all';
         this.currentBloodUnitSearchTerm = '';
         this.currentBloodUnitPage = 1;
+        this.currentDonationRecordTestFilter = 'all';
+        this.currentDonationRecordSearchTerm = '';
+        this.currentDonationRecordPage = 1;
         this.mockData = this.generateMockData();
         this.init();
     }
@@ -79,6 +82,9 @@ class StaffDashboard {
 
         // Blood units management event listeners
         this.setupBloodUnitsEventListeners();
+
+        // Donation records management event listeners
+        this.setupDonationRecordsEventListeners();
     }
 
     loadSection(sectionName) {
@@ -93,6 +99,7 @@ class StaffDashboard {
             'schedules': 'Lịch đặt hiến',
             'donors': 'Quản lý người hiến',
             'blood-units': 'Quản lý túi máu hậu hiến',
+            'donation-records': 'Hô sơ hiến máu',
             'reports': 'Báo cáo thống kê'
         };
         document.getElementById('currentSection').textContent = breadcrumbMap[sectionName];
@@ -113,6 +120,8 @@ class StaffDashboard {
             this.loadDonors();
         } else if (sectionName === 'blood-units') {
             this.loadBloodUnits();
+        } else if (sectionName === 'donation-records') {
+            this.loadDonationRecords();
         }
     }
 
@@ -595,13 +604,22 @@ class StaffDashboard {
             }
         });
 
-        // Status change clicks
+        // Status change clicks - improved event handling
         document.addEventListener('click', (e) => {
-            if (e.target.matches('.status-change-btn')) {
+            // Check if the clicked element or its parent is a status change button
+            let button = e.target;
+            if (e.target.tagName === 'I') {
+                button = e.target.parentElement;
+            }
+            
+            if (button && button.classList.contains('status-change-btn')) {
                 e.preventDefault();
-                const unitId = e.target.getAttribute('data-unit-id');
-                const currentStatus = e.target.getAttribute('data-current-status');
-                this.showStatusChangeOptions(unitId, currentStatus, e.target);
+                e.stopPropagation();
+                console.log('Status change button clicked!', button); // Debug log
+                const unitId = button.getAttribute('data-unit-id');
+                const currentStatus = button.getAttribute('data-current-status');
+                console.log('Unit ID:', unitId, 'Current Status:', currentStatus); // Debug log
+                this.showStatusChangeOptions(unitId, currentStatus, button);
             }
         });
     }
@@ -738,11 +756,23 @@ class StaffDashboard {
     }
 
     showStatusChangeOptions(unitId, currentStatus, buttonElement) {
-        const statusOptions = [
-            { value: 'approved', text: 'Đã duyệt', icon: 'fas fa-check-circle', class: 'text-success' },
-            { value: 'denied', text: 'Từ chối', icon: 'fas fa-times-circle', class: 'text-danger' },
-            { value: 'pending', text: 'Chờ duyệt', icon: 'fas fa-clock', class: 'text-warning' }
-        ];
+        console.log('showStatusChangeOptions called with:', unitId, currentStatus, buttonElement); // Debug log
+        let statusOptions;
+        
+        // Special options for pending status
+        if (currentStatus === 'pending') {
+            statusOptions = [
+                { value: 'approved', text: 'Duyệt đạt', icon: 'fas fa-check-circle', class: 'text-success' },
+                { value: 'denied', text: 'Không đạt', icon: 'fas fa-times-circle', class: 'text-danger' }
+            ];
+        } else {
+            // General options for other statuses
+            statusOptions = [
+                { value: 'approved', text: 'Đã duyệt', icon: 'fas fa-check-circle', class: 'text-success' },
+                { value: 'denied', text: 'Từ chối', icon: 'fas fa-times-circle', class: 'text-danger' },
+                { value: 'pending', text: 'Chờ duyệt', icon: 'fas fa-clock', class: 'text-warning' }
+            ];
+        }
 
         // Create dropdown
         const dropdown = document.createElement('div');
@@ -754,33 +784,63 @@ class StaffDashboard {
         dropdown.style.borderRadius = '8px';
         dropdown.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
         dropdown.style.minWidth = '150px';
+        dropdown.style.padding = '8px 0';
+
+        // For pending status, show special header
+        let headerHTML = '';
+        if (currentStatus === 'pending') {
+            headerHTML = `
+                <div style="padding: 8px 16px; background-color: #f8f9fa; border-bottom: 1px solid #dee2e6; font-weight: 600; color: #495057;">
+                    <i class="fas fa-clipboard-check me-2"></i>
+                    Kết quả duyệt
+                </div>
+            `;
+        }
 
         const optionsHTML = statusOptions
             .filter(option => option.value !== currentStatus)
             .map(option => `
-                <div class="dropdown-item status-option" data-status="${option.value}" data-unit-id="${unitId}">
+                <div class="dropdown-item status-option" data-status="${option.value}" data-unit-id="${unitId}" style="padding: 12px 16px; cursor: pointer; transition: background-color 0.2s;">
                     <i class="${option.icon} ${option.class} me-2"></i>
                     ${option.text}
                 </div>
             `).join('');
 
-        dropdown.innerHTML = optionsHTML;
+        dropdown.innerHTML = headerHTML + optionsHTML;
 
         // Position dropdown
         const rect = buttonElement.getBoundingClientRect();
-        dropdown.style.left = rect.left + 'px';
-        dropdown.style.top = (rect.bottom + 5) + 'px';
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+        
+        dropdown.style.left = (rect.left + scrollLeft) + 'px';
+        dropdown.style.top = (rect.bottom + scrollTop + 5) + 'px';
+        
+        console.log('Dropdown positioned at:', dropdown.style.left, dropdown.style.top); // Debug log
 
         // Add to body
         document.body.appendChild(dropdown);
+        console.log('Dropdown added to body:', dropdown); // Debug log
 
         // Handle clicks
         dropdown.addEventListener('click', (e) => {
-            if (e.target.matches('.status-option')) {
-                const newStatus = e.target.getAttribute('data-status');
-                const unitId = e.target.getAttribute('data-unit-id');
+            console.log('Dropdown clicked:', e.target); // Debug log
+            let option = e.target;
+            
+            // Handle clicking on icon inside option
+            if (e.target.tagName === 'I') {
+                option = e.target.parentElement;
+            }
+            
+            if (option && option.classList.contains('status-option')) {
+                console.log('Status option clicked:', option); // Debug log
+                const newStatus = option.getAttribute('data-status');
+                const unitId = option.getAttribute('data-unit-id');
+                console.log('Changing status to:', newStatus, 'for unit:', unitId); // Debug log
                 this.changeBloodUnitStatus(unitId, newStatus);
-                document.body.removeChild(dropdown);
+                if (document.body.contains(dropdown)) {
+                    document.body.removeChild(dropdown);
+                }
             }
         });
 
@@ -814,28 +874,47 @@ class StaffDashboard {
     showStatusChangeMessage(unitId, newStatus) {
         const statusText = this.getStatusText(newStatus);
         
+        // Determine message type and icon based on status
+        let alertClass = 'alert-success';
+        let icon = 'fas fa-check-circle';
+        let messageText = 'Đã cập nhật trạng thái túi máu';
+        
+        if (newStatus === 'approved') {
+            alertClass = 'alert-success';
+            icon = 'fas fa-check-circle';
+            messageText = 'Đã duyệt túi máu';
+        } else if (newStatus === 'denied') {
+            alertClass = 'alert-danger';
+            icon = 'fas fa-times-circle';
+            messageText = 'Đã từ chối túi máu';
+        } else if (newStatus === 'pending') {
+            alertClass = 'alert-warning';
+            icon = 'fas fa-clock';
+            messageText = 'Đã chuyển túi máu về trạng thái chờ duyệt';
+        }
+        
         // Create toast notification
         const toast = document.createElement('div');
-        toast.className = 'alert alert-success alert-dismissible fade show position-fixed';
+        toast.className = `alert ${alertClass} alert-dismissible fade show position-fixed`;
         toast.style.top = '20px';
         toast.style.right = '20px';
         toast.style.zIndex = '9999';
         toast.style.minWidth = '300px';
         
         toast.innerHTML = `
-            <i class="fas fa-check-circle me-2"></i>
-            Đã cập nhật trạng thái túi máu <strong>${unitId}</strong> thành <strong>${statusText}</strong>
+            <i class="${icon} me-2"></i>
+            ${messageText} <strong>${unitId}</strong> - <strong>${statusText}</strong>
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         `;
         
         document.body.appendChild(toast);
         
-        // Auto remove after 3 seconds
+        // Auto remove after 4 seconds
         setTimeout(() => {
             if (document.body.contains(toast)) {
                 document.body.removeChild(toast);
             }
-        }, 3000);
+        }, 4000);
     }
 
     renderBloodUnitPagination(totalItems, currentPage) {
@@ -919,6 +998,516 @@ class StaffDashboard {
             'expired': 'Hết hạn'
         };
         return statusMap[status] || status;
+    }
+
+    // Donation Records Management Methods
+    setupDonationRecordsEventListeners() {
+        // Search functionality
+        const searchInput = document.getElementById('donationRecordSearchInput');
+        const searchBtn = document.getElementById('donationRecordSearchBtn');
+        
+        if (searchInput && searchBtn) {
+            const performSearch = () => {
+                this.searchDonationRecords();
+            };
+            
+            searchInput.addEventListener('input', performSearch);
+            searchBtn.addEventListener('click', performSearch);
+            
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+        }
+
+        // Filter buttons
+        const testFilterButtons = document.querySelectorAll('[data-test-filter]');
+        testFilterButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const filter = button.dataset.testFilter;
+                this.setTestFilter(filter, button);
+            });
+        });
+
+        // Pagination clicks
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.donation-record-page-btn')) {
+                e.preventDefault();
+                const pageBtn = e.target.closest('.donation-record-page-btn');
+                const page = parseInt(pageBtn.dataset.page);
+                if (!isNaN(page) && page > 0) {
+                    this.currentDonationRecordPage = page;
+                    this.loadDonationRecords();
+                }
+            }
+        });
+
+        // Record row clicks for detail view
+        document.addEventListener('click', (e) => {
+            const recordRow = e.target.closest('.donation-record-row');
+            if (recordRow) {
+                const recordId = recordRow.dataset.recordId;
+                this.showDonationRecordDetail(recordId);
+            }
+        });
+
+        // Back to list button
+        const backBtn = document.getElementById('backToDonationRecords');
+        if (backBtn) {
+            backBtn.addEventListener('click', () => {
+                this.showDonationRecordsList();
+            });
+        }
+
+        // Edit test result functionality
+        this.setupTestResultEdit();
+        
+        // Edit note functionality
+        this.setupNoteEdit();
+    }
+
+    setupTestResultEdit() {
+        const editBtn = document.getElementById('editTestResultBtn');
+        const saveBtn = document.getElementById('saveTestResultBtn');
+        const cancelBtn = document.getElementById('cancelTestResultBtn');
+        const displayElement = document.getElementById('detailBloodTestResult');
+        const editElement = document.getElementById('editBloodTestResult');
+        const actionsElement = document.getElementById('testResultActions');
+
+        if (editBtn && saveBtn && cancelBtn && displayElement && editElement && actionsElement) {
+            editBtn.addEventListener('click', () => {
+                this.enterEditMode('testResult');
+            });
+
+            saveBtn.addEventListener('click', () => {
+                this.saveTestResult();
+            });
+
+            cancelBtn.addEventListener('click', () => {
+                this.cancelEdit('testResult');
+            });
+        }
+    }
+
+    setupNoteEdit() {
+        const editBtn = document.getElementById('editNoteBtn');
+        const saveBtn = document.getElementById('saveNoteBtn');
+        const cancelBtn = document.getElementById('cancelNoteBtn');
+        const displayElement = document.getElementById('detailNote');
+        const editElement = document.getElementById('editNote');
+        const actionsElement = document.getElementById('noteActions');
+
+        if (editBtn && saveBtn && cancelBtn && displayElement && editElement && actionsElement) {
+            editBtn.addEventListener('click', () => {
+                this.enterEditMode('note');
+            });
+
+            saveBtn.addEventListener('click', () => {
+                this.saveNote();
+            });
+
+            cancelBtn.addEventListener('click', () => {
+                this.cancelEdit('note');
+            });
+        }
+    }
+
+    enterEditMode(type) {
+        if (type === 'testResult') {
+            const displayElement = document.getElementById('detailBloodTestResult');
+            const editElement = document.getElementById('editBloodTestResult');
+            const editBtn = document.getElementById('editTestResultBtn');
+            const actionsElement = document.getElementById('testResultActions');
+            
+            // Get current value
+            const currentRecord = this.getCurrentRecord();
+            if (currentRecord) {
+                editElement.value = currentRecord.bloodTestResult;
+            }
+            
+            // Show edit elements, hide display elements
+            displayElement.style.display = 'none';
+            editElement.style.display = 'block';
+            editBtn.style.display = 'none';
+            actionsElement.style.display = 'flex';
+            
+        } else if (type === 'note') {
+            const displayElement = document.getElementById('detailNote');
+            const editElement = document.getElementById('editNote');
+            const editBtn = document.getElementById('editNoteBtn');
+            const actionsElement = document.getElementById('noteActions');
+            
+            // Get current value
+            const currentRecord = this.getCurrentRecord();
+            if (currentRecord) {
+                editElement.value = currentRecord.note || '';
+            }
+            
+            // Show edit elements, hide display elements
+            displayElement.style.display = 'none';
+            editElement.style.display = 'block';
+            editBtn.style.display = 'none';
+            actionsElement.style.display = 'flex';
+            
+            // Focus on textarea
+            editElement.focus();
+        }
+    }
+
+    getCurrentRecord() {
+        const recordId = document.getElementById('detailRecordId').textContent;
+        return this.mockData.donationRecords.find(r => r.id === recordId);
+    }
+
+    saveTestResult() {
+        const editElement = document.getElementById('editBloodTestResult');
+        const newValue = editElement.value;
+        
+        // Update the record in mock data
+        const currentRecord = this.getCurrentRecord();
+        if (currentRecord) {
+            currentRecord.bloodTestResult = newValue;
+            
+            // Update display
+            this.updateTestResultDisplay(newValue);
+            
+            // Exit edit mode
+            this.exitEditMode('testResult');
+            
+            // Show success message
+            this.showEditSuccessMessage('Cập nhật kết quả xét nghiệm thành công!');
+            
+            // Refresh the list view to reflect changes
+            this.loadDonationRecords();
+        }
+    }
+
+    saveNote() {
+        const editElement = document.getElementById('editNote');
+        const newValue = editElement.value.trim();
+        
+        // Update the record in mock data
+        const currentRecord = this.getCurrentRecord();
+        if (currentRecord) {
+            currentRecord.note = newValue;
+            
+            // Update display
+            this.updateNoteDisplay(newValue);
+            
+            // Exit edit mode
+            this.exitEditMode('note');
+            
+            // Show success message
+            this.showEditSuccessMessage('Cập nhật ghi chú thành công!');
+        }
+    }
+
+    updateTestResultDisplay(value) {
+        const displayElement = document.getElementById('detailBloodTestResult');
+        const testResultText = value === 'good' ? 'Máu tốt' : 
+                               value === 'poor' ? 'Máu chưa đạt' : 'Máu xấu';
+        const testResultClass = value === 'good' ? 'good' : 
+                                value === 'poor' ? 'poor' : 'bad';
+        
+        displayElement.textContent = testResultText;
+        displayElement.className = `test-result-badge ${testResultClass}`;
+    }
+
+    updateNoteDisplay(value) {
+        const displayElement = document.getElementById('detailNote');
+        displayElement.textContent = value || 'Không có ghi chú';
+    }
+
+    cancelEdit(type) {
+        this.exitEditMode(type);
+    }
+
+    exitEditMode(type) {
+        if (type === 'testResult') {
+            const displayElement = document.getElementById('detailBloodTestResult');
+            const editElement = document.getElementById('editBloodTestResult');
+            const editBtn = document.getElementById('editTestResultBtn');
+            const actionsElement = document.getElementById('testResultActions');
+            
+            displayElement.style.display = 'inline';
+            editElement.style.display = 'none';
+            editBtn.style.display = 'inline-block';
+            actionsElement.style.display = 'none';
+            
+        } else if (type === 'note') {
+            const displayElement = document.getElementById('detailNote');
+            const editElement = document.getElementById('editNote');
+            const editBtn = document.getElementById('editNoteBtn');
+            const actionsElement = document.getElementById('noteActions');
+            
+            displayElement.style.display = 'block';
+            editElement.style.display = 'none';
+            editBtn.style.display = 'inline-block';
+            actionsElement.style.display = 'none';
+        }
+    }
+
+    showEditSuccessMessage(message) {
+        // Create a temporary success message
+        const alertDiv = document.createElement('div');
+        alertDiv.className = 'alert alert-success alert-dismissible fade show position-fixed';
+        alertDiv.style.top = '20px';
+        alertDiv.style.right = '20px';
+        alertDiv.style.zIndex = '9999';
+        alertDiv.style.minWidth = '300px';
+        alertDiv.innerHTML = `
+            <i class="fas fa-check-circle me-2"></i>
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        `;
+        
+        document.body.appendChild(alertDiv);
+        
+        // Auto remove after 3 seconds
+        setTimeout(() => {
+            if (alertDiv.parentNode) {
+                alertDiv.remove();
+            }
+        }, 3000);
+    }
+
+    setTestFilter(filter, buttonElement) {
+        this.currentDonationRecordTestFilter = filter;
+        this.currentDonationRecordPage = 1;
+        
+        // Update button states
+        document.querySelectorAll('[data-test-filter]').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        buttonElement.classList.add('active');
+
+        // Reload donation records with filter
+        this.loadDonationRecords();
+    }
+
+    loadDonationRecords() {
+        const loadingElement = document.getElementById('donationRecordsLoading');
+        const tableBody = document.getElementById('donationRecordsTableBody');
+        const noDataElement = document.getElementById('noDonationRecordsMessage');
+        
+        // Show loading
+        if (loadingElement) loadingElement.style.display = 'block';
+        if (tableBody) tableBody.innerHTML = '';
+        if (noDataElement) noDataElement.style.display = 'none';
+
+        // Simulate API delay
+        setTimeout(() => {
+            const donationRecords = this.getFilteredDonationRecords();
+            this.renderDonationRecords(donationRecords);
+            this.updateDonationRecordsStats(this.mockData.donationRecords);
+            
+            // Hide loading
+            if (loadingElement) loadingElement.style.display = 'none';
+        }, 500);
+    }
+
+    getFilteredDonationRecords() {
+        let filtered = this.mockData.donationRecords;
+
+        // Apply test result filter
+        if (this.currentDonationRecordTestFilter !== 'all') {
+            filtered = filtered.filter(record => record.bloodTestResult === this.currentDonationRecordTestFilter);
+        }
+
+        // Apply search filter
+        if (this.currentDonationRecordSearchTerm) {
+            const searchTerm = this.currentDonationRecordSearchTerm.toLowerCase();
+            filtered = filtered.filter(record => 
+                record.id.toLowerCase().includes(searchTerm) ||
+                record.donorId.toLowerCase().includes(searchTerm) ||
+                record.donorName.toLowerCase().includes(searchTerm)
+            );
+        }
+
+        return filtered;
+    }
+
+    renderDonationRecords(donationRecords) {
+        const tableBody = document.getElementById('donationRecordsTableBody');
+        const noDataElement = document.getElementById('noDonationRecordsMessage');
+        const tableContainer = document.getElementById('donation-records-list');
+
+        if (donationRecords.length === 0) {
+            if (tableBody) tableBody.innerHTML = '';
+            if (noDataElement) noDataElement.style.display = 'block';
+            if (tableContainer) tableContainer.style.display = 'none';
+            this.renderDonationRecordPagination(0, 0);
+            return;
+        }
+
+        // Show table and hide no-data message
+        if (noDataElement) noDataElement.style.display = 'none';
+        if (tableContainer) tableContainer.style.display = 'block';
+
+        // Pagination
+        const startIndex = (this.currentDonationRecordPage - 1) * this.itemsPerPage;
+        const endIndex = startIndex + this.itemsPerPage;
+        const paginatedRecords = donationRecords.slice(startIndex, endIndex);
+
+        const recordsHTML = paginatedRecords.map((record, index) => 
+            this.renderDonationRecordRow(record, startIndex + index + 1)
+        ).join('');
+
+        if (tableBody) {
+            tableBody.innerHTML = recordsHTML;
+        }
+
+        this.renderDonationRecordPagination(donationRecords.length, this.currentDonationRecordPage);
+    }
+
+    renderDonationRecordRow(record, index) {
+        const testResultClass = record.bloodTestResult === 'good' ? 'test-result-good' : 
+                                record.bloodTestResult === 'poor' ? 'test-result-poor' : 'test-result-bad';
+        const testResultText = record.bloodTestResult === 'good' ? 'Máu tốt' : 
+                               record.bloodTestResult === 'poor' ? 'Máu chưa đạt' : 'Máu xấu';
+        
+        return `
+            <tr class="donation-record-row" data-record-id="${record.id}">
+                <td>${index}</td>
+                <td>
+                    <span class="donation-record-id">${record.id}</span>
+                </td>
+                <td>
+                    <span class="donor-id-display">${record.donorId}</span>
+                </td>
+                <td>
+                    <div class="donor-name">${record.donorName}</div>
+                </td>
+                <td>
+                    <div class="donation-date">${this.formatDateTime(record.donationDateTime)}</div>
+                </td>
+                <td>
+                    <span class="donation-type-display">${record.donationType}</span>
+                </td>
+                <td>
+                    <span class="${testResultClass}">${testResultText}</span>
+                </td>
+                <td>
+                    <div class="donation-record-actions">
+                        <button class="btn btn-outline-primary btn-sm" title="Xem chi tiết">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="btn btn-outline-info btn-sm" title="In hồ sơ">
+                            <i class="fas fa-print"></i>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        `;
+    }
+
+    showDonationRecordDetail(recordId) {
+        const record = this.mockData.donationRecords.find(r => r.id === recordId);
+        if (!record) return;
+
+        // Update detail view
+        document.getElementById('detailRecordId').textContent = record.id;
+        document.getElementById('detailDonorId').textContent = record.donorId;
+        document.getElementById('detailDonorName').textContent = record.donorName;
+        document.getElementById('detailDonationDateTime').textContent = this.formatDateTime(record.donationDateTime);
+        document.getElementById('detailDonorWeight').textContent = record.donorWeight + ' kg';
+        document.getElementById('detailDonorTemperature').textContent = record.donorTemperature + '°C';
+        document.getElementById('detailDonationType').textContent = record.donationType;
+        document.getElementById('detailVolumeDonated').textContent = record.volumeDonated + ' ml';
+        
+        const testResultElement = document.getElementById('detailBloodTestResult');
+        const testResultText = record.bloodTestResult === 'good' ? 'Máu tốt' : 
+                               record.bloodTestResult === 'poor' ? 'Máu chưa đạt' : 'Máu xấu';
+        const testResultClass = record.bloodTestResult === 'good' ? 'good' : 
+                                record.bloodTestResult === 'poor' ? 'poor' : 'bad';
+        testResultElement.textContent = testResultText;
+        testResultElement.className = `test-result-badge ${testResultClass}`;
+        
+        document.getElementById('detailNote').textContent = record.note || 'Không có ghi chú';
+
+        // Update title
+        document.getElementById('donationRecordDetailTitle').textContent = `Chi tiết hồ sơ hiến máu - ${record.id}`;
+
+        // Hide list and show detail
+        document.getElementById('donation-records-list').style.display = 'none';
+        document.getElementById('donation-record-detail').style.display = 'block';
+    }
+
+    showDonationRecordsList() {
+        document.getElementById('donation-record-detail').style.display = 'none';
+        document.getElementById('donation-records-list').style.display = 'block';
+    }
+
+    renderDonationRecordPagination(totalItems, currentPage) {
+        const paginationContainer = document.getElementById('donationRecordPagination');
+        if (!paginationContainer) return;
+
+        const totalPages = Math.ceil(totalItems / this.itemsPerPage);
+        
+        if (totalPages <= 1) {
+            paginationContainer.innerHTML = '';
+            return;
+        }
+
+        let paginationHTML = '';
+        
+        // Previous button
+        paginationHTML += `
+            <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+                <a class="page-link donation-record-page-btn" href="#" data-page="${currentPage - 1}">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+            </li>
+        `;
+
+        // Page numbers
+        for (let i = 1; i <= totalPages; i++) {
+            if (i === 1 || i === totalPages || (i >= currentPage - 2 && i <= currentPage + 2)) {
+                paginationHTML += `
+                    <li class="page-item ${i === currentPage ? 'active' : ''}">
+                        <a class="page-link donation-record-page-btn" href="#" data-page="${i}">${i}</a>
+                    </li>
+                `;
+            } else if (i === currentPage - 3 || i === currentPage + 3) {
+                paginationHTML += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+            }
+        }
+
+        // Next button
+        paginationHTML += `
+            <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
+                <a class="page-link donation-record-page-btn" href="#" data-page="${currentPage + 1}">
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            </li>
+        `;
+
+        paginationContainer.innerHTML = paginationHTML;
+    }
+
+    updateDonationRecordsStats(allRecords) {
+        const totalRecords = allRecords.length;
+        const goodBloodRecords = allRecords.filter(record => record.bloodTestResult === 'good').length;
+        const poorBloodRecords = allRecords.filter(record => record.bloodTestResult === 'poor').length;
+        const badBloodRecords = allRecords.filter(record => record.bloodTestResult === 'bad').length;
+        const totalVolume = allRecords.reduce((sum, record) => sum + record.volumeDonated, 0);
+
+        document.getElementById('totalDonationRecords').textContent = totalRecords;
+        document.getElementById('goodBloodRecords').textContent = goodBloodRecords;
+        document.getElementById('poorBloodRecords').textContent = poorBloodRecords + badBloodRecords; // Combine poor and bad for display
+        document.getElementById('totalVolumeDonated').textContent = totalVolume.toLocaleString();
+    }
+
+    formatDateTime(dateTime) {
+        return new Date(dateTime).toLocaleString('vi-VN', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
     }
 
     generateMockData() {
@@ -1307,6 +1896,248 @@ class StaffDashboard {
                     donorId: 20
                 }
             ],
+            donationRecords: [
+                {
+                    id: 'DR20240115001',
+                    donorId: 1,
+                    donorName: 'Nguyễn Văn Anh',
+                    donationDateTime: '2024-01-15 08:30:00',
+                    donorWeight: 65,
+                    donorTemperature: 36.5,
+                    donationType: 'Máu toàn phần',
+                    volumeDonated: 450,
+                    bloodTestResult: 'good',
+                    note: 'Người hiến khỏe mạnh, không có vấn đề gì trong quá trình hiến máu.'
+                },
+                {
+                    id: 'DR20240114001',
+                    donorId: 2,
+                    donorName: 'Trần Thị Bình',
+                    donationDateTime: '2024-01-14 09:15:00',
+                    donorWeight: 55,
+                    donorTemperature: 36.8,
+                    donationType: 'Huyết tương',
+                    volumeDonated: 400,
+                    bloodTestResult: 'poor',
+                    note: 'Phát hiện chỉ số hemoglobin thấp, cần theo dõi thêm.'
+                },
+                {
+                    id: 'DR20240113001',
+                    donorId: 3,
+                    donorName: 'Lê Minh Cường',
+                    donationDateTime: '2024-01-13 10:00:00',
+                    donorWeight: 70,
+                    donorTemperature: 36.2,
+                    donationType: 'Máu toàn phần',
+                    volumeDonated: 450,
+                    bloodTestResult: 'good',
+                    note: 'Tình trạng sức khỏe tốt, quá trình hiến máu suôn sẻ.'
+                },
+                {
+                    id: 'DR20240112001',
+                    donorId: 4,
+                    donorName: 'Phạm Thị Dung',
+                    donationDateTime: '2024-01-12 14:20:00',
+                    donorWeight: 58,
+                    donorTemperature: 37.1,
+                    donationType: 'Tiểu cầu',
+                    volumeDonated: 300,
+                    bloodTestResult: 'bad',
+                    note: 'Phát hiện nhiễm khuẩn nghiêm trọng trong máu, hoàn toàn không thể sử dụng.'
+                },
+                {
+                    id: 'DR20240111001',
+                    donorId: 5,
+                    donorName: 'Võ Văn Em',
+                    donationDateTime: '2024-01-11 11:45:00',
+                    donorWeight: 62,
+                    donorTemperature: 36.4,
+                    donationType: 'Máu toàn phần',
+                    volumeDonated: 450,
+                    bloodTestResult: 'good',
+                    note: 'Người hiến lần đầu, rất hợp tác và không có phản ứng bất thường.'
+                },
+                {
+                    id: 'DR20240110001',
+                    donorId: 6,
+                    donorName: 'Đặng Thị Phương',
+                    donationDateTime: '2024-01-10 13:30:00',
+                    donorWeight: 60,
+                    donorTemperature: 36.6,
+                    donationType: 'Huyết tương',
+                    volumeDonated: 400,
+                    bloodTestResult: 'good',
+                    note: 'Người hiến kinh nghiệm, quá trình diễn ra thuận lợi.'
+                },
+                {
+                    id: 'DR20240109001',
+                    donorId: 7,
+                    donorName: 'Hoàng Văn Giang',
+                    donationDateTime: '2024-01-09 09:00:00',
+                    donorWeight: 68,
+                    donorTemperature: 36.3,
+                    donationType: 'Máu toàn phần',
+                    volumeDonated: 450,
+                    bloodTestResult: 'good',
+                    note: 'Sức khỏe tốt, không có tiền sử bệnh lý.'
+                },
+                {
+                    id: 'DR20240108001',
+                    donorId: 8,
+                    donorName: 'Bùi Thị Hằng',
+                    donationDateTime: '2024-01-08 15:15:00',
+                    donorWeight: 52,
+                    donorTemperature: 36.7,
+                    donationType: 'Tiểu cầu',
+                    volumeDonated: 250,
+                    bloodTestResult: 'poor',
+                    note: 'Cân nặng ở mức thấp, cần cân nhắc kỹ trước khi sử dụng.'
+                },
+                {
+                    id: 'DR20240107001',
+                    donorId: 9,
+                    donorName: 'Đỗ Minh Quang',
+                    donationDateTime: '2024-01-07 08:45:00',
+                    donorWeight: 75,
+                    donorTemperature: 36.1,
+                    donationType: 'Máu toàn phần',
+                    volumeDonated: 450,
+                    bloodTestResult: 'good',
+                    note: 'Người hiến máu thường xuyên, có kinh nghiệm tốt.'
+                },
+                {
+                    id: 'DR20240106001',
+                    donorId: 10,
+                    donorName: 'Ngô Thị Lan',
+                    donationDateTime: '2024-01-06 16:30:00',
+                    donorWeight: 57,
+                    donorTemperature: 36.9,
+                    donationType: 'Huyết tương',
+                    volumeDonated: 350,
+                    bloodTestResult: 'good',
+                    note: 'Quá trình hiến máu bình thường, không có vấn đề gì.'
+                },
+                {
+                    id: 'DR20240105001',
+                    donorId: 11,
+                    donorName: 'Dương Văn Minh',
+                    donationDateTime: '2024-01-05 12:00:00',
+                    donorWeight: 72,
+                    donorTemperature: 36.4,
+                    donationType: 'Máu toàn phần',
+                    volumeDonated: 450,
+                    bloodTestResult: 'good',
+                    note: 'Tình trạng sức khỏe ổn định, hiến máu thành công.'
+                },
+                {
+                    id: 'DR20240104001',
+                    donorId: 12,
+                    donorName: 'Cao Thị Nga',
+                    donationDateTime: '2024-01-04 10:30:00',
+                    donorWeight: 59,
+                    donorTemperature: 36.5,
+                    donationType: 'Tiểu cầu',
+                    volumeDonated: 300,
+                    bloodTestResult: 'poor',
+                    note: 'Xét nghiệm phát hiện một số chỉ số bất thường, cần kiểm tra lại.'
+                },
+                {
+                    id: 'DR20240103001',
+                    donorId: 13,
+                    donorName: 'Vũ Minh Tuấn',
+                    donationDateTime: '2024-01-03 14:45:00',
+                    donorWeight: 66,
+                    donorTemperature: 36.2,
+                    donationType: 'Huyết tương',
+                    volumeDonated: 400,
+                    bloodTestResult: 'good',
+                    note: 'Người hiến hợp tác tốt, không có phản ứng phụ.'
+                },
+                {
+                    id: 'DR20240102001',
+                    donorId: 14,
+                    donorName: 'Lý Thị Oanh',
+                    donationDateTime: '2024-01-02 11:15:00',
+                    donorWeight: 54,
+                    donorTemperature: 36.7,
+                    donationType: 'Máu toàn phần',
+                    volumeDonated: 400,
+                    bloodTestResult: 'good',
+                    note: 'Người hiến trẻ tuổi, sức khỏe tốt.'
+                },
+                {
+                    id: 'DR20240101001',
+                    donorId: 15,
+                    donorName: 'Trương Văn Phúc',
+                    donationDateTime: '2024-01-01 15:00:00',
+                    donorWeight: 78,
+                    donorTemperature: 36.3,
+                    donationType: 'Máu toàn phần',
+                    volumeDonated: 450,
+                    bloodTestResult: 'good',
+                    note: 'Người hiến có kinh nghiệm lâu năm, rất tin cậy.'
+                },
+                {
+                    id: 'DR20231231001',
+                    donorId: 16,
+                    donorName: 'Đinh Thị Quỳnh',
+                    donationDateTime: '2023-12-31 09:30:00',
+                    donorWeight: 56,
+                    donorTemperature: 36.8,
+                    donationType: 'Huyết tương',
+                    volumeDonated: 350,
+                    bloodTestResult: 'bad',
+                    note: 'Phát hiện virus HIV trong máu, không thể sử dụng và cần thông báo ngay cho người hiến.'
+                },
+                {
+                    id: 'DR20231230001',
+                    donorId: 17,
+                    donorName: 'Phan Minh Sơn',
+                    donationDateTime: '2023-12-30 13:15:00',
+                    donorWeight: 69,
+                    donorTemperature: 36.1,
+                    donationType: 'Máu toàn phần',
+                    volumeDonated: 450,
+                    bloodTestResult: 'good',
+                    note: 'Quá trình hiến máu diễn ra suôn sẻ, không có vấn đề.'
+                },
+                {
+                    id: 'DR20231229001',
+                    donorId: 18,
+                    donorName: 'Mai Thị Trang',
+                    donationDateTime: '2023-12-29 16:45:00',
+                    donorWeight: 61,
+                    donorTemperature: 36.6,
+                    donationType: 'Tiểu cầu',
+                    volumeDonated: 280,
+                    bloodTestResult: 'good',
+                    note: 'Tình trạng sức khỏe ổn định, hiến máu thành công.'
+                },
+                {
+                    id: 'DR20231228001',
+                    donorId: 19,
+                    donorName: 'Hồ Văn Ước',
+                    donationDateTime: '2023-12-28 12:30:00',
+                    donorWeight: 73,
+                    donorTemperature: 36.4,
+                    donationType: 'Máu toàn phần',
+                    volumeDonated: 450,
+                    bloodTestResult: 'good',
+                    note: 'Người hiến có sức khỏe tốt, quá trình hiến máu bình thường.'
+                },
+                {
+                    id: 'DR20231227001',
+                    donorId: 20,
+                    donorName: 'Chu Thị Vân',
+                    donationDateTime: '2023-12-27 10:00:00',
+                    donorWeight: 58,
+                    donorTemperature: 37.0,
+                    donationType: 'Huyết tương',
+                    volumeDonated: 380,
+                    bloodTestResult: 'poor',
+                    note: 'Nhiệt độ cơ thể hơi cao, cần kiểm tra lại các chỉ số.'
+                }
+            ],
             schedules: [
                 {
                     id: '1',
@@ -1378,6 +2209,15 @@ class StaffDashboard {
                 }
             ]
         };
+    }
+
+    searchDonationRecords() {
+        const searchInput = document.getElementById('donationRecordSearchInput');
+        if (searchInput) {
+            this.currentDonationRecordSearchTerm = searchInput.value.trim();
+            this.currentDonationRecordPage = 1;
+            this.loadDonationRecords();
+        }
     }
 }
 
