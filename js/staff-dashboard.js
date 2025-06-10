@@ -99,7 +99,7 @@ class StaffDashboard {
             'schedules': 'Lịch đặt hiến',
             'donors': 'Quản lý người hiến',
             'blood-units': 'Quản lý túi máu hậu hiến',
-            'donation-records': 'Hồ sơ người hiến',
+            'donation-records': 'Hồ sơ hiến máu',
             'reports': 'Báo cáo thống kê'
         };
         document.getElementById('currentSection').textContent = breadcrumbMap[sectionName];
@@ -515,13 +515,9 @@ class StaffDashboard {
 
     updateDonorStats(allDonors) {
         const totalDonors = allDonors.length;
-        const activeDonors = allDonors.filter(donor => this.daysSinceDate(donor.lastDonationDate) <= 365).length;
-        const recentDonors = allDonors.filter(donor => this.daysSinceDate(donor.lastDonationDate) <= 30).length;
         const eligibleDonors = allDonors.filter(donor => this.daysSinceDate(donor.lastDonationDate) >= 56).length;
 
         document.getElementById('totalDonors').textContent = totalDonors;
-        document.getElementById('activeDonors').textContent = activeDonors;
-        document.getElementById('recentDonors').textContent = recentDonors;
         document.getElementById('eligibleDonors').textContent = eligibleDonors;
     }
 
