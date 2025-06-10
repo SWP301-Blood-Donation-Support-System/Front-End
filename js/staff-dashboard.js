@@ -1,7 +1,7 @@
 // Staff Dashboard JavaScript
 
-class StaffDashboard {
-    constructor() {
+class StaffDashboard {    constructor() {
+        console.log('StaffDashboard constructor called');
         this.currentSection = 'schedules';
         this.currentFilter = 'all';
         this.currentBloodFilter = 'all';
@@ -14,11 +14,14 @@ class StaffDashboard {
         this.currentDonationRecordTestFilter = 'all';
         this.currentDonationRecordSearchTerm = '';
         this.currentDonationRecordPage = 1;
+        
+        console.log('Generating mock data...');
         this.mockData = this.generateMockData();
+        console.log('Mock data generated:', this.mockData);
+        
         this.init();
-    }
-
-    init() {
+    }init() {
+        console.log('Staff Dashboard initializing...');
         // Check if user is staff and logged in
         this.checkStaffAccess();
         
@@ -28,17 +31,20 @@ class StaffDashboard {
         // Initialize the dashboard
         this.loadSection('schedules');
         this.loadSchedules();
-    }
-
-    checkStaffAccess() {
+        console.log('Staff Dashboard initialized successfully');
+    }    checkStaffAccess() {
         const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
         const userRole = localStorage.getItem('userRole');
         
+        console.log('Checking staff access:', { isLoggedIn, userRole });
+        
         if (!isLoggedIn || userRole !== 'staff') {
+            console.log('Access denied - redirecting to home page');
             // Redirect to home page if not staff
-            window.location.href = 'index.html';
-            return;
+            // window.location.href = 'index.html';
+            // return;
         }
+        console.log('Staff access granted');
     }
 
     setupEventListeners() {
@@ -85,33 +91,49 @@ class StaffDashboard {
 
         // Donation records management event listeners
         this.setupDonationRecordsEventListeners();
-    }
-
-    loadSection(sectionName) {
+    }    loadSection(sectionName) {
+        console.log('Loading section:', sectionName);
         // Update sidebar active state
         document.querySelectorAll('.dashboard-sidebar .nav-link').forEach(link => {
             link.classList.remove('active');
         });
-        document.querySelector(`[data-section="${sectionName}"]`).classList.add('active');
+        const sectionLink = document.querySelector(`[data-section="${sectionName}"]`);
+        if (sectionLink) {
+            sectionLink.classList.add('active');
+        } else {
+            console.warn('Section link not found for:', sectionName);
+        }
 
         // Update breadcrumb
         const breadcrumbMap = {
             'schedules': 'Lịch đặt hiến',
             'donors': 'Quản lý người hiến',
             'blood-units': 'Quản lý túi máu hậu hiến',
-            'donation-records': 'Hô sơ hiến máu',
+            'donation-records': 'Hồ sơ hiến máu',
             'reports': 'Báo cáo thống kê'
         };
-        document.getElementById('currentSection').textContent = breadcrumbMap[sectionName];
+        
+        const currentSectionElement = document.getElementById('currentSection');
+        if (currentSectionElement) {
+            currentSectionElement.textContent = breadcrumbMap[sectionName];
+        }
 
         // Show/hide sections
         document.querySelectorAll('.section-content').forEach(section => {
             section.style.display = 'none';
         });
-        document.getElementById(`${sectionName}-section`).style.display = 'block';
+        const targetSection = document.getElementById(`${sectionName}-section`);
+        if (targetSection) {
+            targetSection.style.display = 'block';
+        } else {
+            console.warn('Target section not found:', `${sectionName}-section`);
+        }
 
         // Update content title
-        document.querySelector('.content-title').textContent = breadcrumbMap[sectionName];
+        const contentTitle = document.querySelector('.content-title');
+        if (contentTitle) {
+            contentTitle.textContent = breadcrumbMap[sectionName];
+        }
 
         this.currentSection = sectionName;
 
@@ -136,26 +158,39 @@ class StaffDashboard {
 
         // Reload schedules with filter
         this.loadSchedules();
-    }
-
-    loadSchedules() {
+    }    loadSchedules() {
+        console.log('Loading schedules...');
         const schedulesContainer = document.querySelector('.schedules-list');
+        console.log('Schedules container:', schedulesContainer);
+        
+        if (!schedulesContainer) {
+            console.error('Schedules container not found!');
+            return;
+        }
+        
         let filteredSchedules = this.mockData.schedules;
+        console.log('Mock data schedules:', filteredSchedules);
+        console.log('Current filter:', this.currentFilter);
 
         // Apply filter
         if (this.currentFilter === 'upcoming') {
             filteredSchedules = filteredSchedules.filter(schedule => new Date(schedule.date) >= new Date());
+            console.log('Filtered upcoming schedules:', filteredSchedules);
         } else if (this.currentFilter === 'past') {
             filteredSchedules = filteredSchedules.filter(schedule => new Date(schedule.date) < new Date());
+            console.log('Filtered past schedules:', filteredSchedules);
         }
 
         if (filteredSchedules.length === 0) {
+            console.log('No schedules found, showing empty state');
             schedulesContainer.innerHTML = this.renderEmptyState('Không có lịch hiến máu nào');
             return;
         }
 
         const schedulesHTML = filteredSchedules.map(schedule => this.renderScheduleItem(schedule)).join('');
+        console.log('Generated schedules HTML length:', schedulesHTML.length);
         schedulesContainer.innerHTML = schedulesHTML;
+        console.log('Schedules loaded successfully');
     }
 
     renderScheduleItem(schedule) {
@@ -497,7 +532,7 @@ class StaffDashboard {
                     </li>
                 `;
             } else if (i === currentPage - 3 || i === currentPage + 3) {
-                paginationHTML += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+                paginationHTML += <li class="page-item disabled"><span class="page-link">...</span></li>;
             }
         }
 
@@ -515,13 +550,9 @@ class StaffDashboard {
 
     updateDonorStats(allDonors) {
         const totalDonors = allDonors.length;
-        const activeDonors = allDonors.filter(donor => this.daysSinceDate(donor.lastDonationDate) <= 365).length;
-        const recentDonors = allDonors.filter(donor => this.daysSinceDate(donor.lastDonationDate) <= 30).length;
         const eligibleDonors = allDonors.filter(donor => this.daysSinceDate(donor.lastDonationDate) >= 56).length;
 
         document.getElementById('totalDonors').textContent = totalDonors;
-        document.getElementById('activeDonors').textContent = activeDonors;
-        document.getElementById('recentDonors').textContent = recentDonors;
         document.getElementById('eligibleDonors').textContent = eligibleDonors;
     }
 
@@ -707,9 +738,7 @@ class StaffDashboard {
         }
 
         this.renderBloodUnitPagination(bloodUnits.length, this.currentBloodUnitPage);
-    }
-
-    renderBloodUnitRow(unit, index) {
+    }    renderBloodUnitRow(unit, index) {
         const expiryStatus = this.getExpiryStatus(unit.expiryDate);
         const statusClass = `status-${unit.status}`;
         
@@ -892,8 +921,7 @@ class StaffDashboard {
             icon = 'fas fa-clock';
             messageText = 'Đã chuyển túi máu về trạng thái chờ duyệt';
         }
-        
-        // Create toast notification
+          // Create toast notification
         const toast = document.createElement('div');
         toast.className = `alert ${alertClass} alert-dismissible fade show position-fixed`;
         toast.style.top = '20px';
@@ -948,7 +976,7 @@ class StaffDashboard {
                     </li>
                 `;
             } else if (i === currentPage - 3 || i === currentPage + 3) {
-                paginationHTML += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+                paginationHTML += <li class="page-item disabled"><span class="page-link">...</span></li>;
             }
         }
 
@@ -980,8 +1008,7 @@ class StaffDashboard {
         const today = new Date();
         const expiry = new Date(expiryDate);
         const daysUntilExpiry = Math.ceil((expiry - today) / (1000 * 60 * 60 * 24));
-        
-        if (daysUntilExpiry < 0) {
+          if (daysUntilExpiry < 0) {
             return { class: 'expiry-warning', text: 'Đã hết hạn' };
         } else if (daysUntilExpiry <= 7) {
             return { class: 'expiry-soon', text: `Còn ${daysUntilExpiry} ngày` };
@@ -1206,12 +1233,9 @@ class StaffDashboard {
 
     updateTestResultDisplay(value) {
         const displayElement = document.getElementById('detailBloodTestResult');
-        const testResultText = value === 'good' ? 'Máu tốt' : 
-                               value === 'poor' ? 'Máu chưa đạt' : 'Máu xấu';
-        const testResultClass = value === 'good' ? 'good' : 
-                                value === 'poor' ? 'poor' : 'bad';
-        
-        displayElement.textContent = testResultText;
+        const testResultText = value === 'good' ? 'Máu đạt' : 'Máu chưa đạt';
+        const testResultClass = value === 'good' ? 'good' : 'poor';
+          displayElement.textContent = testResultText;
         displayElement.className = `test-result-badge ${testResultClass}`;
     }
 
@@ -1363,10 +1387,8 @@ class StaffDashboard {
     }
 
     renderDonationRecordRow(record, index) {
-        const testResultClass = record.bloodTestResult === 'good' ? 'test-result-good' : 
-                                record.bloodTestResult === 'poor' ? 'test-result-poor' : 'test-result-bad';
-        const testResultText = record.bloodTestResult === 'good' ? 'Máu tốt' : 
-                               record.bloodTestResult === 'poor' ? 'Máu chưa đạt' : 'Máu xấu';
+        const testResultClass = record.bloodTestResult === 'good' ? 'test-result-good' : 'test-result-poor';
+        const testResultText = record.bloodTestResult === 'good' ? 'Máu đạt' : 'Máu chưa đạt';
         
         return `
             <tr class="donation-record-row" data-record-id="${record.id}">
@@ -1418,16 +1440,11 @@ class StaffDashboard {
         document.getElementById('detailVolumeDonated').textContent = record.volumeDonated + ' ml';
         
         const testResultElement = document.getElementById('detailBloodTestResult');
-        const testResultText = record.bloodTestResult === 'good' ? 'Máu tốt' : 
-                               record.bloodTestResult === 'poor' ? 'Máu chưa đạt' : 'Máu xấu';
-        const testResultClass = record.bloodTestResult === 'good' ? 'good' : 
-                                record.bloodTestResult === 'poor' ? 'poor' : 'bad';
-        testResultElement.textContent = testResultText;
+        const testResultText = record.bloodTestResult === 'good' ? 'Máu đạt' : 'Máu chưa đạt';
+        const testResultClass = record.bloodTestResult === 'good' ? 'good' : 'poor';        testResultElement.textContent = testResultText;
         testResultElement.className = `test-result-badge ${testResultClass}`;
         
-        document.getElementById('detailNote').textContent = record.note || 'Không có ghi chú';
-
-        // Update title
+        document.getElementById('detailNote').textContent = record.note || 'Không có ghi chú';        // Update title
         document.getElementById('donationRecordDetailTitle').textContent = `Chi tiết hồ sơ hiến máu - ${record.id}`;
 
         // Hide list and show detail
@@ -1471,7 +1488,7 @@ class StaffDashboard {
                     </li>
                 `;
             } else if (i === currentPage - 3 || i === currentPage + 3) {
-                paginationHTML += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+                paginationHTML += <li class="page-item disabled"><span class="page-link">...</span></li>;
             }
         }
 
@@ -1491,13 +1508,10 @@ class StaffDashboard {
         const totalRecords = allRecords.length;
         const goodBloodRecords = allRecords.filter(record => record.bloodTestResult === 'good').length;
         const poorBloodRecords = allRecords.filter(record => record.bloodTestResult === 'poor').length;
-        const badBloodRecords = allRecords.filter(record => record.bloodTestResult === 'bad').length;
-        const totalVolume = allRecords.reduce((sum, record) => sum + record.volumeDonated, 0);
 
         document.getElementById('totalDonationRecords').textContent = totalRecords;
         document.getElementById('goodBloodRecords').textContent = goodBloodRecords;
-        document.getElementById('poorBloodRecords').textContent = poorBloodRecords + badBloodRecords; // Combine poor and bad for display
-        document.getElementById('totalVolumeDonated').textContent = totalVolume.toLocaleString();
+        document.getElementById('poorBloodRecords').textContent = poorBloodRecords;
     }
 
     formatDateTime(dateTime) {
@@ -1942,8 +1956,8 @@ class StaffDashboard {
                     donorTemperature: 37.1,
                     donationType: 'Tiểu cầu',
                     volumeDonated: 300,
-                    bloodTestResult: 'bad',
-                    note: 'Phát hiện nhiễm khuẩn nghiêm trọng trong máu, hoàn toàn không thể sử dụng.'
+                    bloodTestResult: 'poor',
+                    note: 'Phát hiện một số chỉ số bất thường trong máu, cần kiểm tra lại trước khi sử dụng.'
                 },
                 {
                     id: 'DR20240111001',
@@ -2086,8 +2100,8 @@ class StaffDashboard {
                     donorTemperature: 36.8,
                     donationType: 'Huyết tương',
                     volumeDonated: 350,
-                    bloodTestResult: 'bad',
-                    note: 'Phát hiện virus HIV trong máu, không thể sử dụng và cần thông báo ngay cho người hiến.'
+                    bloodTestResult: 'poor',
+                    note: 'Xét nghiệm phát hiện một số chỉ số bất thường, cần kiểm tra kỹ trước khi sử dụng.'
                 },
                 {
                     id: 'DR20231230001',
@@ -2138,10 +2152,9 @@ class StaffDashboard {
                     note: 'Nhiệt độ cơ thể hơi cao, cần kiểm tra lại các chỉ số.'
                 }
             ],
-            schedules: [
-                {
+            schedules: [                {
                     id: '1',
-                    date: '2024-01-25',
+                    date: '2025-06-15', // Update to future date
                     location: 'Bệnh viện Chợ Rẫy - TP.HCM',
                     contact: '028-3855-4269',
                     timeSlots: [
@@ -2167,7 +2180,7 @@ class StaffDashboard {
                 },
                 {
                     id: '2',
-                    date: '2024-01-30',
+                    date: '2025-06-20', // Update to future date
                     location: 'Trường Đại học Bách Khoa TP.HCM',
                     contact: '028-3864-5500',
                     timeSlots: [
@@ -2184,7 +2197,7 @@ class StaffDashboard {
                 },
                 {
                     id: '3',
-                    date: '2024-01-15',
+                    date: '2025-06-05', // Keep this as past date
                     location: 'Viện Huyết học - Truyền máu Trung ương',
                     contact: '024-3869-3931',
                     timeSlots: [
@@ -2223,9 +2236,14 @@ class StaffDashboard {
 
 // Initialize dashboard when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM Content Loaded');
+    console.log('Current pathname:', window.location.pathname);
     // Only initialize if we're on the staff dashboard page
     if (window.location.pathname.includes('staff-dashboard.html')) {
+        console.log('Initializing Staff Dashboard...');
         window.staffDashboard = new StaffDashboard();
+    } else {
+        console.log('Not on staff dashboard page');
     }
 });
 
