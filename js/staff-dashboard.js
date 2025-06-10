@@ -11,7 +11,7 @@ class StaffDashboard {
         this.currentStatusFilter = 'all';
         this.currentBloodUnitSearchTerm = '';
         this.currentBloodUnitPage = 1;
-        this.currentTestFilter = 'all';
+        this.currentDonationRecordTestFilter = 'all';
         this.currentDonationRecordSearchTerm = '';
         this.currentDonationRecordPage = 1;
         this.mockData = this.generateMockData();
@@ -1274,7 +1274,7 @@ class StaffDashboard {
     }
 
     setTestFilter(filter, buttonElement) {
-        this.currentTestFilter = filter;
+        this.currentDonationRecordTestFilter = filter;
         this.currentDonationRecordPage = 1;
         
         // Update button states
@@ -1332,13 +1332,19 @@ class StaffDashboard {
     renderDonationRecords(donationRecords) {
         const tableBody = document.getElementById('donationRecordsTableBody');
         const noDataElement = document.getElementById('noDonationRecordsMessage');
+        const tableContainer = document.getElementById('donation-records-list');
 
         if (donationRecords.length === 0) {
             if (tableBody) tableBody.innerHTML = '';
             if (noDataElement) noDataElement.style.display = 'block';
+            if (tableContainer) tableContainer.style.display = 'none';
             this.renderDonationRecordPagination(0, 0);
             return;
         }
+
+        // Show table and hide no-data message
+        if (noDataElement) noDataElement.style.display = 'none';
+        if (tableContainer) tableContainer.style.display = 'block';
 
         // Pagination
         const startIndex = (this.currentDonationRecordPage - 1) * this.itemsPerPage;
