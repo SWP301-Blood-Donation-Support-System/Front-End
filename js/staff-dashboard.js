@@ -1206,10 +1206,8 @@ class StaffDashboard {
 
     updateTestResultDisplay(value) {
         const displayElement = document.getElementById('detailBloodTestResult');
-        const testResultText = value === 'good' ? 'Máu tốt' : 
-                               value === 'poor' ? 'Máu chưa đạt' : 'Máu xấu';
-        const testResultClass = value === 'good' ? 'good' : 
-                                value === 'poor' ? 'poor' : 'bad';
+        const testResultText = value === 'good' ? 'Máu đạt' : 'Máu chưa đạt';
+        const testResultClass = value === 'good' ? 'good' : 'poor';
         
         displayElement.textContent = testResultText;
         displayElement.className = `test-result-badge ${testResultClass}`;
@@ -1363,10 +1361,8 @@ class StaffDashboard {
     }
 
     renderDonationRecordRow(record, index) {
-        const testResultClass = record.bloodTestResult === 'good' ? 'test-result-good' : 
-                                record.bloodTestResult === 'poor' ? 'test-result-poor' : 'test-result-bad';
-        const testResultText = record.bloodTestResult === 'good' ? 'Máu tốt' : 
-                               record.bloodTestResult === 'poor' ? 'Máu chưa đạt' : 'Máu xấu';
+        const testResultClass = record.bloodTestResult === 'good' ? 'test-result-good' : 'test-result-poor';
+        const testResultText = record.bloodTestResult === 'good' ? 'Máu đạt' : 'Máu chưa đạt';
         
         return `
             <tr class="donation-record-row" data-record-id="${record.id}">
@@ -1418,10 +1414,8 @@ class StaffDashboard {
         document.getElementById('detailVolumeDonated').textContent = record.volumeDonated + ' ml';
         
         const testResultElement = document.getElementById('detailBloodTestResult');
-        const testResultText = record.bloodTestResult === 'good' ? 'Máu tốt' : 
-                               record.bloodTestResult === 'poor' ? 'Máu chưa đạt' : 'Máu xấu';
-        const testResultClass = record.bloodTestResult === 'good' ? 'good' : 
-                                record.bloodTestResult === 'poor' ? 'poor' : 'bad';
+        const testResultText = record.bloodTestResult === 'good' ? 'Máu đạt' : 'Máu chưa đạt';
+        const testResultClass = record.bloodTestResult === 'good' ? 'good' : 'poor';
         testResultElement.textContent = testResultText;
         testResultElement.className = `test-result-badge ${testResultClass}`;
         
@@ -1491,12 +1485,11 @@ class StaffDashboard {
         const totalRecords = allRecords.length;
         const goodBloodRecords = allRecords.filter(record => record.bloodTestResult === 'good').length;
         const poorBloodRecords = allRecords.filter(record => record.bloodTestResult === 'poor').length;
-        const badBloodRecords = allRecords.filter(record => record.bloodTestResult === 'bad').length;
         const totalVolume = allRecords.reduce((sum, record) => sum + record.volumeDonated, 0);
 
         document.getElementById('totalDonationRecords').textContent = totalRecords;
         document.getElementById('goodBloodRecords').textContent = goodBloodRecords;
-        document.getElementById('poorBloodRecords').textContent = poorBloodRecords + badBloodRecords; // Combine poor and bad for display
+        document.getElementById('poorBloodRecords').textContent = poorBloodRecords;
         document.getElementById('totalVolumeDonated').textContent = totalVolume.toLocaleString();
     }
 
@@ -1942,8 +1935,8 @@ class StaffDashboard {
                     donorTemperature: 37.1,
                     donationType: 'Tiểu cầu',
                     volumeDonated: 300,
-                    bloodTestResult: 'bad',
-                    note: 'Phát hiện nhiễm khuẩn nghiêm trọng trong máu, hoàn toàn không thể sử dụng.'
+                    bloodTestResult: 'poor',
+                    note: 'Phát hiện một số chỉ số bất thường trong máu, cần kiểm tra lại trước khi sử dụng.'
                 },
                 {
                     id: 'DR20240111001',
@@ -2086,8 +2079,8 @@ class StaffDashboard {
                     donorTemperature: 36.8,
                     donationType: 'Huyết tương',
                     volumeDonated: 350,
-                    bloodTestResult: 'bad',
-                    note: 'Phát hiện virus HIV trong máu, không thể sử dụng và cần thông báo ngay cho người hiến.'
+                    bloodTestResult: 'poor',
+                    note: 'Xét nghiệm phát hiện một số chỉ số bất thường, cần kiểm tra kỹ trước khi sử dụng.'
                 },
                 {
                     id: 'DR20231230001',
