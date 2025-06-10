@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Dashboard - Hệ Thống Hỗ Trợ Hiến Máu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link href="css/staff-dashboard.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Upper Header Part -->
+    <div class="header-top">
+        <div class="container">
+            <!-- Logo (Left) -->
+             <!-- huh -->
+            <div class="header-logo">
+                <a href="index.html">
+                    <img src="images/logo.svg" alt="Blood Services Logo" height="40">
+                </a>
+            </div>
+            
+            <!-- Right Side Container -->
+            <div class="header-right">
+                <!-- Auth Section -->
+                <div class="header-auth">
+                    <!-- When logged out -->
+                    <button class="auth-btn" id="loginBtn">
+                        <i class="fas fa-user me-1"></i>
+                        <span class="auth-text">Đăng nhập</span>
+                    </button>
+                    
+                    <!-- When logged in (initially hidden) -->
+                   <div class="user-info" id="userInfo" style="display: none;">
+                        <a href="account.html" class="user-greeting text-decoration-none text-dark">
+                            <i class="fas fa-user-circle me-1"></i>
+                            <span class="hello-text">Hello</span> <span class="user-name">Huy</span>!
+                        </a>
+                        <button class="role-toggle member-role" id="roleToggleBtn" style="display: none;">
+                            <i id="roleIcon" class="fas fa-user"></i>
+                            <span id="roleText">Thành viên</span>
+                        </button>
+                        <button class="auth-btn logged-in ms-2" id="logoutBtn">
+                            <span class="logout-text">Đăng Xuất</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Language Switcher -->
+                <!-- <div class="language-switcher">
+                    <button class="language-toggle">
+                        <span class="current-lang">VN</span>
+                        <span class="text-muted">|</span>
+                        <span class="alternate-lang">EN</span>
+                    </button>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Header Navigation (Lower Part - Auth Container Removed) -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item me-4">
+                            <a class="nav-link fs-6" href="index.html">Trang Chủ</a>
+                        </li>
+                        <li class="nav-item me-4">
+                            <a class="nav-link fs-6" href="donate.html">Đặt Lịch Hiến Máu</a>
+                        </li>
+
+                        <li class="nav-item me-4">
+                            <a class="nav-link fs-6" href="lookup.html">Tra Cứu</a>
+                        </li>
+                        <li class="nav-item me-4">
+                            <a class="nav-link fs-6" href="news.html">Tin Tức</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fs-6" href="faq.html">Hỏi Đáp</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Dashboard Content -->
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <div class="dashboard-sidebar">
+            <nav class="nav flex-column">
+                <div class="nav-item">
+                    <a class="nav-link active" href="#" data-section="schedules">
+                        <i class="fas fa-calendar-check"></i>
+                        Lịch đặt hiến
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a class="nav-link" href="#" data-section="donors">
+                        <i class="fas fa-users"></i>
+                        Quản lý người hiến
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a class="nav-link" href="#" data-section="blood-units">
+                        <i class="fas fa-tint"></i>
+                        Quản lý túi máu hậu hiến
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a class="nav-link" href="#" data-section="donation-records">
+                        <i class="fas fa-file-medical"></i>
+                        Hồ sơ hiến máu
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a class="nav-link" href="#" data-section="reports">
+                        <i class="fas fa-chart-bar"></i>
+                        Báo cáo thống kê
+                    </a>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="dashboard-content">
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Staff Dashboard</a></li>
+                    <li class="breadcrumb-item active" id="currentSection" aria-current="page">Lịch đặt hiến</li>
+                </ol>
+            </nav>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <h2 class="content-title mb-4">Lịch đặt hiến</h2>
+                
+                <!-- Schedules Section -->
+                <div id="schedules-section" class="section-content">
+                    <div class="content-header mb-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h3>Danh sách lịch hiến máu</h3>
+                            <div class="filter-buttons">
+                                <button class="btn btn-outline-primary active" data-filter="all">Tất cả</button>
+                                <button class="btn btn-outline-success" data-filter="upcoming">Sắp tới</button>
+                                <button class="btn btn-outline-secondary" data-filter="past">Đã qua</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="schedules-list">
+                        <!-- Schedule items will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Schedule Detail Section (Hidden by default) -->
+                <div id="schedule-detail-section" class="section-content" style="display: none;">
+                    <div class="content-header mb-4">
+                        <button class="btn btn-outline-secondary mb-3" id="backToSchedules">
+                            <i class="fas fa-arrow-left"></i> Quay lại danh sách
+                        </button>
+                        <h3 id="scheduleDetailTitle">Chi tiết lịch hiến máu</h3>
+                    </div>
+
+                    <div class="schedule-detail-content">
+                        <!-- Time slots will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Other sections (hidden by default) -->
+                <div id="donors-section" class="section-content" style="display: none;">
+                    <div class="content-header mb-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h3>Quản lý người hiến máu</h3>
+                            <div class="search-filter-section">
+                                <div class="input-group" style="width: 300px;">
+                                    <input type="text" class="form-control" id="donorSearchInput" placeholder="Tìm kiếm theo tên hoặc nhóm máu...">
+                                    <button class="btn btn-outline-secondary" id="donorSearchBtn">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="filter-buttons mt-3">
+                            <button class="btn btn-outline-primary active" data-blood-filter="all">Tất cả</button>
+                            <button class="btn btn-outline-danger" data-blood-filter="A">Nhóm A</button>
+                            <button class="btn btn-outline-danger" data-blood-filter="B">Nhóm B</button>
+                            <button class="btn btn-outline-danger" data-blood-filter="AB">Nhóm AB</button>
+                            <button class="btn btn-outline-danger" data-blood-filter="O">Nhóm O</button>
+                        </div>
+                    </div>
+
+                    <div class="donors-stats mb-4">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="stat-card">
+                                    <div class="stat-number" id="totalDonors">0</div>
+                                    <div class="stat-label">Tổng số người hiến</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="stat-card">
+                                    <div class="stat-number" id="eligibleDonors">0</div>
+                                    <div class="stat-label">Đủ điều kiện hiến</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="donors-table-container">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Tên người hiến</th>
+                                        <th scope="col">Tuổi</th>
+                                        <th scope="col">Nhóm máu</th>
+                                        <th scope="col">Lần hiến cuối</th>
+                                        <th scope="col">Tổng số lần hiến</th>
+                                        <th scope="col">Trạng thái</th>
+                                        <th scope="col">Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="donorsTableBody">
+                                    <!-- Donor data will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Pagination -->
+                        <nav aria-label="Donor pagination" class="mt-4">
+                            <ul class="pagination justify-content-center" id="donorPagination">
+                                <!-- Pagination will be generated here -->
+                            </ul>
+                        </nav>
+                    </div>
+
+                    <!-- Loading spinner -->
+                    <div class="text-center" id="donorsLoading" style="display: none;">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-2">Đang tải dữ liệu...</p>
+                    </div>
+
+                    <!-- No data message -->
+                    <div class="text-center" id="noDonorsMessage" style="display: none;">
+                        <i class="fas fa-users text-muted" style="font-size: 3rem;"></i>
+                        <p class="mt-3 text-muted">Không có dữ liệu người hiến máu</p>
+                    </div>
+                </div>
+
+                <div id="blood-units-section" class="section-content" style="display: none;">
+                    <div class="content-header mb-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h3>Quản lý túi máu hậu hiến</h3>
+                            <div class="search-filter-section">
+                                <div class="input-group" style="width: 300px;">
+                                    <input type="text" class="form-control" id="bloodUnitSearchInput" placeholder="Tìm kiếm theo ID hoặc nhóm máu...">
+                                    <button class="btn btn-outline-secondary" id="bloodUnitSearchBtn">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="filter-buttons mt-3">
+                            <button class="btn btn-outline-primary active" data-status-filter="all">Tất cả</button>
+                            <button class="btn btn-outline-success" data-status-filter="approved">Đã duyệt</button>
+                            <button class="btn btn-outline-warning" data-status-filter="pending">Chờ duyệt</button>
+                            <button class="btn btn-outline-danger" data-status-filter="denied">Từ chối</button>
+                            <button class="btn btn-outline-secondary" data-status-filter="expired">Hết hạn</button>
+                        </div>
+                    </div>
+
+                    <div class="blood-units-stats mb-4">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="stat-card stat-card-total">
+                                    <div class="stat-number" id="totalBloodUnits">0</div>
+                                    <div class="stat-label">Tổng túi máu</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="stat-card stat-card-approved">
+                                    <div class="stat-number" id="approvedBloodUnits">0</div>
+                                    <div class="stat-label">Đã duyệt</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="stat-card stat-card-pending">
+                                    <div class="stat-number" id="pendingBloodUnits">0</div>
+                                    <div class="stat-label">Chờ duyệt</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="stat-card stat-card-available">
+                                    <div class="stat-number" id="availableVolume">0</div>
+                                    <div class="stat-label">Tổng thể tích (ml)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="blood-units-table-container">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">ID Túi máu</th>
+                                        <th scope="col">Thể tích (ml)</th>
+                                        <th scope="col">Nhóm máu</th>
+                                        <th scope="col">Ngày hiến</th>
+                                        <th scope="col">Hạn sử dụng</th>
+                                        <th scope="col">Trạng thái</th>
+                                        <th scope="col">Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bloodUnitsTableBody">
+                                    <!-- Blood unit data will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Pagination -->
+                        <nav aria-label="Blood units pagination" class="mt-4">
+                            <ul class="pagination justify-content-center" id="bloodUnitPagination">
+                                <!-- Pagination will be generated here -->
+                            </ul>
+                        </nav>
+                    </div>
+
+                    <!-- Loading spinner -->
+                    <div class="text-center" id="bloodUnitsLoading" style="display: none;">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-2">Đang tải dữ liệu...</p>
+                    </div>
+
+                    <!-- No data message -->
+                    <div class="text-center" id="noBloodUnitsMessage" style="display: none;">
+                        <i class="fas fa-tint text-muted" style="font-size: 3rem;"></i>
+                        <p class="mt-3 text-muted">Không có dữ liệu túi máu</p>
+                    </div>
+                </div>
+
+                <div id="donation-records-section" class="section-content" style="display: none;">
+                    <div class="content-header mb-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="search-filter-section">
+                                <div class="input-group" style="width: 300px;">
+                                    <input type="text" class="form-control" id="donationRecordSearchInput" placeholder="Tìm kiếm theo ID hoặc tên người hiến...">
+                                    <button class="btn btn-outline-secondary" id="donationRecordSearchBtn">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="filter-buttons mt-3">
+                            <button class="btn btn-outline-primary active" data-test-filter="all">Tất cả</button>
+                            <button class="btn btn-outline-success" data-test-filter="good">Máu đạt</button>
+                            <button class="btn btn-outline-danger" data-test-filter="poor">Máu chưa đạt</button>
+                        </div>
+                    </div>
+
+                    <div class="donation-records-stats mb-4">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="stat-card stat-card-total">
+                                    <div class="stat-number" id="totalDonationRecords">0</div>
+                                    <div class="stat-label">Tổng hồ sơ</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="stat-card stat-card-approved">
+                                    <div class="stat-number" id="goodBloodRecords">0</div>
+                                    <div class="stat-label">Máu đạt</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="stat-card stat-card-pending">
+                                    <div class="stat-number" id="poorBloodRecords">0</div>
+                                    <div class="stat-label">Máu chưa đạt</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Records List View -->
+                    <div id="donation-records-list" class="donation-records-table-container">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">ID Hồ sơ</th>
+                                        <th scope="col">ID Người hiến</th>
+                                        <th scope="col">Tên người hiến</th>
+                                        <th scope="col">Ngày hiến</th>
+                                        <th scope="col">Loại hiến</th>
+                                        <th scope="col">Kết quả xét nghiệm</th>
+                                        <th scope="col">Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="donationRecordsTableBody">
+                                    <!-- Donation records data will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Pagination -->
+                        <nav aria-label="Donation records pagination" class="mt-4">
+                            <ul class="pagination justify-content-center" id="donationRecordPagination">
+                                <!-- Pagination will be generated here -->
+                            </ul>
+                        </nav>
+                    </div>
+
+                    <!-- Record Detail View -->
+                    <div id="donation-record-detail" class="donation-record-detail" style="display: none;">
+                        <div class="content-header mb-4">
+                            <button class="btn btn-outline-secondary mb-3" id="backToDonationRecords">
+                                <i class="fas fa-arrow-left"></i> Quay lại danh sách
+                            </button>
+                            <h3 id="donationRecordDetailTitle">Chi tiết hồ sơ hiến máu</h3>
+                        </div>
+
+                        <div class="donation-record-detail-content">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="detail-card">
+                                        <div class="detail-card-header">
+                                            <i class="fas fa-user-circle"></i>
+                                            <h5>Thông tin người hiến</h5>
+                                        </div>
+                                        <div class="detail-card-body">
+                                            <div class="detail-item">
+                                                <label>ID Hồ sơ:</label>
+                                                <span id="detailRecordId">-</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <label>ID Người hiến:</label>
+                                                <span id="detailDonorId">-</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <label>Tên người hiến:</label>
+                                                <span id="detailDonorName">-</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <label>Ngày và giờ hiến:</label>
+                                                <span id="detailDonationDateTime">-</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="detail-card">
+                                        <div class="detail-card-header">
+                                            <i class="fas fa-heartbeat"></i>
+                                            <h5>Thông tin sức khỏe</h5>
+                                        </div>
+                                        <div class="detail-card-body">
+                                            <div class="detail-item">
+                                                <label>Cân nặng:</label>
+                                                <span id="detailDonorWeight">-</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <label>Nhiệt độ:</label>
+                                                <span id="detailDonorTemperature">-</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <label>Loại hiến máu:</label>
+                                                <span id="detailDonationType">-</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <label>Thể tích hiến:</label>
+                                                <span id="detailVolumeDonated">-</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row mt-4">
+                                <div class="col-md-6">
+                                    <div class="detail-card">
+                                        <div class="detail-card-header">
+                                            <i class="fas fa-flask"></i>
+                                            <h5>Kết quả xét nghiệm</h5>
+                                            <button class="btn btn-sm btn-outline-primary edit-btn" id="editTestResultBtn" title="Chỉnh sửa kết quả">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                        </div>
+                                        <div class="detail-card-body">
+                                            <div class="detail-item">
+                                                <label>Kết quả:</label>
+                                                <span id="detailBloodTestResult" class="test-result-badge">-</span>
+                                                <select id="editBloodTestResult" class="form-select form-select-sm edit-field" style="display: none;">
+                                                    <option value="good">Máu đạt</option>
+                                                    <option value="poor">Máu chưa đạt</option>
+                                                </select>
+                                            </div>
+                                            <div class="detail-item edit-actions" id="testResultActions" style="display: none;">
+                                                <button class="btn btn-sm btn-success" id="saveTestResultBtn">
+                                                    <i class="fas fa-check"></i> Lưu
+                                                </button>
+                                                <button class="btn btn-sm btn-secondary" id="cancelTestResultBtn">
+                                                    <i class="fas fa-times"></i> Hủy
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="detail-card">
+                                        <div class="detail-card-header">
+                                            <i class="fas fa-sticky-note"></i>
+                                            <h5>Ghi chú</h5>
+                                            <button class="btn btn-sm btn-outline-primary edit-btn" id="editNoteBtn" title="Chỉnh sửa ghi chú">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                        </div>
+                                        <div class="detail-card-body">
+                                            <div class="detail-item">
+                                                <span id="detailNote" class="note-content">-</span>
+                                                <textarea id="editNote" class="form-control edit-field" rows="4" style="display: none;" placeholder="Nhập ghi chú..."></textarea>
+                                            </div>
+                                            <div class="detail-item edit-actions" id="noteActions" style="display: none;">
+                                                <button class="btn btn-sm btn-success" id="saveNoteBtn">
+                                                    <i class="fas fa-check"></i> Lưu
+                                                </button>
+                                                <button class="btn btn-sm btn-secondary" id="cancelNoteBtn">
+                                                    <i class="fas fa-times"></i> Hủy
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Loading spinner -->
+                    <div class="text-center" id="donationRecordsLoading" style="display: none;">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-2">Đang tải dữ liệu...</p>
+                    </div>
+
+                    <!-- No data message -->
+                    <div class="text-center" id="noDonationRecordsMessage" style="display: none;">
+                        <i class="fas fa-file-medical text-muted" style="font-size: 3rem;"></i>
+                        <p class="mt-3 text-muted">Không có dữ liệu hồ sơ hiến máu</p>
+                    </div>
+                </div>
+
+                <div id="reports-section" class="section-content" style="display: none;">
+                    <h3>Báo cáo thống kê</h3>
+                    <p>Đang phát triển...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/header.js"></script>
+    <script src="js/role-manager.js"></script>
+    <script src="js/staff-login-checker.js"></script>
+    <script src="js/staff-features.js"></script>
+    <script src="js/staff-dashboard.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html> 
