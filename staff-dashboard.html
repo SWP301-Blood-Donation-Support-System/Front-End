@@ -180,7 +180,6 @@
                 <div id="donors-section" class="section-content" style="display: none;">
                     <div class="content-header mb-4">
                         <div class="d-flex justify-content-between align-items-center">
-                            <h3>Quản lý người hiến máu</h3>
                             <div class="search-filter-section">
                                 <div class="input-group" style="width: 300px;">
                                     <input type="text" class="form-control" id="donorSearchInput" placeholder="Tìm kiếm theo tên hoặc nhóm máu...">
@@ -263,7 +262,6 @@
                 <div id="blood-units-section" class="section-content" style="display: none;">
                     <div class="content-header mb-4">
                         <div class="d-flex justify-content-between align-items-center">
-                            <h3>Quản lý túi máu hậu hiến</h3>
                             <div class="search-filter-section">
                                 <div class="input-group" style="width: 300px;">
                                     <input type="text" class="form-control" id="bloodUnitSearchInput" placeholder="Tìm kiếm theo ID hoặc nhóm máu...">
@@ -318,11 +316,15 @@
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">ID Túi máu</th>
+                                        <th scope="col">Id thành phần máu</th>
+                                        <th scope="col">Thành phần</th>
                                         <th scope="col">Thể tích (ml)</th>
                                         <th scope="col">Nhóm máu</th>
                                         <th scope="col">Ngày hiến</th>
                                         <th scope="col">Hạn sử dụng</th>
-                                        <th scope="col">Trạng thái</th>
+                                        <th scope="col" class="sortable-header" id="statusColumnHeader" style="cursor: pointer;" title="Nhấp để lọc theo trạng thái">
+                                            Trạng thái <i class="fas fa-sort ms-1" id="statusSortIcon"></i>
+                                        </th>
                                         <th scope="col">Thao tác</th>
                                     </tr>
                                 </thead>
@@ -366,6 +368,11 @@
                                     </button>
                                 </div>
                             </div>
+                            <div class="action-buttons">
+                                <button class="btn btn-primary" id="createNewRecordBtn" data-bs-toggle="modal" data-bs-target="#createRecordModal">
+                                    <i class="fas fa-plus"></i> Tạo hồ sơ mới
+                                </button>
+                            </div>
                         </div>
                         <div class="filter-buttons mt-3">
                             <button class="btn btn-outline-primary active" data-test-filter="all">Tất cả</button>
@@ -407,9 +414,9 @@
                                         <th scope="col">ID Hồ sơ</th>
                                         <th scope="col">ID Người hiến</th>
                                         <th scope="col">Tên người hiến</th>
-                                        <th scope="col">Ngày hiến</th>
-                                        <th scope="col">Loại hiến</th>
-                                        <th scope="col">Kết quả xét nghiệm</th>
+                                        <th scope="col">CCCD</th>
+                                        <th scope="col">Số điện thoại</th>
+                                        <th scope="col">Ngày sinh</th>
                                         <th scope="col">Thao tác</th>
                                     </tr>
                                 </thead>
@@ -433,118 +440,70 @@
                             <button class="btn btn-outline-secondary mb-3" id="backToDonationRecords">
                                 <i class="fas fa-arrow-left"></i> Quay lại danh sách
                             </button>
-                            <h3 id="donationRecordDetailTitle">Chi tiết hồ sơ hiến máu</h3>
+                            <h3 id="donationRecordDetailTitle">Lịch sử hiến máu của người hiến</h3>
                         </div>
 
-                        <div class="donation-record-detail-content">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="detail-card">
-                                        <div class="detail-card-header">
-                                            <i class="fas fa-user-circle"></i>
-                                            <h5>Thông tin người hiến</h5>
-                                        </div>
-                                        <div class="detail-card-body">
-                                            <div class="detail-item">
-                                                <label>ID Hồ sơ:</label>
-                                                <span id="detailRecordId">-</span>
-                                            </div>
+                        <!-- Donor Info Summary -->
+                        <div class="donor-info-summary mb-4">
+                            <div class="detail-card">
+                                <div class="detail-card-header">
+                                    <i class="fas fa-user-circle"></i>
+                                    <h5>Thông tin người hiến</h5>
+                                </div>
+                                <div class="detail-card-body">
+                                    <div class="row">
+                                        <div class="col-md-3">
                                             <div class="detail-item">
                                                 <label>ID Người hiến:</label>
                                                 <span id="detailDonorId">-</span>
                                             </div>
+                                        </div>
+                                        <div class="col-md-6">
                                             <div class="detail-item">
                                                 <label>Tên người hiến:</label>
                                                 <span id="detailDonorName">-</span>
                                             </div>
-                                            <div class="detail-item">
-                                                <label>Ngày và giờ hiến:</label>
-                                                <span id="detailDonationDateTime">-</span>
-                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="detail-card">
-                                        <div class="detail-card-header">
-                                            <i class="fas fa-heartbeat"></i>
-                                            <h5>Thông tin sức khỏe</h5>
-                                        </div>
-                                        <div class="detail-card-body">
+                                        <div class="col-md-3">
                                             <div class="detail-item">
-                                                <label>Cân nặng:</label>
-                                                <span id="detailDonorWeight">-</span>
-                                            </div>
-                                            <div class="detail-item">
-                                                <label>Nhiệt độ:</label>
-                                                <span id="detailDonorTemperature">-</span>
-                                            </div>
-                                            <div class="detail-item">
-                                                <label>Loại hiến máu:</label>
-                                                <span id="detailDonationType">-</span>
-                                            </div>
-                                            <div class="detail-item">
-                                                <label>Thể tích hiến:</label>
-                                                <span id="detailVolumeDonated">-</span>
+                                                <label>Ngày sinh:</label>
+                                                <span id="detailDonorBirthDate">-</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            
-                            <div class="row mt-4">
-                                <div class="col-md-6">
-                                    <div class="detail-card">
-                                        <div class="detail-card-header">
-                                            <i class="fas fa-flask"></i>
-                                            <h5>Kết quả xét nghiệm</h5>
-                                            <button class="btn btn-sm btn-outline-primary edit-btn" id="editTestResultBtn" title="Chỉnh sửa kết quả">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                        </div>
-                                        <div class="detail-card-body">
-                                            <div class="detail-item">
-                                                <label>Kết quả:</label>
-                                                <span id="detailBloodTestResult" class="test-result-badge">-</span>
-                                                <select id="editBloodTestResult" class="form-select form-select-sm edit-field" style="display: none;">
-                                                    <option value="good">Máu đạt</option>
-                                                    <option value="poor">Máu chưa đạt</option>
-                                                </select>
-                                            </div>
-                                            <div class="detail-item edit-actions" id="testResultActions" style="display: none;">
-                                                <button class="btn btn-sm btn-success" id="saveTestResultBtn">
-                                                    <i class="fas fa-check"></i> Lưu
-                                                </button>
-                                                <button class="btn btn-sm btn-secondary" id="cancelTestResultBtn">
-                                                    <i class="fas fa-times"></i> Hủy
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
+                        </div>
+
+                        <!-- Donation History Table -->
+                        <div class="donation-history-table">
+                            <div class="detail-card">
+                                <div class="detail-card-header">
+                                    <i class="fas fa-history"></i>
+                                    <h5>Lịch sử hiến máu</h5>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="detail-card">
-                                        <div class="detail-card-header">
-                                            <i class="fas fa-sticky-note"></i>
-                                            <h5>Ghi chú</h5>
-                                            <button class="btn btn-sm btn-outline-primary edit-btn" id="editNoteBtn" title="Chỉnh sửa ghi chú">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                        </div>
-                                        <div class="detail-card-body">
-                                            <div class="detail-item">
-                                                <span id="detailNote" class="note-content">-</span>
-                                                <textarea id="editNote" class="form-control edit-field" rows="4" style="display: none;" placeholder="Nhập ghi chú..."></textarea>
-                                            </div>
-                                            <div class="detail-item edit-actions" id="noteActions" style="display: none;">
-                                                <button class="btn btn-sm btn-success" id="saveNoteBtn">
-                                                    <i class="fas fa-check"></i> Lưu
-                                                </button>
-                                                <button class="btn btn-sm btn-secondary" id="cancelNoteBtn">
-                                                    <i class="fas fa-times"></i> Hủy
-                                                </button>
-                                            </div>
-                                        </div>
+                                <div class="detail-card-body p-0">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-hover mb-0">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Ngày hiến</th>
+                                                    <th scope="col">SlotID</th>
+                                                    <th scope="col">AppointmentID</th>
+                                                    <th scope="col">StaffID</th>
+                                                    <th scope="col">Cân nặng (kg)</th>
+                                                    <th scope="col">Nhiệt độ (°C)</th>
+                                                    <th scope="col">Huyết áp</th>
+                                                    <th scope="col">Loại hiến</th>
+                                                    <th scope="col">Thể tích (ml)</th>
+                                                    <th scope="col">Ghi chú</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="donationHistoryTableBody">
+                                                <!-- Donation history will be loaded here -->
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -569,6 +528,149 @@
                 <div id="reports-section" class="section-content" style="display: none;">
                     <h3>Báo cáo thống kê</h3>
                     <p>Đang phát triển...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create New Record Modal -->
+    <div class="modal fade" id="createRecordModal" tabindex="-1" aria-labelledby="createRecordModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="createRecordModalLabel">
+                        <i class="fas fa-plus-circle me-2"></i>Tạo hồ sơ hiến máu mới
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="createRecordForm">
+                        <div class="row">
+                            <!-- Donor Information Section -->
+                            <div class="col-12 mb-4">
+                                <h6 class="text-primary border-bottom pb-2">
+                                    <i class="fas fa-user me-2"></i>Thông tin người hiến
+                                </h6>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="donorId" class="form-label">ID Người hiến <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="donorId" name="donorId" required>
+                                <div class="invalid-feedback">Vui lòng nhập ID người hiến</div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="donorName" class="form-label">Tên người hiến <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="donorName" name="donorName" required>
+                                <div class="invalid-feedback">Vui lòng nhập tên người hiến</div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="donorCCCD" class="form-label">CCCD <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="donorCCCD" name="donorCCCD" required pattern="[0-9]{12}" maxlength="12">
+                                <div class="invalid-feedback">Vui lòng nhập CCCD (12 số)</div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="donorPhone" class="form-label">Số điện thoại <span class="text-danger">*</span></label>
+                                <input type="tel" class="form-control" id="donorPhone" name="donorPhone" required pattern="[0-9]{10,11}" maxlength="11">
+                                <div class="invalid-feedback">Vui lòng nhập số điện thoại (10-11 số)</div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="donorBirthDate" class="form-label">Ngày sinh <span class="text-danger">*</span></label>
+                                <input type="date" class="form-control" id="donorBirthDate" name="donorBirthDate" required>
+                                <div class="invalid-feedback">Vui lòng chọn ngày sinh</div>
+                            </div>
+
+                            <!-- Donation Information Section -->
+                            <div class="col-12 mb-4 mt-4">
+                                <h6 class="text-primary border-bottom pb-2">
+                                    <i class="fas fa-tint me-2"></i>Thông tin hiến máu
+                                </h6>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="donationDate" class="form-label">Ngày hiến <span class="text-danger">*</span></label>
+                                <input type="date" class="form-control" id="donationDate" name="donationDate" required>
+                                <div class="invalid-feedback">Vui lòng chọn ngày hiến</div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="slotId" class="form-label">SlotID <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="slotId" name="slotId" required>
+                                <div class="invalid-feedback">Vui lòng nhập SlotID</div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="appointmentId" class="form-label">AppointmentID <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="appointmentId" name="appointmentId" required>
+                                <div class="invalid-feedback">Vui lòng nhập AppointmentID</div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="staffId" class="form-label">StaffID <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="staffId" name="staffId" required>
+                                <div class="invalid-feedback">Vui lòng nhập StaffID</div>
+                            </div>
+
+                            <!-- Medical Information Section -->
+                            <div class="col-12 mb-4 mt-4">
+                                <h6 class="text-primary border-bottom pb-2">
+                                    <i class="fas fa-heartbeat me-2"></i>Thông tin y tế
+                                </h6>
+                            </div>
+                            
+                            <div class="col-md-4 mb-3">
+                                <label for="donorWeight" class="form-label">Cân nặng (kg) <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" id="donorWeight" name="donorWeight" required min="30" max="200" step="0.1">
+                                <div class="invalid-feedback">Vui lòng nhập cân nặng (30-200kg)</div>
+                            </div>
+                            
+                            <div class="col-md-4 mb-3">
+                                <label for="donorTemperature" class="form-label">Nhiệt độ (°C) <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" id="donorTemperature" name="donorTemperature" required min="35" max="42" step="0.1">
+                                <div class="invalid-feedback">Vui lòng nhập nhiệt độ (35-42°C)</div>
+                            </div>
+                            
+                            <div class="col-md-4 mb-3">
+                                <label for="bloodPressure" class="form-label">Huyết áp <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="bloodPressure" name="bloodPressure" required placeholder="120/80">
+                                <div class="invalid-feedback">Vui lòng nhập huyết áp (VD: 120/80)</div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="donationType" class="form-label">Loại hiến <span class="text-danger">*</span></label>
+                                <select class="form-select" id="donationType" name="donationType" required>
+                                    <option value="">Chọn loại hiến...</option>
+                                    <option value="Máu toàn phần">Máu toàn phần</option>
+                                    <option value="Hồng cầu">Hồng cầu</option>
+                                    <option value="Tiểu cầu">Tiểu cầu</option>
+                                    <option value="Huyết tương">Huyết tương</option>
+                                </select>
+                                <div class="invalid-feedback">Vui lòng chọn loại hiến</div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="donationVolume" class="form-label">Thể tích (ml) <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" id="donationVolume" name="donationVolume" required min="100" max="500" step="50">
+                                <div class="invalid-feedback">Vui lòng nhập thể tích (100-500ml)</div>
+                            </div>
+                            
+                            <div class="col-12 mb-3">
+                                <label for="donationNotes" class="form-label">Ghi chú</label>
+                                <textarea class="form-control" id="donationNotes" name="donationNotes" rows="3" placeholder="Nhập ghi chú (tùy chọn)..."></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-2"></i>Hủy
+                    </button>
+                    <button type="button" class="btn btn-primary" id="saveRecordBtn">
+                        <i class="fas fa-save me-2"></i>Lưu hồ sơ
+                    </button>
                 </div>
             </div>
         </div>

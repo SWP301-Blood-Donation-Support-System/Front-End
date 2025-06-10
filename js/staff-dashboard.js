@@ -11,6 +11,7 @@ class StaffDashboard {
         this.currentStatusFilter = 'all';
         this.currentBloodUnitSearchTerm = '';
         this.currentBloodUnitPage = 1;
+        this.statusSortMode = 'none'; // 'none', 'pending-first', 'status-asc', 'status-desc'
         this.currentDonationRecordTestFilter = 'all';
         this.currentDonationRecordSearchTerm = '';
         this.currentDonationRecordPage = 1;
@@ -85,6 +86,9 @@ class StaffDashboard {
 
         // Donation records management event listeners
         this.setupDonationRecordsEventListeners();
+
+        // Create record modal event listeners
+        this.setupCreateRecordEventListeners();
     }
 
     loadSection(sectionName) {
@@ -561,6 +565,14 @@ class StaffDashboard {
 
     // Blood Units Management Methods
     setupBloodUnitsEventListeners() {
+        // Status column header click
+        const statusColumnHeader = document.getElementById('statusColumnHeader');
+        if (statusColumnHeader) {
+            statusColumnHeader.addEventListener('click', () => {
+                this.toggleStatusSort();
+            });
+        }
+
         // Status filter buttons
         document.addEventListener('click', (e) => {
             if (e.target.matches('[data-status-filter]')) {
@@ -634,10 +646,67 @@ class StaffDashboard {
         this.loadBloodUnits();
     }
 
+    toggleStatusSort() {
+        // Cycle through sort modes: none -> pending-first -> status-asc -> status-desc -> none
+        switch (this.statusSortMode) {
+            case 'none':
+                this.statusSortMode = 'pending-first';
+                break;
+            case 'pending-first':
+                this.statusSortMode = 'status-asc';
+                break;
+            case 'status-asc':
+                this.statusSortMode = 'status-desc';
+                break;
+            case 'status-desc':
+                this.statusSortMode = 'none';
+                break;
+            default:
+                this.statusSortMode = 'pending-first';
+        }
+
+        // Update sort icon
+        this.updateStatusSortIcon();
+        
+        // Reset to first page and reload
+        this.currentBloodUnitPage = 1;
+        this.loadBloodUnits();
+    }
+
+    updateStatusSortIcon() {
+        const icon = document.getElementById('statusSortIcon');
+        if (!icon) return;
+
+        // Remove all sort classes
+        icon.className = icon.className.replace(/fa-sort.*?(?=\s|$)/g, '');
+        
+        switch (this.statusSortMode) {
+            case 'none':
+                icon.classList.add('fa-sort');
+                icon.parentElement.title = 'Nhấp để lọc theo trạng thái';
+                break;
+            case 'pending-first':
+                icon.classList.add('fa-sort-up');
+                icon.parentElement.title = 'Đang hiển thị: Chờ duyệt trước - Nhấp để sắp xếp A-Z';
+                break;
+            case 'status-asc':
+                icon.classList.add('fa-sort-alpha-down');
+                icon.parentElement.title = 'Đang sắp xếp: A-Z - Nhấp để sắp xếp Z-A';
+                break;
+            case 'status-desc':
+                icon.classList.add('fa-sort-alpha-up');
+                icon.parentElement.title = 'Đang sắp xếp: Z-A - Nhấp để bỏ sắp xếp';
+                break;
+        }
+    }
+
     loadBloodUnits() {
         const loadingElement = document.getElementById('bloodUnitsLoading');
         const tableBody = document.getElementById('bloodUnitsTableBody');
         const noDataElement = document.getElementById('noBloodUnitsMessage');
+        
+        // Initialize sort icon if not already done
+        this.updateStatusSortIcon();
         
         // Show loading
         if (loadingElement) loadingElement.style.display = 'block';
@@ -672,8 +741,36 @@ class StaffDashboard {
             );
         }
 
-        // Sort by donation date (most recent first)
-        filteredUnits.sort((a, b) => new Date(b.donationDate) - new Date(a.donationDate));
+        // Apply status sorting
+        switch (this.statusSortMode) {
+            case 'pending-first':
+                // Sort pending first, then by donation date
+                filteredUnits.sort((a, b) => {
+                    if (a.status === 'pending' && b.status !== 'pending') return -1;
+                    if (a.status !== 'pending' && b.status === 'pending') return 1;
+                    return new Date(b.donationDate) - new Date(a.donationDate);
+                });
+                break;
+            case 'status-asc':
+                // Sort by status alphabetically (A-Z), then by donation date
+                filteredUnits.sort((a, b) => {
+                    const statusComparison = this.getStatusText(a.status).localeCompare(this.getStatusText(b.status), 'vi');
+                    if (statusComparison !== 0) return statusComparison;
+                    return new Date(b.donationDate) - new Date(a.donationDate);
+                });
+                break;
+            case 'status-desc':
+                // Sort by status reverse alphabetically (Z-A), then by donation date
+                filteredUnits.sort((a, b) => {
+                    const statusComparison = this.getStatusText(b.status).localeCompare(this.getStatusText(a.status), 'vi');
+                    if (statusComparison !== 0) return statusComparison;
+                    return new Date(b.donationDate) - new Date(a.donationDate);
+                });
+                break;
+            default:
+                // Default sort by donation date (most recent first)
+                filteredUnits.sort((a, b) => new Date(b.donationDate) - new Date(a.donationDate));
+        }
 
         return filteredUnits;
     }
@@ -709,11 +806,21 @@ class StaffDashboard {
         const expiryStatus = this.getExpiryStatus(unit.expiryDate);
         const statusClass = `status-${unit.status}`;
         
+        // Default values for missing fields
+        const componentId = unit.componentId || `BC${unit.id.substring(2)}`;
+        const component = unit.component || 'Máu toàn phần';
+        
         return `
             <tr class="blood-unit-row">
                 <td>${index}</td>
                 <td>
                     <span class="blood-unit-id">${unit.id}</span>
+                </td>
+                <td>
+                    <span class="component-id">${componentId}</span>
+                </td>
+                <td>
+                    <span class="badge bg-primary">${component}</span>
                 </td>
                 <td>
                     <span class="volume-display">${unit.volume}</span> ml
@@ -1357,8 +1464,11 @@ class StaffDashboard {
     }
 
     renderDonationRecordRow(record, index) {
-        const testResultClass = record.bloodTestResult === 'good' ? 'test-result-good' : 'test-result-poor';
-        const testResultText = record.bloodTestResult === 'good' ? 'Máu đạt' : 'Máu chưa đạt';
+        // Get donor information from donors data
+        const donor = this.mockData.donors.find(d => d.id === record.donorId);
+        const birthDate = donor ? this.formatDate(donor.birthDate) : '-';
+        const cccd = donor ? donor.cccd : `00${String(record.donorId).padStart(2, '0')}${String(Math.floor(Math.random() * 9000) + 1000).padStart(4, '0')}${String(Math.floor(Math.random() * 90) + 10)}`;
+        const phone = donor ? donor.phone : `09${String(Math.floor(Math.random() * 90000000) + 10000000)}`;
         
         return `
             <tr class="donation-record-row" data-record-id="${record.id}">
@@ -1373,18 +1483,18 @@ class StaffDashboard {
                     <div class="donor-name">${record.donorName}</div>
                 </td>
                 <td>
-                    <div class="donation-date">${this.formatDateTime(record.donationDateTime)}</div>
+                    <div class="cccd-display">${cccd}</div>
                 </td>
                 <td>
-                    <span class="donation-type-display">${record.donationType}</span>
+                    <div class="phone-display">${phone}</div>
                 </td>
                 <td>
-                    <span class="${testResultClass}">${testResultText}</span>
+                    <div class="birth-date">${birthDate}</div>
                 </td>
                 <td>
                     <div class="donation-record-actions">
-                        <button class="btn btn-outline-primary btn-sm" title="Xem chi tiết">
-                            <i class="fas fa-eye"></i>
+                        <button class="btn btn-outline-primary btn-sm" title="Xem lịch sử hiến máu">
+                            <i class="fas fa-history"></i>
                         </button>
                         <button class="btn btn-outline-info btn-sm" title="In hồ sơ">
                             <i class="fas fa-print"></i>
@@ -1399,30 +1509,82 @@ class StaffDashboard {
         const record = this.mockData.donationRecords.find(r => r.id === recordId);
         if (!record) return;
 
-        // Update detail view
-        document.getElementById('detailRecordId').textContent = record.id;
+        // Get donor information
+        const donor = this.mockData.donors.find(d => d.id === record.donorId);
+        if (!donor) return;
+
+        // Update donor info
         document.getElementById('detailDonorId').textContent = record.donorId;
         document.getElementById('detailDonorName').textContent = record.donorName;
-        document.getElementById('detailDonationDateTime').textContent = this.formatDateTime(record.donationDateTime);
-        document.getElementById('detailDonorWeight').textContent = record.donorWeight + ' kg';
-        document.getElementById('detailDonorTemperature').textContent = record.donorTemperature + '°C';
-        document.getElementById('detailDonationType').textContent = record.donationType;
-        document.getElementById('detailVolumeDonated').textContent = record.volumeDonated + ' ml';
-        
-        const testResultElement = document.getElementById('detailBloodTestResult');
-        const testResultText = record.bloodTestResult === 'good' ? 'Máu đạt' : 'Máu chưa đạt';
-        const testResultClass = record.bloodTestResult === 'good' ? 'good' : 'poor';
-        testResultElement.textContent = testResultText;
-        testResultElement.className = `test-result-badge ${testResultClass}`;
-        
-        document.getElementById('detailNote').textContent = record.note || 'Không có ghi chú';
+        document.getElementById('detailDonorBirthDate').textContent = this.formatDate(donor.birthDate);
+
+        // Get all donation records for this donor
+        const donorRecords = this.mockData.donationRecords
+            .filter(r => r.donorId === record.donorId)
+            .sort((a, b) => new Date(b.donationDateTime) - new Date(a.donationDateTime));
+
+        // Render donation history table
+        this.renderDonationHistory(donorRecords);
 
         // Update title
-        document.getElementById('donationRecordDetailTitle').textContent = `Chi tiết hồ sơ hiến máu - ${record.id}`;
+        document.getElementById('donationRecordDetailTitle').textContent = `Lịch sử hiến máu của ${record.donorName}`;
 
         // Hide list and show detail
         document.getElementById('donation-records-list').style.display = 'none';
         document.getElementById('donation-record-detail').style.display = 'block';
+    }
+
+    renderDonationHistory(donorRecords) {
+        const tableBody = document.getElementById('donationHistoryTableBody');
+        if (!tableBody) return;
+
+        if (donorRecords.length === 0) {
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="11" class="text-center text-muted py-4">
+                        <i class="fas fa-inbox fa-2x mb-2"></i>
+                        <div>Không có lịch sử hiến máu</div>
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+
+        const historyHTML = donorRecords.map((record, index) => {
+            // Generate default values if not present
+            const slotId = record.slotId || `SL${String(record.donorId).padStart(3, '0')}`;
+            const appointmentId = record.appointmentId || `AP${record.id.replace('DR', '')}`;
+            const staffId = record.staffId || `ST${String(Math.floor(Math.random() * 3) + 1).padStart(3, '0')}`;
+            const bloodPressure = record.bloodPressure || '120/80';
+            
+            return `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${this.formatDateTime(record.donationDateTime)}</td>
+                    <td>
+                        <span class="badge bg-secondary">${slotId}</span>
+                    </td>
+                    <td>
+                        <span class="badge bg-info">${appointmentId}</span>
+                    </td>
+                    <td>${staffId}</td>
+                    <td>${record.donorWeight}</td>
+                    <td>${record.donorTemperature}</td>
+                    <td>${bloodPressure}</td>
+                    <td>
+                        <span class="badge bg-primary">${record.donationType}</span>
+                    </td>
+                    <td>${record.volumeDonated}</td>
+                    <td>
+                        <span class="text-truncate" style="max-width: 200px;" title="${record.note || 'Không có ghi chú'}">
+                            ${record.note || '-'}
+                        </span>
+                    </td>
+                </tr>
+            `;
+        }).join('');
+
+        tableBody.innerHTML = historyHTML;
     }
 
     showDonationRecordsList() {
@@ -1506,9 +1668,10 @@ class StaffDashboard {
                     email: 'nguyen.van.anh@email.com',
                     birthDate: '1990-05-15',
                     bloodType: 'A+',
-                    lastDonationDate: '2024-01-10',
+                    lastDonationDate: '2025-01-10',
                     totalDonations: 12,
-                    phone: '0901234567'
+                    phone: '0901234567',
+                    cccd: '001090012345'
                 },
                 {
                     id: 2,
@@ -1516,9 +1679,10 @@ class StaffDashboard {
                     email: 'tran.thi.binh@email.com',
                     birthDate: '1985-08-22',
                     bloodType: 'O-',
-                    lastDonationDate: '2023-11-25',
+                    lastDonationDate: '2024-11-25',
                     totalDonations: 8,
-                    phone: '0912345678'
+                    phone: '0912345678',
+                    cccd: '001085023456'
                 },
                 {
                     id: 3,
@@ -1526,9 +1690,10 @@ class StaffDashboard {
                     email: 'le.minh.cuong@email.com',
                     birthDate: '1992-03-10',
                     bloodType: 'B+',
-                    lastDonationDate: '2024-01-05',
+                    lastDonationDate: '2025-01-05',
                     totalDonations: 15,
-                    phone: '0923456789'
+                    phone: '0923456789',
+                    cccd: '001092034567'
                 },
                 {
                     id: 4,
@@ -1536,9 +1701,10 @@ class StaffDashboard {
                     email: 'pham.thi.dung@email.com',
                     birthDate: '1988-12-03',
                     bloodType: 'AB+',
-                    lastDonationDate: '2023-12-20',
+                    lastDonationDate: '2024-12-20',
                     totalDonations: 6,
-                    phone: '0934567890'
+                    phone: '0934567890',
+                    cccd: '001088045678'
                 },
                 {
                     id: 5,
@@ -1546,7 +1712,7 @@ class StaffDashboard {
                     email: 'vo.van.em@email.com',
                     birthDate: '1995-07-18',
                     bloodType: 'A-',
-                    lastDonationDate: '2024-01-15',
+                    lastDonationDate: '2025-01-15',
                     totalDonations: 4,
                     phone: '0945678901'
                 },
@@ -1556,7 +1722,7 @@ class StaffDashboard {
                     email: 'dang.thi.phuong@email.com',
                     birthDate: '1991-11-27',
                     bloodType: 'O+',
-                    lastDonationDate: '2023-10-12',
+                    lastDonationDate: '2024-10-12',
                     totalDonations: 18,
                     phone: '0956789012'
                 },
@@ -1566,7 +1732,7 @@ class StaffDashboard {
                     email: 'hoang.van.giang@email.com',
                     birthDate: '1987-04-08',
                     bloodType: 'B-',
-                    lastDonationDate: '2024-01-08',
+                    lastDonationDate: '2025-01-08',
                     totalDonations: 9,
                     phone: '0967890123'
                 },
@@ -1576,7 +1742,7 @@ class StaffDashboard {
                     email: 'bui.thi.hang@email.com',
                     birthDate: '1993-09-14',
                     bloodType: 'AB-',
-                    lastDonationDate: '2023-12-15',
+                    lastDonationDate: '2024-12-15',
                     totalDonations: 7,
                     phone: '0978901234'
                 },
@@ -1586,7 +1752,7 @@ class StaffDashboard {
                     email: 'do.minh.quang@email.com',
                     birthDate: '1989-01-30',
                     bloodType: 'A+',
-                    lastDonationDate: '2023-09-20',
+                    lastDonationDate: '2024-09-20',
                     totalDonations: 22,
                     phone: '0989012345'
                 },
@@ -1596,7 +1762,7 @@ class StaffDashboard {
                     email: 'ngo.thi.lan@email.com',
                     birthDate: '1994-06-25',
                     bloodType: 'O+',
-                    lastDonationDate: '2024-01-12',
+                    lastDonationDate: '2025-01-12',
                     totalDonations: 3,
                     phone: '0990123456'
                 },
@@ -1606,7 +1772,7 @@ class StaffDashboard {
                     email: 'duong.van.minh@email.com',
                     birthDate: '1986-10-05',
                     bloodType: 'B+',
-                    lastDonationDate: '2023-08-15',
+                    lastDonationDate: '2024-08-15',
                     totalDonations: 16,
                     phone: '0901234560'
                 },
@@ -1616,7 +1782,7 @@ class StaffDashboard {
                     email: 'cao.thi.nga@email.com',
                     birthDate: '1996-02-12',
                     bloodType: 'A-',
-                    lastDonationDate: '2024-01-03',
+                    lastDonationDate: '2025-01-03',
                     totalDonations: 5,
                     phone: '0912345601'
                 },
@@ -1626,7 +1792,7 @@ class StaffDashboard {
                     email: 'vu.minh.tuan@email.com',
                     birthDate: '1984-08-17',
                     bloodType: 'AB+',
-                    lastDonationDate: '2023-11-08',
+                    lastDonationDate: '2024-11-08',
                     totalDonations: 13,
                     phone: '0923456012'
                 },
@@ -1636,7 +1802,7 @@ class StaffDashboard {
                     email: 'ly.thi.oanh@email.com',
                     birthDate: '1997-12-21',
                     bloodType: 'O-',
-                    lastDonationDate: '2024-01-07',
+                    lastDonationDate: '2025-01-07',
                     totalDonations: 2,
                     phone: '0934560123'
                 },
@@ -1646,7 +1812,7 @@ class StaffDashboard {
                     email: 'truong.van.phuc@email.com',
                     birthDate: '1983-05-09',
                     bloodType: 'B-',
-                    lastDonationDate: '2023-07-25',
+                    lastDonationDate: '2024-07-25',
                     totalDonations: 25,
                     phone: '0945601234'
                 },
@@ -1656,7 +1822,7 @@ class StaffDashboard {
                     email: 'dinh.thi.quynh@email.com',
                     birthDate: '1998-03-16',
                     bloodType: 'A+',
-                    lastDonationDate: '2024-01-14',
+                    lastDonationDate: '2025-01-14',
                     totalDonations: 1,
                     phone: '0956012345'
                 },
@@ -1666,7 +1832,7 @@ class StaffDashboard {
                     email: 'phan.minh.son@email.com',
                     birthDate: '1990-11-04',
                     bloodType: 'O+',
-                    lastDonationDate: '2023-12-28',
+                    lastDonationDate: '2024-12-28',
                     totalDonations: 11,
                     phone: '0967123456'
                 },
@@ -1676,7 +1842,7 @@ class StaffDashboard {
                     email: 'mai.thi.trang@email.com',
                     birthDate: '1992-07-23',
                     bloodType: 'AB-',
-                    lastDonationDate: '2023-10-30',
+                    lastDonationDate: '2024-10-30',
                     totalDonations: 14,
                     phone: '0978234567'
                 },
@@ -1686,7 +1852,7 @@ class StaffDashboard {
                     email: 'ho.van.uoc@email.com',
                     birthDate: '1987-01-11',
                     bloodType: 'B+',
-                    lastDonationDate: '2024-01-01',
+                    lastDonationDate: '2025-01-01',
                     totalDonations: 19,
                     phone: '0989345678'
                 },
@@ -1696,259 +1862,295 @@ class StaffDashboard {
                     email: 'chu.thi.van@email.com',
                     birthDate: '1995-04-28',
                     bloodType: 'A-',
-                    lastDonationDate: '2023-09-12',
+                    lastDonationDate: '2024-09-12',
                     totalDonations: 10,
                     phone: '0990456789'
                 }
             ],
             bloodUnits: [
                 {
-                    id: 'BU20240101001',
+                    id: 'BU20250101001',
+                    componentId: 'BC20250101001',
+                    component: 'Hồng cầu',
                     volume: 450,
                     bloodType: 'A+',
-                    donationDate: '2024-01-15',
-                    expiryDate: '2024-03-15',
+                    donationDate: '2025-01-15',
+                    expiryDate: '2025-03-15',
                     status: 'approved',
                     donorId: 1
                 },
                 {
-                    id: 'BU20240101002',
+                    id: 'BU20250101002',
+                    componentId: 'BC20250101002',
+                    component: 'Tiểu cầu',
                     volume: 450,
                     bloodType: 'O-',
-                    donationDate: '2024-01-14',
-                    expiryDate: '2024-03-14',
+                    donationDate: '2025-01-14',
+                    expiryDate: '2025-03-14',
                     status: 'pending',
                     donorId: 2
                 },
                 {
-                    id: 'BU20240101003',
+                    id: 'BU20250101003',
+                    componentId: 'BC20250101003',
+                    component: 'Huyết tương',
                     volume: 350,
                     bloodType: 'B+',
-                    donationDate: '2024-01-13',
-                    expiryDate: '2024-03-13',
+                    donationDate: '2025-01-13',
+                    expiryDate: '2025-03-13',
                     status: 'approved',
                     donorId: 3
                 },
                 {
-                    id: 'BU20240101004',
+                    id: 'BU20250101004',
+                    componentId: 'BC20250101004',
+                    component: 'Máu toàn phần',
                     volume: 450,
                     bloodType: 'AB+',
-                    donationDate: '2024-01-12',
-                    expiryDate: '2024-03-12',
+                    donationDate: '2025-01-12',
+                    expiryDate: '2025-03-12',
                     status: 'denied',
                     donorId: 4
                 },
                 {
-                    id: 'BU20240101005',
+                    id: 'BU20250101005',
+                    componentId: 'BC20250101005',
+                    component: 'Hồng cầu',
                     volume: 450,
                     bloodType: 'A-',
-                    donationDate: '2024-01-11',
-                    expiryDate: '2024-03-11',
+                    donationDate: '2025-01-11',
+                    expiryDate: '2025-03-11',
                     status: 'approved',
                     donorId: 5
                 },
                 {
-                    id: 'BU20240101006',
+                    id: 'BU20250101006',
+                    componentId: 'BC20250101006',
+                    component: 'Tiểu cầu',
                     volume: 400,
                     bloodType: 'O+',
-                    donationDate: '2024-01-10',
-                    expiryDate: '2024-03-10',
+                    donationDate: '2025-01-10',
+                    expiryDate: '2025-03-10',
                     status: 'pending',
                     donorId: 6
                 },
                 {
-                    id: 'BU20240101007',
+                    id: 'BU20250101007',
+                    componentId: 'BC20250101007',
+                    component: 'Huyết tương',
                     volume: 450,
                     bloodType: 'B-',
-                    donationDate: '2024-01-09',
-                    expiryDate: '2024-03-09',
+                    donationDate: '2025-01-09',
+                    expiryDate: '2025-03-09',
                     status: 'approved',
                     donorId: 7
                 },
                 {
-                    id: 'BU20240101008',
+                    id: 'BU20250101008',
+                    componentId: 'BC20250101008',
+                    component: 'Máu toàn phần',
                     volume: 450,
                     bloodType: 'AB-',
-                    donationDate: '2024-01-08',
-                    expiryDate: '2024-03-08',
+                    donationDate: '2025-01-08',
+                    expiryDate: '2025-03-08',
                     status: 'approved',
                     donorId: 8
                 },
                 {
-                    id: 'BU20240101009',
+                    id: 'BU20250101009',
                     volume: 350,
                     bloodType: 'A+',
-                    donationDate: '2024-01-07',
-                    expiryDate: '2024-03-07',
+                    donationDate: '2025-01-07',
+                    expiryDate: '2025-03-07',
                     status: 'pending',
                     donorId: 9
                 },
                 {
-                    id: 'BU20240101010',
+                    id: 'BU20250101010',
                     volume: 450,
                     bloodType: 'O+',
-                    donationDate: '2024-01-06',
-                    expiryDate: '2024-03-06',
+                    donationDate: '2025-01-06',
+                    expiryDate: '2025-03-06',
                     status: 'approved',
                     donorId: 10
                 },
                 {
-                    id: 'BU20240101011',
+                    id: 'BU20250101011',
                     volume: 450,
                     bloodType: 'B+',
-                    donationDate: '2024-01-05',
-                    expiryDate: '2024-03-05',
+                    donationDate: '2025-01-05',
+                    expiryDate: '2025-03-05',
                     status: 'denied',
                     donorId: 11
                 },
                 {
-                    id: 'BU20240101012',
+                    id: 'BU20250101012',
                     volume: 400,
                     bloodType: 'A-',
-                    donationDate: '2024-01-04',
-                    expiryDate: '2024-03-04',
+                    donationDate: '2025-01-04',
+                    expiryDate: '2025-03-04',
                     status: 'approved',
                     donorId: 12
                 },
                 {
-                    id: 'BU20240101013',
+                    id: 'BU20250101013',
                     volume: 450,
                     bloodType: 'AB+',
-                    donationDate: '2024-01-03',
-                    expiryDate: '2024-03-03',
+                    donationDate: '2025-01-03',
+                    expiryDate: '2025-03-03',
                     status: 'pending',
                     donorId: 13
                 },
                 {
-                    id: 'BU20240101014',
+                    id: 'BU20250101014',
                     volume: 450,
                     bloodType: 'O-',
-                    donationDate: '2024-01-02',
-                    expiryDate: '2024-03-02',
+                    donationDate: '2025-01-02',
+                    expiryDate: '2025-03-02',
                     status: 'approved',
                     donorId: 14
                 },
                 {
-                    id: 'BU20240101015',
+                    id: 'BU20250101015',
                     volume: 350,
                     bloodType: 'B-',
-                    donationDate: '2024-01-01',
-                    expiryDate: '2024-03-01',
+                    donationDate: '2025-01-01',
+                    expiryDate: '2025-03-01',
                     status: 'approved',
                     donorId: 15
                 },
                 {
-                    id: 'BU20231201016',
+                    id: 'BU20241201016',
                     volume: 450,
                     bloodType: 'A+',
-                    donationDate: '2023-12-31',
-                    expiryDate: '2024-02-29',
+                    donationDate: '2024-12-31',
+                    expiryDate: '2025-02-28',
                     status: 'expired',
                     donorId: 16
                 },
                 {
-                    id: 'BU20231201017',
+                    id: 'BU20241201017',
                     volume: 450,
                     bloodType: 'O+',
-                    donationDate: '2023-12-30',
-                    expiryDate: '2024-02-28',
+                    donationDate: '2024-12-30',
+                    expiryDate: '2025-02-27',
                     status: 'approved',
                     donorId: 17
                 },
                 {
-                    id: 'BU20231201018',
+                    id: 'BU20241201018',
                     volume: 400,
                     bloodType: 'AB-',
-                    donationDate: '2023-12-29',
-                    expiryDate: '2024-02-27',
+                    donationDate: '2024-12-29',
+                    expiryDate: '2025-02-26',
                     status: 'pending',
                     donorId: 18
                 },
                 {
-                    id: 'BU20231201019',
+                    id: 'BU20241201019',
                     volume: 450,
                     bloodType: 'B+',
-                    donationDate: '2023-12-28',
-                    expiryDate: '2024-02-26',
+                    donationDate: '2024-12-28',
+                    expiryDate: '2025-02-25',
                     status: 'approved',
                     donorId: 19
                 },
                 {
-                    id: 'BU20231201020',
+                    id: 'BU20241201020',
                     volume: 450,
                     bloodType: 'A-',
-                    donationDate: '2023-12-27',
-                    expiryDate: '2024-02-25',
+                    donationDate: '2024-12-27',
+                    expiryDate: '2025-02-24',
                     status: 'denied',
                     donorId: 20
                 }
             ],
             donationRecords: [
                 {
-                    id: 'DR20240115001',
+                    id: 'DR20250115001',
                     donorId: 1,
                     donorName: 'Nguyễn Văn Anh',
-                    donationDateTime: '2024-01-15 08:30:00',
+                    donationDateTime: '2025-01-15 08:30:00',
                     donorWeight: 65,
                     donorTemperature: 36.5,
                     donationType: 'Máu toàn phần',
                     volumeDonated: 450,
                     bloodTestResult: 'good',
-                    note: 'Người hiến khỏe mạnh, không có vấn đề gì trong quá trình hiến máu.'
+                    note: 'Người hiến khỏe mạnh, không có vấn đề gì trong quá trình hiến máu.',
+                    slotId: 'SL001',
+                    appointmentId: 'AP20250115001',
+                    staffId: 'ST001',
+                    bloodPressure: '120/80'
                 },
                 {
-                    id: 'DR20240114001',
+                    id: 'DR20250114001',
                     donorId: 2,
                     donorName: 'Trần Thị Bình',
-                    donationDateTime: '2024-01-14 09:15:00',
+                    donationDateTime: '2025-01-14 09:15:00',
                     donorWeight: 55,
                     donorTemperature: 36.8,
                     donationType: 'Huyết tương',
                     volumeDonated: 400,
                     bloodTestResult: 'poor',
-                    note: 'Phát hiện chỉ số hemoglobin thấp, cần theo dõi thêm.'
+                    note: 'Phát hiện chỉ số hemoglobin thấp, cần theo dõi thêm.',
+                    slotId: 'SL002',
+                    appointmentId: 'AP20250114001',
+                    staffId: 'ST002',
+                    bloodPressure: '110/70'
                 },
                 {
-                    id: 'DR20240113001',
+                    id: 'DR20250113001',
                     donorId: 3,
                     donorName: 'Lê Minh Cường',
-                    donationDateTime: '2024-01-13 10:00:00',
+                    donationDateTime: '2025-01-13 10:00:00',
                     donorWeight: 70,
                     donorTemperature: 36.2,
                     donationType: 'Máu toàn phần',
                     volumeDonated: 450,
                     bloodTestResult: 'good',
-                    note: 'Tình trạng sức khỏe tốt, quá trình hiến máu suôn sẻ.'
+                    note: 'Tình trạng sức khỏe tốt, quá trình hiến máu suôn sẻ.',
+                    slotId: 'SL003',
+                    appointmentId: 'AP20250113001',
+                    staffId: 'ST001',
+                    bloodPressure: '125/85'
                 },
                 {
-                    id: 'DR20240112001',
+                    id: 'DR20250112001',
                     donorId: 4,
                     donorName: 'Phạm Thị Dung',
-                    donationDateTime: '2024-01-12 14:20:00',
+                    donationDateTime: '2025-01-12 14:20:00',
                     donorWeight: 58,
                     donorTemperature: 37.1,
                     donationType: 'Tiểu cầu',
                     volumeDonated: 300,
                     bloodTestResult: 'poor',
-                    note: 'Phát hiện một số chỉ số bất thường trong máu, cần kiểm tra lại trước khi sử dụng.'
+                    note: 'Phát hiện một số chỉ số bất thường trong máu, cần kiểm tra lại trước khi sử dụng.',
+                    slotId: 'SL004',
+                    appointmentId: 'AP20250112001',
+                    staffId: 'ST003',
+                    bloodPressure: '115/75'
                 },
                 {
-                    id: 'DR20240111001',
+                    id: 'DR20250111001',
                     donorId: 5,
                     donorName: 'Võ Văn Em',
-                    donationDateTime: '2024-01-11 11:45:00',
+                    donationDateTime: '2025-01-11 11:45:00',
                     donorWeight: 62,
                     donorTemperature: 36.4,
                     donationType: 'Máu toàn phần',
                     volumeDonated: 450,
                     bloodTestResult: 'good',
-                    note: 'Người hiến lần đầu, rất hợp tác và không có phản ứng bất thường.'
+                    note: 'Người hiến lần đầu, rất hợp tác và không có phản ứng bất thường.',
+                    slotId: 'SL005',
+                    appointmentId: 'AP20250111001',
+                    staffId: 'ST002',
+                    bloodPressure: '118/78'
                 },
                 {
-                    id: 'DR20240110001',
+                    id: 'DR20250110001',
                     donorId: 6,
                     donorName: 'Đặng Thị Phương',
-                    donationDateTime: '2024-01-10 13:30:00',
+                    donationDateTime: '2025-01-10 13:30:00',
                     donorWeight: 60,
                     donorTemperature: 36.6,
                     donationType: 'Huyết tương',
@@ -1957,10 +2159,10 @@ class StaffDashboard {
                     note: 'Người hiến kinh nghiệm, quá trình diễn ra thuận lợi.'
                 },
                 {
-                    id: 'DR20240109001',
+                    id: 'DR20250109001',
                     donorId: 7,
                     donorName: 'Hoàng Văn Giang',
-                    donationDateTime: '2024-01-09 09:00:00',
+                    donationDateTime: '2025-01-09 09:00:00',
                     donorWeight: 68,
                     donorTemperature: 36.3,
                     donationType: 'Máu toàn phần',
@@ -1969,10 +2171,10 @@ class StaffDashboard {
                     note: 'Sức khỏe tốt, không có tiền sử bệnh lý.'
                 },
                 {
-                    id: 'DR20240108001',
+                    id: 'DR20250108001',
                     donorId: 8,
                     donorName: 'Bùi Thị Hằng',
-                    donationDateTime: '2024-01-08 15:15:00',
+                    donationDateTime: '2025-01-08 15:15:00',
                     donorWeight: 52,
                     donorTemperature: 36.7,
                     donationType: 'Tiểu cầu',
@@ -1981,10 +2183,10 @@ class StaffDashboard {
                     note: 'Cân nặng ở mức thấp, cần cân nhắc kỹ trước khi sử dụng.'
                 },
                 {
-                    id: 'DR20240107001',
+                    id: 'DR20250107001',
                     donorId: 9,
                     donorName: 'Đỗ Minh Quang',
-                    donationDateTime: '2024-01-07 08:45:00',
+                    donationDateTime: '2025-01-07 08:45:00',
                     donorWeight: 75,
                     donorTemperature: 36.1,
                     donationType: 'Máu toàn phần',
@@ -1993,10 +2195,10 @@ class StaffDashboard {
                     note: 'Người hiến máu thường xuyên, có kinh nghiệm tốt.'
                 },
                 {
-                    id: 'DR20240106001',
+                    id: 'DR20250106001',
                     donorId: 10,
                     donorName: 'Ngô Thị Lan',
-                    donationDateTime: '2024-01-06 16:30:00',
+                    donationDateTime: '2025-01-06 16:30:00',
                     donorWeight: 57,
                     donorTemperature: 36.9,
                     donationType: 'Huyết tương',
@@ -2005,10 +2207,10 @@ class StaffDashboard {
                     note: 'Quá trình hiến máu bình thường, không có vấn đề gì.'
                 },
                 {
-                    id: 'DR20240105001',
+                    id: 'DR20250105001',
                     donorId: 11,
                     donorName: 'Dương Văn Minh',
-                    donationDateTime: '2024-01-05 12:00:00',
+                    donationDateTime: '2025-01-05 12:00:00',
                     donorWeight: 72,
                     donorTemperature: 36.4,
                     donationType: 'Máu toàn phần',
@@ -2017,10 +2219,10 @@ class StaffDashboard {
                     note: 'Tình trạng sức khỏe ổn định, hiến máu thành công.'
                 },
                 {
-                    id: 'DR20240104001',
+                    id: 'DR20250104001',
                     donorId: 12,
                     donorName: 'Cao Thị Nga',
-                    donationDateTime: '2024-01-04 10:30:00',
+                    donationDateTime: '2025-01-04 10:30:00',
                     donorWeight: 59,
                     donorTemperature: 36.5,
                     donationType: 'Tiểu cầu',
@@ -2029,10 +2231,10 @@ class StaffDashboard {
                     note: 'Xét nghiệm phát hiện một số chỉ số bất thường, cần kiểm tra lại.'
                 },
                 {
-                    id: 'DR20240103001',
+                    id: 'DR20250103001',
                     donorId: 13,
                     donorName: 'Vũ Minh Tuấn',
-                    donationDateTime: '2024-01-03 14:45:00',
+                    donationDateTime: '2025-01-03 14:45:00',
                     donorWeight: 66,
                     donorTemperature: 36.2,
                     donationType: 'Huyết tương',
@@ -2041,10 +2243,10 @@ class StaffDashboard {
                     note: 'Người hiến hợp tác tốt, không có phản ứng phụ.'
                 },
                 {
-                    id: 'DR20240102001',
+                    id: 'DR20250102001',
                     donorId: 14,
                     donorName: 'Lý Thị Oanh',
-                    donationDateTime: '2024-01-02 11:15:00',
+                    donationDateTime: '2025-01-02 11:15:00',
                     donorWeight: 54,
                     donorTemperature: 36.7,
                     donationType: 'Máu toàn phần',
@@ -2053,10 +2255,10 @@ class StaffDashboard {
                     note: 'Người hiến trẻ tuổi, sức khỏe tốt.'
                 },
                 {
-                    id: 'DR20240101001',
+                    id: 'DR20250101001',
                     donorId: 15,
                     donorName: 'Trương Văn Phúc',
-                    donationDateTime: '2024-01-01 15:00:00',
+                    donationDateTime: '2025-01-01 15:00:00',
                     donorWeight: 78,
                     donorTemperature: 36.3,
                     donationType: 'Máu toàn phần',
@@ -2065,10 +2267,10 @@ class StaffDashboard {
                     note: 'Người hiến có kinh nghiệm lâu năm, rất tin cậy.'
                 },
                 {
-                    id: 'DR20231231001',
+                    id: 'DR20241231001',
                     donorId: 16,
                     donorName: 'Đinh Thị Quỳnh',
-                    donationDateTime: '2023-12-31 09:30:00',
+                    donationDateTime: '2024-12-31 09:30:00',
                     donorWeight: 56,
                     donorTemperature: 36.8,
                     donationType: 'Huyết tương',
@@ -2077,10 +2279,10 @@ class StaffDashboard {
                     note: 'Xét nghiệm phát hiện một số chỉ số bất thường, cần kiểm tra kỹ trước khi sử dụng.'
                 },
                 {
-                    id: 'DR20231230001',
+                    id: 'DR20241230001',
                     donorId: 17,
                     donorName: 'Phan Minh Sơn',
-                    donationDateTime: '2023-12-30 13:15:00',
+                    donationDateTime: '2024-12-30 13:15:00',
                     donorWeight: 69,
                     donorTemperature: 36.1,
                     donationType: 'Máu toàn phần',
@@ -2089,16 +2291,53 @@ class StaffDashboard {
                     note: 'Quá trình hiến máu diễn ra suôn sẻ, không có vấn đề.'
                 },
                 {
-                    id: 'DR20231229001',
+                    id: 'DR20241229001',
                     donorId: 18,
                     donorName: 'Mai Thị Trang',
-                    donationDateTime: '2023-12-29 16:45:00',
+                    donationDateTime: '2024-12-29 16:45:00',
                     donorWeight: 61,
                     donorTemperature: 36.6,
                     donationType: 'Tiểu cầu',
                     volumeDonated: 280,
                     bloodTestResult: 'good',
-                    note: 'Tình trạng sức khỏe ổn định, hiến máu thành công.'
+                    note: 'Quá trình hiến máu bình thường.',
+                    slotId: 'SL015',
+                    appointmentId: 'AP20241229001',
+                    staffId: 'ST002',
+                    bloodPressure: '122/82'
+                },
+                // Additional historical records for donor 1 (Nguyễn Văn Anh)
+                {
+                    id: 'DR20241115001',
+                    donorId: 1,
+                    donorName: 'Nguyễn Văn Anh',
+                    donationDateTime: '2024-11-15 09:30:00',
+                    donorWeight: 64,
+                    donorTemperature: 36.3,
+                    donationType: 'Máu toàn phần',
+                    volumeDonated: 450,
+                    bloodTestResult: 'good',
+                    note: 'Lần hiến máu thứ 11, tình trạng sức khỏe tốt.',
+                    slotId: 'SL020',
+                    appointmentId: 'AP20241115001',
+                    staffId: 'ST001',
+                    bloodPressure: '118/76'
+                },
+                {
+                    id: 'DR20240915001',
+                    donorId: 1,
+                    donorName: 'Nguyễn Văn Anh',
+                    donationDateTime: '2024-09-15 14:15:00',
+                    donorWeight: 63,
+                    donorTemperature: 36.4,
+                    donationType: 'Huyết tương',
+                    volumeDonated: 400,
+                    bloodTestResult: 'good',
+                    note: 'Lần hiến máu thứ 10, không có vấn đề gì.',
+                    slotId: 'SL025',
+                    appointmentId: 'AP20240915001',
+                    staffId: 'ST003',
+                    bloodPressure: '120/80'
                 },
                 {
                     id: 'DR20231228001',
@@ -2204,6 +2443,313 @@ class StaffDashboard {
             this.currentDonationRecordSearchTerm = searchInput.value.trim();
             this.currentDonationRecordPage = 1;
             this.loadDonationRecords();
+        }
+    }
+
+    // Create Record Modal Methods
+    setupCreateRecordEventListeners() {
+        // Save record button
+        const saveBtn = document.getElementById('saveRecordBtn');
+        if (saveBtn) {
+            saveBtn.addEventListener('click', () => {
+                this.handleCreateRecord();
+            });
+        }
+
+        // Form validation on input change
+        const form = document.getElementById('createRecordForm');
+        if (form) {
+            const inputs = form.querySelectorAll('input, select, textarea');
+            inputs.forEach(input => {
+                input.addEventListener('input', () => {
+                    this.validateField(input);
+                });
+            });
+        }
+
+        // Modal reset on close
+        const modal = document.getElementById('createRecordModal');
+        if (modal) {
+            modal.addEventListener('hidden.bs.modal', () => {
+                this.resetCreateRecordForm();
+            });
+        }
+
+        // Set default values when modal opens
+        const modal2 = document.getElementById('createRecordModal');
+        if (modal2) {
+            modal2.addEventListener('shown.bs.modal', () => {
+                this.setDefaultValues();
+            });
+        }
+    }
+
+    setDefaultValues() {
+        // Set current date as default for donation date
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('donationDate').value = today;
+        
+        // Set default staff ID (you can modify this based on logged-in staff)
+        document.getElementById('staffId').value = 'ST001';
+        
+        // Generate next donor ID
+        const nextDonorId = this.generateNextDonorId();
+        document.getElementById('donorId').value = nextDonorId;
+        
+        // Generate next slot and appointment IDs
+        document.getElementById('slotId').value = this.generateNextSlotId();
+        document.getElementById('appointmentId').value = this.generateNextAppointmentId();
+    }
+
+    generateNextDonorId() {
+        const existingIds = this.mockData.donationRecords.map(record => record.donorId);
+        const maxId = Math.max(...existingIds, 0);
+        return maxId + 1;
+    }
+
+    generateNextSlotId() {
+        const existingSlots = this.mockData.donationRecords.map(record => record.slotId);
+        const slotNumbers = existingSlots.map(slot => parseInt(slot.replace('SL', ''))).filter(num => !isNaN(num));
+        const maxSlot = Math.max(...slotNumbers, 0);
+        return `SL${String(maxSlot + 1).padStart(3, '0')}`;
+    }
+
+    generateNextAppointmentId() {
+        const today = new Date();
+        const dateStr = today.toISOString().split('T')[0].replace(/-/g, '');
+        const existingAppointments = this.mockData.donationRecords
+            .map(record => record.appointmentId)
+            .filter(id => id.includes(dateStr));
+        
+        const appointmentNumbers = existingAppointments
+            .map(id => parseInt(id.slice(-3)))
+            .filter(num => !isNaN(num));
+        
+        const maxNum = Math.max(...appointmentNumbers, 0);
+        return `AP${dateStr}${String(maxNum + 1).padStart(3, '0')}`;
+    }
+
+    validateField(field) {
+        const value = field.value.trim();
+        let isValid = true;
+        let errorMessage = '';
+
+        // Remove previous validation classes
+        field.classList.remove('is-valid', 'is-invalid');
+
+        // Check if required field is empty
+        if (field.hasAttribute('required') && !value) {
+            isValid = false;
+            errorMessage = 'Trường này là bắt buộc';
+        } else if (value) {
+            // Specific validation rules
+            switch (field.name) {
+                case 'donorCCCD':
+                    if (!/^[0-9]{12}$/.test(value)) {
+                        isValid = false;
+                        errorMessage = 'CCCD phải có 12 số';
+                    }
+                    break;
+                case 'donorPhone':
+                    if (!/^[0-9]{10,11}$/.test(value)) {
+                        isValid = false;
+                        errorMessage = 'Số điện thoại phải có 10-11 số';
+                    }
+                    break;
+                case 'donorWeight':
+                    const weight = parseFloat(value);
+                    if (weight < 30 || weight > 200) {
+                        isValid = false;
+                        errorMessage = 'Cân nặng phải từ 30-200kg';
+                    }
+                    break;
+                case 'donorTemperature':
+                    const temp = parseFloat(value);
+                    if (temp < 35 || temp > 42) {
+                        isValid = false;
+                        errorMessage = 'Nhiệt độ phải từ 35-42°C';
+                    }
+                    break;
+                case 'bloodPressure':
+                    if (!/^\d{2,3}\/\d{2,3}$/.test(value)) {
+                        isValid = false;
+                        errorMessage = 'Huyết áp phải có định dạng 120/80';
+                    }
+                    break;
+                case 'donationVolume':
+                    const volume = parseInt(value);
+                    if (volume < 100 || volume > 500) {
+                        isValid = false;
+                        errorMessage = 'Thể tích phải từ 100-500ml';
+                    }
+                    break;
+                case 'donorBirthDate':
+                    const birthDate = new Date(value);
+                    const today = new Date();
+                    const age = today.getFullYear() - birthDate.getFullYear();
+                    if (age < 18 || age > 65) {
+                        isValid = false;
+                        errorMessage = 'Tuổi phải từ 18-65';
+                    }
+                    break;
+                case 'donationDate':
+                    const donationDate = new Date(value);
+                    const maxDate = new Date();
+                    const minDate = new Date();
+                    minDate.setFullYear(minDate.getFullYear() - 1);
+                    if (donationDate > maxDate) {
+                        isValid = false;
+                        errorMessage = 'Ngày hiến không thể trong tương lai';
+                    } else if (donationDate < minDate) {
+                        isValid = false;
+                        errorMessage = 'Ngày hiến không thể quá 1 năm trước';
+                    }
+                    break;
+            }
+        }
+
+        // Apply validation classes
+        if (isValid) {
+            field.classList.add('is-valid');
+        } else {
+            field.classList.add('is-invalid');
+            const feedback = field.parentElement.querySelector('.invalid-feedback');
+            if (feedback) {
+                feedback.textContent = errorMessage;
+            }
+        }
+
+        return isValid;
+    }
+
+    handleCreateRecord() {
+        const form = document.getElementById('createRecordForm');
+        const formData = new FormData(form);
+        let isFormValid = true;
+
+        // Validate all fields
+        const inputs = form.querySelectorAll('input[required], select[required], textarea[required]');
+        inputs.forEach(input => {
+            if (!this.validateField(input)) {
+                isFormValid = false;
+            }
+        });
+
+        if (!isFormValid) {
+            this.showValidationError('Vui lòng kiểm tra lại các trường bắt buộc');
+            return;
+        }
+
+        // Create new record object
+        const newRecord = {
+            id: this.generateNextRecordId(),
+            donorId: parseInt(formData.get('donorId')),
+            donorName: formData.get('donorName'),
+            cccd: formData.get('donorCCCD'),
+            phone: formData.get('donorPhone'),
+            birthDate: formData.get('donorBirthDate'),
+            donationDateTime: `${formData.get('donationDate')} 08:00:00`,
+            donorWeight: parseFloat(formData.get('donorWeight')),
+            donorTemperature: parseFloat(formData.get('donorTemperature')),
+            donationType: formData.get('donationType'),
+            volumeDonated: parseInt(formData.get('donationVolume')),
+            bloodTestResult: 'good', // Default to good
+            note: formData.get('donationNotes') || 'Không có ghi chú đặc biệt',
+            slotId: formData.get('slotId'),
+            appointmentId: formData.get('appointmentId'),
+            staffId: formData.get('staffId'),
+            bloodPressure: formData.get('bloodPressure')
+        };
+
+        // Add to mock data
+        this.mockData.donationRecords.unshift(newRecord);
+
+        // Close modal
+        const modal = bootstrap.Modal.getInstance(document.getElementById('createRecordModal'));
+        modal.hide();
+
+        // Show success message
+        this.showCreateSuccessMessage();
+
+        // Reload donation records
+        this.loadDonationRecords();
+    }
+
+    generateNextRecordId() {
+        const today = new Date();
+        const dateStr = today.toISOString().split('T')[0].replace(/-/g, '');
+        const existingRecords = this.mockData.donationRecords
+            .map(record => record.id)
+            .filter(id => id.includes(dateStr));
+        
+        const recordNumbers = existingRecords
+            .map(id => parseInt(id.slice(-3)))
+            .filter(num => !isNaN(num));
+        
+        const maxNum = Math.max(...recordNumbers, 0);
+        return `DR${dateStr}${String(maxNum + 1).padStart(3, '0')}`;
+    }
+
+    showValidationError(message) {
+        // Create toast notification
+        const toast = document.createElement('div');
+        toast.className = 'alert alert-danger alert-dismissible fade show position-fixed';
+        toast.style.top = '20px';
+        toast.style.right = '20px';
+        toast.style.zIndex = '9999';
+        toast.style.minWidth = '300px';
+        
+        toast.innerHTML = `
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        `;
+        
+        document.body.appendChild(toast);
+        
+        // Auto remove after 5 seconds
+        setTimeout(() => {
+            if (document.body.contains(toast)) {
+                toast.remove();
+            }
+        }, 5000);
+    }
+
+    showCreateSuccessMessage() {
+        // Create toast notification
+        const toast = document.createElement('div');
+        toast.className = 'alert alert-success alert-dismissible fade show position-fixed';
+        toast.style.top = '20px';
+        toast.style.right = '20px';
+        toast.style.zIndex = '9999';
+        toast.style.minWidth = '300px';
+        
+        toast.innerHTML = `
+            <i class="fas fa-check-circle me-2"></i>
+            Đã tạo hồ sơ hiến máu thành công!
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        `;
+        
+        document.body.appendChild(toast);
+        
+        // Auto remove after 5 seconds
+        setTimeout(() => {
+            if (document.body.contains(toast)) {
+                toast.remove();
+            }
+        }, 5000);
+    }
+
+    resetCreateRecordForm() {
+        const form = document.getElementById('createRecordForm');
+        if (form) {
+            form.reset();
+            
+            // Remove validation classes
+            const inputs = form.querySelectorAll('input, select, textarea');
+            inputs.forEach(input => {
+                input.classList.remove('is-valid', 'is-invalid');
+            });
         }
     }
 }
