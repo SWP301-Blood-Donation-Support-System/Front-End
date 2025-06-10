@@ -95,7 +95,7 @@ class StaffDashboard {
         document.querySelector(`[data-section="${sectionName}"]`).classList.add('active');
 
         // Update breadcrumb
-        const breadcrumbMap = {
+       const breadcrumbMap = {
             'schedules': 'Lịch đặt hiến',
             'donors': 'Quản lý người hiến',
             'blood-units': 'Quản lý túi máu hậu hiến',
@@ -1481,10 +1481,12 @@ class StaffDashboard {
         const totalRecords = allRecords.length;
         const goodBloodRecords = allRecords.filter(record => record.bloodTestResult === 'good').length;
         const poorBloodRecords = allRecords.filter(record => record.bloodTestResult === 'poor').length;
+        const totalVolume = allRecords.reduce((sum, record) => sum + record.volumeDonated, 0);
 
         document.getElementById('totalDonationRecords').textContent = totalRecords;
         document.getElementById('goodBloodRecords').textContent = goodBloodRecords;
         document.getElementById('poorBloodRecords').textContent = poorBloodRecords;
+        document.getElementById('totalVolumeDonated').textContent = totalVolume.toLocaleString();
     }
 
     formatDateTime(dateTime) {
