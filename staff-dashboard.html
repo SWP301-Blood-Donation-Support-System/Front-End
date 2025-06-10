@@ -94,36 +94,43 @@
     <!-- Dashboard Content -->
     <div class="dashboard-container">
         <!-- Sidebar Navigation -->
-        <div class="dashboard-sidebar">
-            <nav class="nav flex-column">
+        <div class="dashboard-sidebar" id="dashboardSidebar">
+            <!-- Toggle Button -->
+            <div class="sidebar-toggle">
+                <button class="toggle-btn" id="sidebarToggle">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+            
+            <nav class="nav flex-column sidebar-nav">
                 <div class="nav-item">
-                    <a class="nav-link active" href="#" data-section="schedules">
+                    <a class="nav-link active" href="#" data-section="schedules" data-tooltip="Lịch đặt hiến">
                         <i class="fas fa-calendar-check"></i>
-                        Lịch đặt hiến
+                        <span class="nav-text">Lịch đặt hiến</span>
                     </a>
                 </div>
                 <div class="nav-item">
-                    <a class="nav-link" href="#" data-section="donors">
+                    <a class="nav-link" href="#" data-section="donors" data-tooltip="Quản lý người hiến">
                         <i class="fas fa-users"></i>
-                        Quản lý người hiến
+                        <span class="nav-text">Quản lý người hiến</span>
                     </a>
                 </div>
                 <div class="nav-item">
-                    <a class="nav-link" href="#" data-section="blood-units">
+                    <a class="nav-link" href="#" data-section="blood-units" data-tooltip="Quản lý túi máu hậu hiến">
                         <i class="fas fa-tint"></i>
-                        Quản lý túi máu hậu hiến
+                        <span class="nav-text">Quản lý túi máu hậu hiến</span>
                     </a>
                 </div>
                 <div class="nav-item">
-                    <a class="nav-link" href="#" data-section="donation-records">
+                    <a class="nav-link" href="#" data-section="donation-records" data-tooltip="Hồ sơ hiến máu">
                         <i class="fas fa-file-medical"></i>
-                        Hồ sơ hiến máu
+                        <span class="nav-text">Hồ sơ hiến máu</span>
                     </a>
                 </div>
                 <div class="nav-item">
-                    <a class="nav-link" href="#" data-section="reports">
+                    <a class="nav-link" href="#" data-section="reports" data-tooltip="Báo cáo thống kê">
                         <i class="fas fa-chart-bar"></i>
-                        Báo cáo thống kê
+                        <span class="nav-text">Báo cáo thống kê</span>
                     </a>
                 </div>
             </nav>

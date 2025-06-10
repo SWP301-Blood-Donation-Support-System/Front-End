@@ -26,6 +26,9 @@ class StaffDashboard {
         // Setup event listeners
         this.setupEventListeners();
         
+        // Initialize sidebar state
+        this.initializeSidebarState();
+        
         // Initialize the dashboard
         this.loadSection('schedules');
         this.loadSchedules();
@@ -89,6 +92,9 @@ class StaffDashboard {
 
         // Create record modal event listeners
         this.setupCreateRecordEventListeners();
+
+        // Sidebar toggle event listeners
+        this.setupSidebarToggle();
     }
 
     loadSection(sectionName) {
@@ -2750,6 +2756,85 @@ class StaffDashboard {
             inputs.forEach(input => {
                 input.classList.remove('is-valid', 'is-invalid');
             });
+        }
+    }
+
+    // Sidebar Toggle Methods
+    setupSidebarToggle() {
+        const toggleBtn = document.getElementById('sidebarToggle');
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', () => {
+                this.toggleSidebar();
+            });
+        }
+
+        // Close sidebar on mobile when clicking content area
+        const dashboardContent = document.querySelector('.dashboard-content');
+        if (dashboardContent) {
+            dashboardContent.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    this.closeSidebarOnMobile();
+                }
+            });
+        }
+    }
+
+    toggleSidebar() {
+        const sidebar = document.getElementById('dashboardSidebar');
+        const toggleIcon = document.querySelector('#sidebarToggle i');
+        const dashboardContainer = document.querySelector('.dashboard-container');
+        
+        if (sidebar.classList.contains('collapsed')) {
+            // Expand sidebar
+            sidebar.classList.remove('collapsed');
+            dashboardContainer.classList.remove('sidebar-collapsed');
+            toggleIcon.classList.remove('fa-chevron-right');
+            toggleIcon.classList.add('fa-chevron-left');
+            
+            // Store state in localStorage
+            localStorage.setItem('sidebarCollapsed', 'false');
+        } else {
+            // Collapse sidebar
+            sidebar.classList.add('collapsed');
+            dashboardContainer.classList.add('sidebar-collapsed');
+            toggleIcon.classList.remove('fa-chevron-left');
+            toggleIcon.classList.add('fa-chevron-right');
+            
+            // Store state in localStorage
+            localStorage.setItem('sidebarCollapsed', 'true');
+        }
+    }
+
+    closeSidebarOnMobile() {
+        const sidebar = document.getElementById('dashboardSidebar');
+        const dashboardContainer = document.querySelector('.dashboard-container');
+        
+        if (window.innerWidth <= 768 && !sidebar.classList.contains('collapsed')) {
+            sidebar.classList.add('collapsed');
+            dashboardContainer.classList.add('sidebar-collapsed');
+        }
+    }
+
+    initializeSidebarState() {
+        // Check if sidebar should be collapsed from localStorage
+        const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+        const sidebar = document.getElementById('dashboardSidebar');
+        const toggleIcon = document.querySelector('#sidebarToggle i');
+        const dashboardContainer = document.querySelector('.dashboard-container');
+        
+        if (isCollapsed) {
+            sidebar.classList.add('collapsed');
+            dashboardContainer.classList.add('sidebar-collapsed');
+            toggleIcon.classList.remove('fa-chevron-left');
+            toggleIcon.classList.add('fa-chevron-right');
+        }
+
+        // Auto-collapse on mobile devices
+        if (window.innerWidth <= 768) {
+            sidebar.classList.add('collapsed');
+            dashboardContainer.classList.add('sidebar-collapsed');
+            toggleIcon.classList.remove('fa-chevron-left');
+            toggleIcon.classList.add('fa-chevron-right');
         }
     }
 }
